@@ -56,7 +56,7 @@ public class SeesawController : MonoBehaviour
             }
             else if (currangle < tilt * degreetilt)
             {
-                this.transform.Rotate(0, 0, -0.05f, Space.Self);
+                this.transform.Rotate(0, 0, 0.05f, Space.Self);
             }
         } else { // tilt == 0
             // Unity doesn't move it by exact values so give it a slight bit of wiggle room when
