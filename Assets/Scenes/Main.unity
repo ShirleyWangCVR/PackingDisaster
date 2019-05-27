@@ -1175,6 +1175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 7017859109228230586, guid: 7677a02e557a0dc4192225a646a4d8bb, type: 3}
+  canvas: {fileID: 858786907}
 --- !u!4 &355683332
 Transform:
   m_ObjectHideFlags: 0
@@ -1267,6 +1268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 5044895873799692828, guid: b79df0512f0d05f4dbb7edc0a81ee3ca, type: 3}
+  canvas: {fileID: 858786907}
 --- !u!4 &459925434
 Transform:
   m_ObjectHideFlags: 0
@@ -1819,8 +1821,8 @@ MonoBehaviour:
   rightHandSidePositive: {fileID: 466808575}
   leftHandSideNegative: {fileID: 532067068}
   rightHandSideNegative: {fileID: 66404440}
-  toyPool: {fileID: 0}
-  variablePool: {fileID: 0}
+  toyPool: {fileID: 355683331}
+  variablePool: {fileID: 459925433}
 --- !u!1 &790901294
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,32 @@ public class NegativeSide : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.transform.localScale = new Vector3(-1, -1, 1);
                 eventData.pointerDrag.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
             }
+        }  
+    }
+
+    public int NumVariables()
+    {
+        int num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                num++;
+            }
         }
-            
+        return num;
+    }
+
+    public int NumValues()
+    {
+        int num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                num++;
+            }
+        }
+        return num;
     }
 }

@@ -6,6 +6,7 @@ public class SimpleObjectPool : MonoBehaviour
 {
     // the prefab that this object pool returns instances of
     public GameObject prefab;
+    public GameObject canvas;
     // collection of currently inactive instances of the prefab
     private Stack<GameObject> inactiveInstances = new Stack<GameObject>();
 
@@ -55,6 +56,7 @@ public class SimpleObjectPool : MonoBehaviour
             
             // disable the instance
             toReturn.SetActive(false);
+            toReturn.transform.SetParent(canvas.transform);
 
             // add the instance to the collection of inactive instances
             inactiveInstances.Push(toReturn);

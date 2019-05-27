@@ -41,7 +41,32 @@ public class PositiveSide : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
         }
-            
+    }
+
+    public int NumVariables()
+    {
+        int num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                num++;
+            }
+        }
+        return num;
+    }
+
+    public int NumValues()
+    {
+        int num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                num++;
+            }
+        }
+        return num;
     }
 
 }
