@@ -7,34 +7,18 @@ public class PositiveSide : MonoBehaviour, IDropHandler
 {
     
     public Draggable.Slot typeOfItems = Draggable.Slot.All;
-    public GameObject seesaw;
-    
-    private float xposition;
-    private float yposition;
+
     
     // Start is called before the first frame update
     void Start()
     {
-        // because the seesaw changes positions we need to set this upon startup
-        xposition = this.transform.position.x - seesaw.transform.position.x;
-        yposition = this.transform.position.y - seesaw.transform.position.y;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-     
-    public float GetXPosition()
-    {
-        return xposition;
-    }
-
-    public float GetYPosition()
-    {
-        return yposition;
     }
     
 

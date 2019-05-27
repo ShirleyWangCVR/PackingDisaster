@@ -9,6 +9,8 @@ public class SeesawController : MonoBehaviour
     public GameObject rightHandSidePositive;
     public GameObject leftHandSideNegative;
     public GameObject rightHandSideNegative;
+    public SimpleObjectPool toyPool;
+    public SimpleObjectPool variablePool;
     
     private int tilt;
     private float degreetilt = 5f; // tilt by 5 for every 1 over
@@ -38,7 +40,7 @@ public class SeesawController : MonoBehaviour
         
         if (tilt > 0)
         {
-            if (currangle < tilt * degreetilt)
+            if (currangle < tilt * degreetilt + 0.03)
             {
                 this.transform.Rotate(0, 0, 0.05f, Space.Self);
             }
@@ -54,7 +56,7 @@ public class SeesawController : MonoBehaviour
             {
                 this.transform.Rotate(0, 0, -0.05f, Space.Self);
             }
-            else if (currangle < tilt * degreetilt)
+            else if (currangle < tilt * degreetilt + 0.03)
             {
                 this.transform.Rotate(0, 0, 0.05f, Space.Self);
             }
@@ -104,6 +106,57 @@ public class SeesawController : MonoBehaviour
         
     }
 
+    public void ClearAllValues()
+    {
+        foreach(Transform child in leftHandSidePositive.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                toyPool.ReturnObject(child.gameObject);
+            }
+           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                variablePool.ReturnObject(child.gameObject);
+            }
+        }
+
+        foreach(Transform child in leftHandSideNegative.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                toyPool.ReturnObject(child.gameObject);
+            }
+           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                variablePool.ReturnObject(child.gameObject);
+            }
+        }
+
+        foreach(Transform child in rightHandSidePositive.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                toyPool.ReturnObject(child.gameObject);
+            }
+           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                variablePool.ReturnObject(child.gameObject);
+            }
+        }
+
+        foreach(Transform child in rightHandSideNegative.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                toyPool.ReturnObject(child.gameObject);
+            }
+           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                variablePool.ReturnObject(child.gameObject);
+            }
+        }
+    }
+
     private double DegreeToRadian(double angle)
     {
     return Mathf.PI * angle / 180.0;
@@ -120,5 +173,17 @@ public class SeesawController : MonoBehaviour
         Debug.Log(leftHandSideNegative.transform.localRotation);
         Debug.Log(this.transform.localRotation);
         Debug.Log(tilt * degreetilt);
+    }
+
+    // if it's tipped over more than 60 then the seesaw it too tipped over and they lose
+    public bool FellOver()
+    {
+        float currangle = this.transform.rotation.eulerAngles.z;
+        if (currangle > 180)
+        {
+            currangle = 360 - this.transform.rotation.eulerAngles.z;
+        }
+
+        return currangle > 45;
     }
 }

@@ -8,18 +8,20 @@ public class HasValue : MonoBehaviour
     // public for now to set manually
     [SerializeField]
     public int value;
+    public Draggable.Slot typeOfItem = Draggable.Slot.Value;
 
     // Start is called before the first frame update
     void Start()
     {
         // GameController should set this value depending on equation being used
         // value = 3;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (typeOfItem == Draggable.Slot.Value)
+        {
+            value = 1;
+        } else if (typeOfItem == Draggable.Slot.Dummy)
+        {
+            value = 0;
+        }
     }
 
     public void SetValue(int num)
