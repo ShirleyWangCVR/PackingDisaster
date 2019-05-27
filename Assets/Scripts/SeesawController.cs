@@ -186,4 +186,102 @@ public class SeesawController : MonoBehaviour
 
         return currangle > 45;
     }
+
+    public bool CheckIfComplete()
+    {
+        // check that a variable is singled out on one of the positive sides
+        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0) {
+            bool allvalues = true;
+            
+            foreach(Transform child in rightHandSidePositive.transform)
+            {
+                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
+                {
+                    allvalues = false;
+                }
+            }
+
+            foreach(Transform child in rightHandSideNegative.transform)
+            {
+                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
+                {
+                    allvalues = false;
+                }
+            }
+            return allvalues;
+        }
+        
+        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0) {
+            bool allvalues = true;
+            
+            foreach(Transform child in leftHandSidePositive.transform)
+            {
+                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
+                {
+                    allvalues = false;
+                }
+            }
+
+            foreach(Transform child in leftHandSideNegative.transform)
+            {
+                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
+                {
+                    allvalues = false;
+                }
+            }
+            return allvalues;
+        }
+        
+        return false;
+    }
+
+    public bool CorrectlyBalanced(int correctValue)
+    {
+        // assumes called when it's complete
+        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
+        {
+            return GetRightHandSideValue() == correctValue;
+        }
+        
+        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
+        {
+            return GetLeftHandSideValue() == correctValue;
+        }
+
+        return false;
+    }
+
+    public int GetRightHandSideValue()
+    {
+        int rhs = 0;
+        foreach(Transform child in rightHandSidePositive.transform)
+            {
+                rhs = rhs + child.gameObject.GetComponent<HasValue>().GetValue();
+                
+            }
+
+        foreach(Transform child in rightHandSideNegative.transform)
+            {
+                rhs = rhs - child.gameObject.GetComponent<HasValue>().GetValue();
+            }
+
+        return rhs;
+    }
+
+    public int GetLeftHandSideValue()
+    {
+        int lhs = 0;
+        foreach(Transform child in leftHandSidePositive.transform)
+            {
+                lhs = lhs + child.gameObject.GetComponent<HasValue>().GetValue();
+                
+            }
+
+        foreach(Transform child in leftHandSideNegative.transform)
+            {
+                lhs = lhs - child.gameObject.GetComponent<HasValue>().GetValue();
+            }
+
+        return lhs;
+    }
 }

@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 public class RestockZone : MonoBehaviour, IDropHandler
 {
     
-    public GameObject createdPrefab;
+    // public GameObject createdPrefab;
+    public SimpleObjectPool objectPool;
     public Draggable.Slot typeOfItems = Draggable.Slot.Value;
     
     // Start is called before the first frame update
@@ -25,8 +26,8 @@ public class RestockZone : MonoBehaviour, IDropHandler
     // When the toy crate is clicked
     public void OnClick()
     {
-        GameObject newbear = Instantiate(createdPrefab, this.transform.position, Quaternion.identity);
-        newbear.transform.SetParent(this.transform, true);
+        GameObject newObject = objectPool.GetObject(); // Instantiate(createdPrefab, this.transform.position, Quaternion.identity);
+        newObject.transform.SetParent(this.transform, true);
     }
 
     // when a toy is dropped onto it it should disappear
@@ -35,10 +36,9 @@ public class RestockZone : MonoBehaviour, IDropHandler
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
 
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
-        
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
         {
-            Destroy(eventData.pointerDrag);
+            objectPool.ReturnObject(eventData.pointerDrag);
         }
     
     }

@@ -32,6 +32,7 @@ public class SimpleObjectPool : MonoBehaviour
 
         // enable the instance
         spawnedGameObject.SetActive(true);
+        spawnedGameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         // return a reference to the instance
         return spawnedGameObject;
@@ -45,6 +46,13 @@ public class SimpleObjectPool : MonoBehaviour
         // if the instance came from this pool, return it to the pool
         if(pooledObject != null && pooledObject.pool == this)
         {
+            
+            Draggable d = toReturn.GetComponent<Draggable>();
+            if (d != null)
+            {
+                d.DestroyPlaceholder();
+            }
+            
             // disable the instance
             toReturn.SetActive(false);
 

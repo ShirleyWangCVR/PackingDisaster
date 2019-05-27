@@ -5,13 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
-{
-    
+{    
     public Text timeLeftText;
     public GameObject seesaw;
     public SimpleObjectPool variablePool;
     public SimpleObjectPool toyPool;
-    public GameObject finishedDisplay;
+    // public GameObject finishedDisplay;
+    public FinishedPanelManager finishedDisplayManager;
 
     private EquationController equationController;
     private EquationData equation; // current equation being displayed
@@ -52,7 +52,6 @@ public class GameController : MonoBehaviour
                 newVar.transform.SetParent(lhsPositive);
                 HasValue value = newVar.GetComponent<HasValue>();
                 value.SetValue(equation.variableValue);
-                
             }
         }
         else if (equation.lhsVars < 0)
@@ -65,7 +64,6 @@ public class GameController : MonoBehaviour
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
                 HasValue value = newVar.GetComponent<HasValue>();
                 value.SetValue(equation.variableValue);
-                
             }
         }
 
@@ -167,17 +165,37 @@ public class GameController : MonoBehaviour
     public void EndRound(string howEnded)
     {
         isRoundActive = false;
-        finishedDisplay.SetActive(true);
+        // finishedDisplay.SetActive(true);
 
         if (howEnded == "Time Out")
         {
-
-        } else if (howEnded == "Finished Check") 
+            finishedDisplayManager.DisplayTimeOut();
+        } 
+        else if (howEnded == "Finished Check") 
         {
-
+            if (seesaw.GetComponent<SeesawController>().CheckIfComplete())
+            {
+                if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced(equation.variableValue))
+                {
+                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
+                } else {
+                    int side = seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
+                    if (equation.variableValue != side)
+                    {
+                        finishedDisplayManager.DisplayWrongBalanced(side);
+                    } else {
+                        side = seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
+                        finishedDisplayManager.DisplayWrongBalanced(side);
+                    }
+                }
+            }
+            else 
+            {
+                finishedDisplayManager.DisplayNotYetBalanced();
+            }
         } else if (howEnded == "Scale Tipped") 
         {
-
+            finishedDisplayManager.DisplaySeesawTipped();
         }
     }
 
@@ -188,6 +206,6 @@ public class GameController : MonoBehaviour
 
     public void FinishedCheck()
     {
-
+        EndRound("Finished Check");
     }
 }

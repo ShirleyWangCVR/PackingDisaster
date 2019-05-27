@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class NegativeSide : MonoBehaviour, IDropHandler
 {
@@ -35,6 +36,7 @@ public class NegativeSide : MonoBehaviour, IDropHandler
             if (check == 1)
             {
                 eventData.pointerDrag.transform.localScale = new Vector3(-1, -1, 1);
+                eventData.pointerDrag.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
             }
         }
             
