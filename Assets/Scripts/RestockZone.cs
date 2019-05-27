@@ -4,11 +4,11 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ToyCrate : MonoBehaviour, IDropHandler
+public class RestockZone : MonoBehaviour, IDropHandler
 {
     
-    public GameObject teddybearPrefab;
-    public GameObject canvas;
+    public GameObject createdPrefab;
+    public Draggable.Slot typeOfItems = Draggable.Slot.Value;
     
     // Start is called before the first frame update
     void Start()
@@ -25,8 +25,8 @@ public class ToyCrate : MonoBehaviour, IDropHandler
     // When the toy crate is clicked
     public void OnClick()
     {
-        GameObject newbear = Instantiate(teddybearPrefab, this.transform.position, Quaternion.identity);
-        newbear.transform.SetParent(canvas.transform, true);
+        GameObject newbear = Instantiate(createdPrefab, this.transform.position, Quaternion.identity);
+        newbear.transform.SetParent(this.transform, true);
     }
 
     // when a toy is dropped onto it it should disappear
@@ -34,7 +34,9 @@ public class ToyCrate : MonoBehaviour, IDropHandler
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
 
-        if (eventData.pointerDrag.name.StartsWith("Teddy"))
+        Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
+        
+        if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
         {
             Destroy(eventData.pointerDrag);
         }

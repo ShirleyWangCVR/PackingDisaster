@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5107753421726118218}
   - component: {fileID: 4280989097301510131}
   m_Layer: 5
-  m_Name: Teddy Bear
+  m_Name: Toy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ RectTransform:
   m_GameObject: {fileID: 7017859109228230586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToReturnTo: {fileID: 0}
+  typeOfItem: 1
 --- !u!114 &-8325185266354924356
 MonoBehaviour:
   m_ObjectHideFlags: 0

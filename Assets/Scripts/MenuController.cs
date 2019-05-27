@@ -1,13 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Value : MonoBehaviour
+public class MenuController : MonoBehaviour
 {
-    
-    // changing the value seems counterintuitive
-    int value = 1;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +17,8 @@ public class Value : MonoBehaviour
         
     }
 
-    public int GetValue()
+    public void StartGame()
     {
-        return value;
+        SceneManager.LoadScene("Main");
     }
 }

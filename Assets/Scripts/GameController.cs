@@ -5,17 +5,16 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     
-    // public GameObject leftHandSide;
-    // public GameObject rightHandSide;
     public GameObject seesaw;
-    
-    // private int tilt;
-    // private float degreetilt = 5f; // tilt by 5 for every 1 over
+
+    // eventually set this somehow
+    private int variable = 3;
+    private int difficultyLevel = 0; // difficulty levels 0 to 5?
 
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame

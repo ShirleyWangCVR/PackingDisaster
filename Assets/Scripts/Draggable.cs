@@ -8,18 +8,20 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 {
     
     public Transform parentToReturnTo = null;
+    public enum Slot {Variable, Value, All};
+    public Slot typeOfItem = Slot.Value;
     
     public void OnBeginDrag(PointerEventData eventData)
     {
         // Debug.Log("BeginDragged");
 
-        if (!this.transform.parent.name.StartsWith("Canvas"))
-        {
-            // Debug.Log(this.transform.parent.name);
-            parentToReturnTo = this.transform.parent;
-            this.transform.SetParent(this.transform.parent.parent);
-            
-        }
+
+        // Debug.Log(this.transform.parent.name);
+        parentToReturnTo = this.transform.parent;
+        this.transform.SetParent(this.transform.parent.parent);
+
+
+        // don't allow thing to block pointer so it can be detected once its dropped
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
     }
@@ -39,7 +41,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             this.transform.SetParent(parentToReturnTo);
         }
         
-
+        // reallow 
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 

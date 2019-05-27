@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Variable : MonoBehaviour
+public class HasValue : MonoBehaviour
 {
     
     // public for now to set manually

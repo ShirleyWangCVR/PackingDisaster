@@ -91,6 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentToReturnTo: {fileID: 0}
+  typeOfItem: 0
 --- !u!114 &1646822657663286044
 MonoBehaviour:
   m_ObjectHideFlags: 0

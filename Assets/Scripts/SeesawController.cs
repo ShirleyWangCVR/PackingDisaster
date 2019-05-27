@@ -17,7 +17,7 @@ public class SeesawController : MonoBehaviour
     void Start()
     {
         tilt = 0;
-        InvokeRepeating("DebugTilt", 0, 5.0f);
+        // InvokeRepeating("DebugTilt", 0, 5.0f);
     }
 
     // Update is called once per frame
@@ -71,18 +71,7 @@ public class SeesawController : MonoBehaviour
                 }
             }
         }
-        
-        // update positions of the two sides for the seesaw
-        float angle = (float) DegreeToRadian(currangle);
-        leftHandSidePositive.transform.position = new Vector2(-155 * Mathf.Cos(angle) + this.transform.position.x, -155 * Mathf.Sin(angle) + this.transform.position.y + 72);
-        rightHandSidePositive.transform.position = new Vector2(155 * Mathf.Cos(angle) + this.transform.position.x, 155 * Mathf.Sin(angle) + this.transform.position.y + 72);
-        leftHandSidePositive.transform.localRotation = this.transform.localRotation;
-        rightHandSidePositive.transform.localRotation = this.transform.localRotation;
-
-        leftHandSideNegative.transform.position = new Vector2(-155 * Mathf.Cos(angle) + this.transform.position.x, -155 * Mathf.Sin(angle) + this.transform.position.y - 73);
-        rightHandSideNegative.transform.position = new Vector2(155 * Mathf.Cos(angle) + this.transform.position.x, 155 * Mathf.Sin(angle) + this.transform.position.y - 73);
-        leftHandSideNegative.transform.localRotation = this.transform.localRotation;
-        rightHandSideNegative.transform.localRotation = this.transform.localRotation;
+    
     }
 
     void UpdateTilt()
@@ -93,22 +82,22 @@ public class SeesawController : MonoBehaviour
          
         foreach(Transform child in leftHandSidePositive.transform)
         {
-            lhs = lhs + child.gameObject.GetComponent<Variable>().GetValue();
+            lhs = lhs + child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
         foreach(Transform child in leftHandSideNegative.transform)
         {
-            lhs = lhs - child.gameObject.GetComponent<Variable>().GetValue();
+            lhs = lhs - child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
         foreach(Transform child in rightHandSidePositive.transform)
         {
-            rhs = rhs + child.gameObject.GetComponent<Variable>().GetValue();
+            rhs = rhs + child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
         foreach(Transform child in rightHandSideNegative.transform)
         {
-            rhs = rhs - child.gameObject.GetComponent<Variable>().GetValue();
+            rhs = rhs - child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
         tilt = lhs - rhs;
@@ -128,6 +117,8 @@ public class SeesawController : MonoBehaviour
             currangle = this.transform.rotation.eulerAngles.z - 360;
         }
         Debug.Log(currangle);
+        Debug.Log(leftHandSideNegative.transform.localRotation);
+        Debug.Log(this.transform.localRotation);
         Debug.Log(tilt * degreetilt);
     }
 }
