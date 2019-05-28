@@ -34,7 +34,7 @@ public class FinishedPanelManager : MonoBehaviour
         userMessage.text = "You Ran Out of Time\nYou Lose!";
     }
 
-    public void DisplayCorrectlyBalanced(int correctValue)
+    public void DisplayCorrectlyBalanced(int correctValue, int playerScore)
     {
         finishedDisplay.SetActive(true);
         userMessage.text = "You Determined Correctly " + correctValue.ToString() + " in the Box!" + "\nYou Win!";

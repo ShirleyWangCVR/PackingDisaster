@@ -13,19 +13,20 @@ public class GameController : MonoBehaviour
     // public GameObject finishedDisplay;
     public FinishedPanelManager finishedDisplayManager;
 
-    private EquationController equationController;
+    private DataController equationController;
     private EquationData equation; // current equation being displayed
     
     private bool isRoundActive; 
     private float timeRemaining;
     private int difficultyLevel; // difficulty levels 0 to 5? 1 to 5? 0 being tutorial?
     private int equationsCompleted;
+    private int playerScore;
     private List<GameObject> allValuesInPlay = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
-        equationController = FindObjectOfType<EquationController>();
+        equationController = FindObjectOfType<DataController>();
         equation = equationController.GetCurrentEquationData(0);
         difficultyLevel = equationController.GetDifficulty();
         equationsCompleted = equationController.GetEquationsCompleted();
@@ -165,7 +166,9 @@ public class GameController : MonoBehaviour
     public void EndRound(string howEnded)
     {
         isRoundActive = false;
-        // finishedDisplay.SetActive(true);
+        playerScore = (int) Mathf.Round(timeRemaining);
+        equationController.SubmitNewPlayerScore(playerScore);
+        int highestScore = equationController.GetHighestPlayerScore();
 
         if (howEnded == "Time Out")
         {
@@ -177,7 +180,7 @@ public class GameController : MonoBehaviour
             {
                 if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced(equation.variableValue))
                 {
-                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
+                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue, playerScore);
                 } else {
                     int side = seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
                     if (equation.variableValue != side)
