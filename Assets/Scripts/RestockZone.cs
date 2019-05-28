@@ -27,7 +27,15 @@ public class RestockZone : MonoBehaviour, IDropHandler
     public void OnClick()
     {
         GameObject newObject = objectPool.GetObject(); // Instantiate(createdPrefab, this.transform.position, Quaternion.identity);
+        newObject.transform.position = this.transform.position;
         newObject.transform.SetParent(this.transform, true);
+
+        int check = (int) Mathf.Round(newObject.transform.localScale.x);
+        if (check == -1)
+        {
+            newObject.transform.localScale = new Vector3(1, 1, 1);
+            newObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
     }
 
     // when a toy is dropped onto it it should disappear

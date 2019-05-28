@@ -14,14 +14,14 @@ public class SeesawController : MonoBehaviour
     
     private int tilt;
     private float degreetilt = 5f; // tilt by 5 for every 1 over
-    private int interval = 1; 
+    private int interval = 5; 
     private float nextTime = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         tilt = 0;
-        InvokeRepeating("CancelOutValues", 0, 5.0f);
+        // InvokeRepeating("CancelOutValues", 0, 5.0f);
     }
 
     // Update is called once per frame
@@ -30,14 +30,14 @@ public class SeesawController : MonoBehaviour
         UpdateTilt();
         UpdatePositions();
 
-        /* 
+        
         if (Time.time >= nextTime) {
             // check if any positive and negative values cancel each other out.
             CancelOutValues();
             nextTime += interval; 
             Debug.Log("Check for Cancel out");
         }
-        */
+        
     }
 
     void UpdatePositions()
@@ -186,7 +186,7 @@ public class SeesawController : MonoBehaviour
         Debug.Log(tilt * degreetilt);
     }
 
-    // if it's tipped over more than 60 then the seesaw it too tipped over and they lose
+    // if it's tipped over more than 45 then the seesaw it too tipped over and they lose
     public bool FellOver()
     {
         float currangle = this.transform.rotation.eulerAngles.z;
@@ -298,61 +298,15 @@ public class SeesawController : MonoBehaviour
 
     public void CancelOutValues()
     {
-        GameObject top = null;
-        GameObject bottom = null;
         if (leftHandSidePositive.transform.childCount > 0 && leftHandSideNegative.transform.childCount > 0)
         {
             if (leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() > 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumVariables() > 0)
             {
-                // cancel out extra 
-                int num = Mathf.Min(leftHandSidePositive.GetComponent<PositiveSide>().NumVariables(), leftHandSideNegative.GetComponent<NegativeSide>().NumVariables());
-                for (int i = 0; i < num; i++)
-                {
-                    foreach(Transform child in leftHandSidePositive.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-                        {
-                            top = child.gameObject;
-                            break;
-                        }
-                    }
-                    foreach(Transform child in leftHandSideNegative.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-                        {
-                            bottom = child.gameObject;
-                            break;
-                        }
-                    }
-                    variablePool.ReturnObject(top);
-                    variablePool.ReturnObject(bottom);
-                }
+                CancelOutSide(leftHandSidePositive, leftHandSideNegative, Draggable.Slot.Variable, variablePool);
             }
             if (leftHandSidePositive.GetComponent<PositiveSide>().NumValues() > 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumValues() > 0)
             {
-                // cancel out extra
-                int num = Mathf.Min(leftHandSidePositive.GetComponent<PositiveSide>().NumValues(), leftHandSideNegative.GetComponent<NegativeSide>().NumValues());
-                for (int i = 0; i < num; i++)
-                {
-                    foreach(Transform child in leftHandSidePositive.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-                        {
-                            top = child.gameObject;
-                            break;
-                        }
-                    }
-                    foreach(Transform child in leftHandSideNegative.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-                        {
-                            bottom = child.gameObject;
-                            break;
-                        }
-                    }
-                    toyPool.ReturnObject(top);
-                    toyPool.ReturnObject(bottom);
-                } 
+                CancelOutSide(leftHandSidePositive, leftHandSideNegative, Draggable.Slot.Value, toyPool);
             }
         }
 
@@ -360,56 +314,44 @@ public class SeesawController : MonoBehaviour
         {
             if (rightHandSidePositive.GetComponent<PositiveSide>().NumVariables() > 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumVariables() > 0)
             {
-                // cancel out extra 
-                int num = Mathf.Min(rightHandSidePositive.GetComponent<PositiveSide>().NumVariables(), rightHandSideNegative.GetComponent<NegativeSide>().NumVariables());
-                for (int i = 0; i < num; i++)
-                {
-                    foreach(Transform child in rightHandSidePositive.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-                        {
-                            top = child.gameObject;
-                            break;
-                        }
-                    }
-                    foreach(Transform child in rightHandSideNegative.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-                        {
-                            bottom = child.gameObject;
-                            break;
-                        }
-                    }
-                    variablePool.ReturnObject(top);
-                    variablePool.ReturnObject(bottom);
-                }
+                CancelOutSide(rightHandSidePositive, rightHandSideNegative, Draggable.Slot.Variable, variablePool);
             }
             if (rightHandSidePositive.GetComponent<PositiveSide>().NumValues() > 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumValues() > 0)
             {
-                // cancel out extra
-                int num = Mathf.Min(rightHandSidePositive.GetComponent<PositiveSide>().NumValues(), rightHandSideNegative.GetComponent<NegativeSide>().NumValues());
-                for (int i = 0; i < num; i++)
-                {
-                    foreach(Transform child in rightHandSidePositive.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-                        {
-                            top = child.gameObject;
-                            break;
-                        }
-                    }
-                    foreach(Transform child in rightHandSideNegative.transform)
-                    {
-                        if (child.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-                        {
-                            bottom = child.gameObject;
-                            break;
-                        }
-                    }
-                    toyPool.ReturnObject(top);
-                    toyPool.ReturnObject(bottom);
-                } 
+                CancelOutSide(rightHandSidePositive, rightHandSideNegative, Draggable.Slot.Value, toyPool);
             }
         }
     }
+
+
+    private void CancelOutSide(GameObject positiveSide, GameObject negativeSide, Draggable.Slot slot, SimpleObjectPool pool)
+    {
+        // cancel out extra
+        GameObject top = null;
+        GameObject bottom = null;
+
+        int num = Mathf.Min(positiveSide.GetComponent<PositiveSide>().NumValues(), negativeSide.GetComponent<NegativeSide>().NumValues());
+        for (int i = 0; i < num; i++)
+        {
+            foreach(Transform child in positiveSide.transform)
+            {
+                if (child.GetComponent<HasValue>().typeOfItem == slot)
+                {
+                    top = child.gameObject;
+                    break;
+                }
+            }
+            foreach(Transform child in negativeSide.transform)
+            {
+                if (child.GetComponent<HasValue>().typeOfItem == slot)
+                {
+                    bottom = child.gameObject;
+                    break;
+                }
+            }
+            pool.ReturnObject(top);
+            pool.ReturnObject(bottom);
+        } 
+    }
+
 }
