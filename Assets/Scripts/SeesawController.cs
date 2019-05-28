@@ -35,7 +35,6 @@ public class SeesawController : MonoBehaviour
             // check if any positive and negative values cancel each other out.
             CancelOutValues();
             nextTime += interval; 
-            Debug.Log("Check for Cancel out");
         }
         
     }

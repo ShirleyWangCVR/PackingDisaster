@@ -8,18 +8,20 @@ public class DataController : MonoBehaviour
 {
     
     public EquationData[] allEquationsUsed;
+    public DialogueData dialogue;
 
     private int currentDifficulty;
     private int equationsCompleted;
     private PlayerProgress playerProgress;
     private string equationDataFileName = "equations.json";
-    // private string dialogueDataFileName = "dialogueData.json";
+    private string dialogueDataFileName = "dialogueData.json";
     
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
         LoadGameData();
+        LoadDialogueData();
         LoadPlayerProgress();
         SceneManager.LoadScene("Menu");
         currentDifficulty = 0;
@@ -93,6 +95,20 @@ public class DataController : MonoBehaviour
             allEquationsUsed = loadedData.equationData;
         } else {
             Debug.LogError("Cannot Load Game Data");
+        }
+    }
+
+    private void LoadDialogueData()
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, dialogueDataFileName);
+
+        if (File.Exists(filePath))
+        {
+            string jsonDialogueData = File.ReadAllText(filePath);
+            dialogue = JsonUtility.FromJson<DialogueData>(jsonDialogueData);
+
+        } else {
+            Debug.LogError("Cannot Load Dialogue Data");
         }
     }
 }

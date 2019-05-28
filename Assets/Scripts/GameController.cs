@@ -10,10 +10,10 @@ public class GameController : MonoBehaviour
     public GameObject seesaw;
     public SimpleObjectPool variablePool;
     public SimpleObjectPool toyPool;
-    // public GameObject finishedDisplay;
     public FinishedPanelManager finishedDisplayManager;
+    public DialogueController dialogueController;
 
-    private DataController equationController;
+    private DataController dataController;
     private EquationData equation; // current equation being displayed
     
     private bool isRoundActive; 
@@ -26,10 +26,10 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        equationController = FindObjectOfType<DataController>();
-        equation = equationController.GetCurrentEquationData(0);
-        difficultyLevel = equationController.GetDifficulty();
-        equationsCompleted = equationController.GetEquationsCompleted();
+        dataController = FindObjectOfType<DataController>();
+        equation = dataController.GetCurrentEquationData(0);
+        difficultyLevel = dataController.GetDifficulty();
+        equationsCompleted = dataController.GetEquationsCompleted();
         timeRemaining = equation.timeLimit;
         
         // set up seesaw according to equation
@@ -37,7 +37,13 @@ public class GameController : MonoBehaviour
         timeLeftText.text = "Time Left: " + timeRemaining.ToString();
 
         // if we have tutorials then this isn't active just yet
-        isRoundActive = true;
+
+        if (difficultyLevel == 0)
+        {
+            isRoundActive = false;
+            dialogueController.ExecuteTutorialDialogue();
+        }
+
     }
 
     private void SetUpSeesaw()
@@ -161,14 +167,16 @@ public class GameController : MonoBehaviour
         {
             EndRound("Scale Tipped");
         }
+
+        isRoundActive = dialogueController.FinishedDialogue();
     }
 
     public void EndRound(string howEnded)
     {
         isRoundActive = false;
         playerScore = (int) Mathf.Round(timeRemaining);
-        equationController.SubmitNewPlayerScore(playerScore);
-        int highestScore = equationController.GetHighestPlayerScore();
+        dataController.SubmitNewPlayerScore(playerScore);
+        int highestScore = dataController.GetHighestPlayerScore();
 
         if (howEnded == "Time Out")
         {
