@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* GameObject that has a value to be balanced on the scale
+ */
 public class HasValue : MonoBehaviour
 {
-    
-    // public for now to set manually
-    [SerializeField]
     public int value;
+    // default to Value for now
     public Draggable.Slot typeOfItem = Draggable.Slot.Value;
 
     // Start is called before the first frame update
     void Start()
     {
-        // GameController should set this value depending on equation being used
-        // value = 3;
+        // default Value to 1, default Dummy to 0, Variables need to be set by Game Controller
         if (typeOfItem == Draggable.Slot.Value)
         {
             value = 1;
@@ -33,5 +32,4 @@ public class HasValue : MonoBehaviour
     {
         return value;
     }
-
 }

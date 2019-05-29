@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* EquationData represents one equation that will be solved by the player
+ * during the level.
+ */
 [System.Serializable]
 public class EquationData
 {

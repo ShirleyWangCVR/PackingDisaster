@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
+/* Create dialogue editor window for easy dialogue editing.
+ */
 public class DialogueDataEditor : EditorWindow
 {
     public DialogueData dialogueData;

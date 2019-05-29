@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
-// A very simple object pooling class
+/* A simple object pool that keeps a stack of inactive objects to pop
+ * off when we need more or less of the object to make the game performance slightly more efficient.
+ * Since this way we don't have to continually instantiate and destroy extra objects
+ */
 public class SimpleObjectPool : MonoBehaviour
 {
     // the prefab that this object pool returns instances of
@@ -18,13 +22,13 @@ public class SimpleObjectPool : MonoBehaviour
         // if there is an inactive instance of the prefab ready to return, return that
         if (inactiveInstances.Count > 0) 
         {
-            // remove the instance from teh collection of inactive instances
+            // remove the instance from the collection of inactive instances
             spawnedGameObject = inactiveInstances.Pop();
         }
         // otherwise, create a new instance
         else 
         {
-            spawnedGameObject = (GameObject)GameObject.Instantiate(prefab);
+            spawnedGameObject = (GameObject) GameObject.Instantiate(prefab);
 
             // add the PooledObject component to the prefab so we know it came from this pool
             PooledObject pooledObject = spawnedGameObject.AddComponent<PooledObject>();
@@ -33,6 +37,9 @@ public class SimpleObjectPool : MonoBehaviour
 
         // enable the instance
         spawnedGameObject.SetActive(true);
+        spawnedGameObject.transform.SetParent(canvas.transform);
+        spawnedGameObject.transform.localScale = new Vector3(1, 1, 1);
+        spawnedGameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         spawnedGameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         // return a reference to the instance

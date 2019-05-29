@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+/* Game Controller for the main scene where the question is solved.
+ */
 public class GameController : MonoBehaviour
 {    
     public Text timeLeftText;
@@ -19,13 +21,14 @@ public class GameController : MonoBehaviour
     private bool isRoundActive; 
     private float timeRemaining;
     private int difficultyLevel; // difficulty levels 0 to 5? 1 to 5? 0 being tutorial?
-    private int equationsCompleted;
-    private int playerScore;
-    private List<GameObject> allValuesInPlay = new List<GameObject>();
+    private int equationsCompleted; // currently not being used
+    private int playerScore; // currently not being used
+    private bool dialogueActive;
 
     // Start is called before the first frame update
     void Start()
     {
+        // get data from dataController
         dataController = FindObjectOfType<DataController>();
         equation = dataController.GetCurrentEquationData(0);
         difficultyLevel = dataController.GetDifficulty();
@@ -36,20 +39,18 @@ public class GameController : MonoBehaviour
         SetUpSeesaw();
         timeLeftText.text = "Time Left: " + timeRemaining.ToString();
 
-        // if we have tutorials then this isn't active just yet
-
+        // set up tutorial dialogue
         if (difficultyLevel == 0)
         {
             isRoundActive = false;
+            dialogueActive = true;
             dialogueController.ExecuteTutorialDialogue();
         }
-
     }
 
+    // set up the seesaw according to the equation data
     private void SetUpSeesaw()
     {
-        RemovePreviousValues();
-
         if (equation.lhsVars > 0)
         {
             for (int i = 0; i < equation.lhsVars; i++)
@@ -57,8 +58,9 @@ public class GameController : MonoBehaviour
                 Transform lhsPositive = seesaw.transform.Find("LHSPositive");
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(lhsPositive);
-                HasValue value = newVar.GetComponent<HasValue>();
-                value.SetValue(equation.variableValue);
+                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
+                // HasValue value = newVar.GetComponent<HasValue>();
+                // value.SetValue(equation.variableValue);
             }
         }
         else if (equation.lhsVars < 0)
@@ -69,8 +71,8 @@ public class GameController : MonoBehaviour
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(lhsNegative);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-                HasValue value = newVar.GetComponent<HasValue>();
-                value.SetValue(equation.variableValue);
+                // HasValue value = newVar.GetComponent<HasValue>();
+                // value.SetValue(equation.variableValue);
             }
         }
 
@@ -101,8 +103,8 @@ public class GameController : MonoBehaviour
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(rhsPositive);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-                HasValue value = newVar.GetComponent<HasValue>();
-                value.SetValue(equation.variableValue);
+                // HasValue value = newVar.GetComponent<HasValue>();
+                // value.SetValue(equation.variableValue);
             }
         }
         else if (equation.rhsVars < 0)
@@ -113,8 +115,8 @@ public class GameController : MonoBehaviour
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(rhsNegative);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-                HasValue value = newVar.GetComponent<HasValue>();
-                value.SetValue(equation.variableValue);
+                // HasValue value = newVar.GetComponent<HasValue>();
+                // value.SetValue(equation.variableValue);
             }
         }
 
@@ -143,15 +145,10 @@ public class GameController : MonoBehaviour
         timeLeftText.text = "Time Left: " + Mathf.Round(timeRemaining).ToString();
     }
 
-    private void RemovePreviousValues()
-    {
-        seesaw.GetComponent<SeesawController>().ClearAllValues();
-        // also double check canvas, toybox, and boxpile
-    }
-
     // Update is called once per frame
     void Update()
     {
+        // if round active count down time display
         if (isRoundActive) 
         {
             timeRemaining -= Time.deltaTime;
@@ -163,16 +160,27 @@ public class GameController : MonoBehaviour
             }
         }
 
+        // if seesaw fell over end game
         if (seesaw.GetComponent<SeesawController>().FellOver())
         {
             EndRound("Scale Tipped");
         }
 
-        isRoundActive = dialogueController.FinishedDialogue();
+        // if dialogue currently active check until dialogue no longer active
+        if (dialogueActive)
+        {
+            isRoundActive = dialogueController.FinishedDialogue();
+            if (isRoundActive)
+            {
+                dialogueActive = false;
+            }
+        }
     }
 
+    // end the current round
     public void EndRound(string howEnded)
     {
+        // deactivate game logic
         isRoundActive = false;
         playerScore = (int) Mathf.Round(timeRemaining);
         dataController.SubmitNewPlayerScore(playerScore);
@@ -186,10 +194,13 @@ public class GameController : MonoBehaviour
         {
             if (seesaw.GetComponent<SeesawController>().CheckIfComplete())
             {
-                if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced(equation.variableValue))
+                if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced())
                 {
                     finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue, playerScore);
-                } else {
+                } 
+                else 
+                {
+                    // lost because wrong answer, get whatever they answered
                     int side = seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
                     if (equation.variableValue != side)
                     {

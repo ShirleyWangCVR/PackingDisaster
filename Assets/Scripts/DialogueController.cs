@@ -12,21 +12,18 @@ public class DialogueController : MonoBehaviour
     private DataController dataController;
     private bool dialogueActive;
     private string[] currentDialogue;
+    // index of the next dialogue to show
     private int dialogueIndex;
     
     // Start is called before the first frame update
     void Start()
     {
+        // get dialogue from data controller
         dataController = FindObjectOfType<DataController>();
         dialogueData = dataController.dialogue;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // start the tutorial dialogue
     public void ExecuteTutorialDialogue()
     {
         dialogueActive = true;
@@ -36,11 +33,15 @@ public class DialogueController : MonoBehaviour
         ShowDialogue();
     }
 
+    // show the next dialogue
     public void ShowDialogue()
     {
         userText.text = currentDialogue[dialogueIndex];
     }
 
+    /* If player clicks dialogue box show next dialogue.
+     * If out of dialogue then start game and end dialogue.
+     */
     public void OnClick()
     {
         if (dialogueActive)
@@ -48,6 +49,7 @@ public class DialogueController : MonoBehaviour
             dialogueIndex++;
             if (dialogueIndex == currentDialogue.Length)
             {
+                // out of dialogue
                 dialogueActive = false;
                 dialogueDisplay.SetActive(false);
                 return;
@@ -56,6 +58,7 @@ public class DialogueController : MonoBehaviour
         }
     }
 
+    // Are we finished dialogue?
     public bool FinishedDialogue()
     {
         return ! dialogueActive;

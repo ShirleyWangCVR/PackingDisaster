@@ -4,31 +4,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/* The Positive part of an equation side
+*/
 public class PositiveSide : MonoBehaviour, IDropHandler
 {
-    
     public Draggable.Slot typeOfItems = Draggable.Slot.All;
 
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
-
+    // When Draggable object is dropped onto it
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
     
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
-        
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
         {
             dragged.parentToReturnTo = this.transform;
@@ -43,6 +30,7 @@ public class PositiveSide : MonoBehaviour, IDropHandler
         }
     }
 
+    // get number of variables on this side
     public int NumVariables()
     {
         int num = 0;
@@ -56,6 +44,7 @@ public class PositiveSide : MonoBehaviour, IDropHandler
         return num;
     }
 
+    // get number of values on this side
     public int NumValues()
     {
         int num = 0;
@@ -68,5 +57,4 @@ public class PositiveSide : MonoBehaviour, IDropHandler
         }
         return num;
     }
-
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEditor;
 using System.IO;
 
+/* Create game editor window for easy dialogue editing.
+ */
 public class GameDataEditor : EditorWindow
 {
     public GameData gameData;

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Controller for the Game Seesaw
+ */
 public class SeesawController : MonoBehaviour
 {
-    
     public GameObject leftHandSidePositive;
     public GameObject rightHandSidePositive;
     public GameObject leftHandSideNegative;
@@ -13,32 +14,32 @@ public class SeesawController : MonoBehaviour
     public SimpleObjectPool variablePool;
     
     private int tilt;
-    private float degreetilt = 5f; // tilt by 5 for every 1 over
-    private int interval = 5; 
+    private int interval = 2; // cancel out values every 2 seconds
     private float nextTime = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        // set initial tilt to 0
         tilt = 0;
-        // InvokeRepeating("CancelOutValues", 0, 5.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
+        // update the seesaw's current tilt
         UpdateTilt();
         UpdatePositions();
-
         
+        // check if any positive and negative values cancel each other out
+        // every 2 seconds
         if (Time.time >= nextTime) {
-            // check if any positive and negative values cancel each other out.
             CancelOutValues();
             nextTime += interval; 
         }
-        
     }
 
+    // make the seesaw tilt if it needs to
     void UpdatePositions()
     {
         // tilt seesaw ominously
@@ -50,35 +51,23 @@ public class SeesawController : MonoBehaviour
         
         if (tilt > 0)
         {
-            if (currangle < tilt * degreetilt + 0.03)
-            {
-                this.transform.Rotate(0, 0, 0.05f, Space.Self);
-            }
-            else if (currangle > tilt * degreetilt + 0.03)
-            {
-                this.transform.Rotate(0, 0, -0.05f, Space.Self);
-            }
-
+            this.transform.Rotate(0, 0, 0.05f, Space.Self);
         }
         else if (tilt < 0)
         {
-            if (currangle > tilt * degreetilt + 0.03)
-            {
-                this.transform.Rotate(0, 0, -0.05f, Space.Self);
-            }
-            else if (currangle < tilt * degreetilt + 0.03)
-            {
-                this.transform.Rotate(0, 0, 0.05f, Space.Self);
-            }
-        } else { // tilt == 0
+            this.transform.Rotate(0, 0, -0.05f, Space.Self);
+        } 
+        else 
+        {   // tilt == 0
             // Unity doesn't move it by exact values so give it a slight bit of wiggle room when
             // returning to horizontal
-            if (currangle > 0.03 || currangle < -0.03)
+            if (currangle > 0.05 || currangle < -0.05)
             {
                 if (this.transform.rotation.eulerAngles.z < 180)
                 {
                     this.transform.Rotate(0, 0, -0.05f, Space.Self);
-                } else {
+                } else 
+                {
                     this.transform.Rotate(0, 0, 0.05f, Space.Self);
                 }
             }
@@ -86,6 +75,7 @@ public class SeesawController : MonoBehaviour
     
     }
 
+    // update the current numerical tilt representing how unbalanced the seesaw is
     void UpdateTilt()
     {
         // update current tilt
@@ -113,65 +103,9 @@ public class SeesawController : MonoBehaviour
         }
 
         tilt = lhs - rhs;
-        
     }
 
-    public void ClearAllValues()
-    {
-        foreach(Transform child in leftHandSidePositive.transform)
-        {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-            {
-                toyPool.ReturnObject(child.gameObject);
-            }
-           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-            {
-                variablePool.ReturnObject(child.gameObject);
-            }
-        }
-
-        foreach(Transform child in leftHandSideNegative.transform)
-        {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-            {
-                toyPool.ReturnObject(child.gameObject);
-            }
-           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-            {
-                variablePool.ReturnObject(child.gameObject);
-            }
-        }
-
-        foreach(Transform child in rightHandSidePositive.transform)
-        {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-            {
-                toyPool.ReturnObject(child.gameObject);
-            }
-           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-            {
-                variablePool.ReturnObject(child.gameObject);
-            }
-        }
-
-        foreach(Transform child in rightHandSideNegative.transform)
-        {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-            {
-                toyPool.ReturnObject(child.gameObject);
-            }
-           else if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-            {
-                variablePool.ReturnObject(child.gameObject);
-            }
-        }
-    }
-
-    private double DegreeToRadian(double angle)
-    {
-    return Mathf.PI * angle / 180.0;
-    }
-
+    // in case tilt isn't working debug this by invokerepeating in start
     void DebugTilt()
     {
         float currangle = this.transform.rotation.eulerAngles.z;
@@ -180,12 +114,10 @@ public class SeesawController : MonoBehaviour
             currangle = this.transform.rotation.eulerAngles.z - 360;
         }
         Debug.Log(currangle);
-        Debug.Log(leftHandSideNegative.transform.localRotation);
         Debug.Log(this.transform.localRotation);
-        Debug.Log(tilt * degreetilt);
     }
 
-    // if it's tipped over more than 45 then the seesaw it too tipped over and they lose
+    // if it's tipped over more than 40 then the seesaw it too tipped over and they lose
     public bool FellOver()
     {
         float currangle = this.transform.rotation.eulerAngles.z;
@@ -194,73 +126,33 @@ public class SeesawController : MonoBehaviour
             currangle = 360 - this.transform.rotation.eulerAngles.z;
         }
 
-        return currangle > 45;
+        return currangle > 40;
     }
 
+    // check if a variable is correctly isolated
     public bool CheckIfComplete()
     {
-        // check that a variable is singled out on one of the positive sides
-        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0) {
-            bool allvalues = true;
-            
-            foreach(Transform child in rightHandSidePositive.transform)
-            {
-                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
-                {
-                    allvalues = false;
-                }
-            }
-
-            foreach(Transform child in rightHandSideNegative.transform)
-            {
-                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
-                {
-                    allvalues = false;
-                }
-            }
-            return allvalues;
-        }
-        
-        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0) {
-            bool allvalues = true;
-            
-            foreach(Transform child in leftHandSidePositive.transform)
-            {
-                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
-                {
-                    allvalues = false;
-                }
-            }
-
-            foreach(Transform child in leftHandSideNegative.transform)
-            {
-                if (child.gameObject.GetComponent<HasValue>().typeOfItem != Draggable.Slot.Value)
-                {
-                    allvalues = false;
-                }
-            }
-            return allvalues;
-        }
-        
-        return false;
-    }
-
-    public bool CorrectlyBalanced(int correctValue)
-    {
-        // assumes called when it's complete
+        // check if there is only 1 variable on the left hand side
         if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
         {
-            return GetRightHandSideValue() == correctValue;
+            return rightHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
         }
         
         if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
         {
-            return GetLeftHandSideValue() == correctValue;
+            return leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
         }
-
+        
         return false;
     }
 
+    // check if both sides of equation are equal
+    public bool CorrectlyBalanced()
+    {
+        return tilt == 0;
+    }
+
+    // get total numerical value of right hand side
     public int GetRightHandSideValue()
     {
         int rhs = 0;
@@ -278,6 +170,7 @@ public class SeesawController : MonoBehaviour
         return rhs;
     }
 
+    // get total numerical value of left hand side
     public int GetLeftHandSideValue()
     {
         int lhs = 0;
@@ -295,6 +188,7 @@ public class SeesawController : MonoBehaviour
         return lhs;
     }
 
+    // if there are values to be cancelled out on either side then cancel them out
     public void CancelOutValues()
     {
         if (leftHandSidePositive.transform.childCount > 0 && leftHandSideNegative.transform.childCount > 0)
@@ -322,10 +216,9 @@ public class SeesawController : MonoBehaviour
         }
     }
 
-
+    // cancels out from the positive and negative side a certain type of value
     private void CancelOutSide(GameObject positiveSide, GameObject negativeSide, Draggable.Slot slot, SimpleObjectPool pool)
     {
-        // cancel out extra
         GameObject top = null;
         GameObject bottom = null;
 
@@ -352,5 +245,4 @@ public class SeesawController : MonoBehaviour
             pool.ReturnObject(bottom);
         } 
     }
-
 }

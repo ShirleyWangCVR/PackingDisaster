@@ -4,32 +4,23 @@ using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/* A zone where you click on to spawn another type of item, and drop items on
+ * to get rid of them.
+ */
 public class RestockZone : MonoBehaviour, IDropHandler
 {
-    
-    // public GameObject createdPrefab;
+    // the object pool of the game object that this zone will restock
     public SimpleObjectPool objectPool;
     public Draggable.Slot typeOfItems = Draggable.Slot.Value;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    // When the toy crate is clicked
+    // When clicked on create another object
     public void OnClick()
     {
-        GameObject newObject = objectPool.GetObject(); // Instantiate(createdPrefab, this.transform.position, Quaternion.identity);
-        newObject.transform.position = this.transform.position;
+        GameObject newObject = objectPool.GetObject(); 
+        newObject.transform.position = this.transform.position + new Vector3(30, -30, 0);
         newObject.transform.SetParent(this.transform, true);
 
+        // make sure orientation is correct
         int check = (int) Mathf.Round(newObject.transform.localScale.x);
         if (check == -1)
         {
@@ -38,7 +29,7 @@ public class RestockZone : MonoBehaviour, IDropHandler
         }
     }
 
-    // when a toy is dropped onto it it should disappear
+    // when an item is dropped on it get rid of it
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);

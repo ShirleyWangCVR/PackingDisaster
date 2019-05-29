@@ -4,29 +4,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/* The Negative part of an equation side.
+ */
 public class NegativeSide : MonoBehaviour, IDropHandler
 {
-    
+    // Equation sides can hold all types of draggable items.
     public Draggable.Slot typeOfItems = Draggable.Slot.All;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // if Draggable object dropped onto this. Assuming all items dropped on it are Draggable.
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
     
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
-        
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
         {
             dragged.parentToReturnTo = this.transform;
@@ -41,6 +31,7 @@ public class NegativeSide : MonoBehaviour, IDropHandler
         }  
     }
 
+    // get the number of variables currently on this side
     public int NumVariables()
     {
         int num = 0;
@@ -54,6 +45,7 @@ public class NegativeSide : MonoBehaviour, IDropHandler
         return num;
     }
 
+    // get the number of values currently on this side
     public int NumValues()
     {
         int num = 0;

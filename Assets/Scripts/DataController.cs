@@ -4,14 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 
+/* Main Data Controller for game.
+ * Contains and stores all data that needs to persist between scenes.
+ */
 public class DataController : MonoBehaviour
 {
-    
+    // list of all equations from the loaded json. For now just 1.
     public EquationData[] allEquationsUsed;
     public DialogueData dialogue;
 
     private int currentDifficulty;
     private int equationsCompleted;
+    // Player Progress used to store between sessions. Currently only in use for storing high scores.
     private PlayerProgress playerProgress;
     private string equationDataFileName = "equations.json";
     private string dialogueDataFileName = "dialogueData.json";
@@ -28,6 +32,7 @@ public class DataController : MonoBehaviour
         equationsCompleted = 0;
     }
 
+    // get current equation to show depending on provided difficulty
     public EquationData GetCurrentEquationData(int difficulty)
     {
         return allEquationsUsed[0];
@@ -54,6 +59,7 @@ public class DataController : MonoBehaviour
     }
     
 
+    // submit a new score and store it if it's the highest
     public void SubmitNewPlayerScore(int newScore)
     {
         if (newScore > playerProgress.highestScore)
@@ -68,6 +74,7 @@ public class DataController : MonoBehaviour
         return playerProgress.highestScore;
     }
 
+    // load current player progress
     private void LoadPlayerProgress()
     {
         playerProgress = new PlayerProgress();
@@ -78,11 +85,13 @@ public class DataController : MonoBehaviour
         }
     }
 
+    // save current player progress in player prefs
     private void SavePlayerProgress()
     {
         PlayerPrefs.SetInt("highestScore", playerProgress.highestScore);
     }
 
+    // load game data from json
     private void LoadGameData()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, equationDataFileName);
@@ -98,6 +107,7 @@ public class DataController : MonoBehaviour
         }
     }
 
+    // load dialogue data from json
     private void LoadDialogueData()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, dialogueDataFileName);
