@@ -1,1 +1,1 @@
-{"equationData":[{"timeLimit":30,"difficulty":0,"variableValue":3,"lhsVars":1,"lhsValues":2,"rhsVars":0,"rhsValues":5,"equation":"x + 2 = 5"}]}
+{"equationData":[{"difficulty":0,"variableValue":3,"lhs":{"numVars":1,"numValues":2,"numBrackets":0,"bracketExpressions":[],"representation":"x + 2"},"rhs":{"numVars":0,"numValues":5,"numBrackets":0,"bracketExpressions":[],"representation":"5"},"equation":"x + 2 = 5"}]}

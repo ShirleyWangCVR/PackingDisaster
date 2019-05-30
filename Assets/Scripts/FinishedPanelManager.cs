@@ -24,14 +24,14 @@ public class FinishedPanelManager : MonoBehaviour
     }
 
     // set finished display to if player wins
-    public void DisplayCorrectlyBalanced(int correctValue, int playerScore)
+    public void DisplayCorrectlyBalanced(int correctValue)
     {
         finishedDisplay.SetActive(true);
         userMessage.text = "You Determined Correctly " + correctValue.ToString() + " in the Box!" + "\nYou Win!";
         nextQuestion.gameObject.SetActive(true);
         boxDisplay.SetActive(true);
 
-        // also set playerScore and highScore at some point        
+        // Should we also set playerScore and highScore at some point??? 
 
         if (correctValue > 0)
         {

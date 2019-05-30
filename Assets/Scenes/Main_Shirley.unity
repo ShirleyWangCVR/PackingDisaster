@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8b24bddf3cc1274ebb1cfa271490c84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeUsedText: {fileID: 1492740377}
+  timeLeftText: {fileID: 1492740377}
   seesaw: {fileID: 732550606}
   variablePool: {fileID: 459925433}
   toyPool: {fileID: 355683331}
@@ -3096,7 +3096,7 @@ GameObject:
   - component: {fileID: 1492740378}
   - component: {fileID: 1492740377}
   m_Layer: 5
-  m_Name: Time Used
+  m_Name: Time Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
