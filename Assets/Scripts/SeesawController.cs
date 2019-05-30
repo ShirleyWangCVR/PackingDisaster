@@ -12,7 +12,7 @@ public class SeesawController : MonoBehaviour
     public GameObject rightHandSideNegative;
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
-    
+
     private int tilt;
     private int interval = 2; // cancel out values every 2 seconds
     private float nextTime = 0;
@@ -30,12 +30,12 @@ public class SeesawController : MonoBehaviour
         // update the seesaw's current tilt
         UpdateTilt();
         UpdatePositions();
-        
+
         // check if any positive and negative values cancel each other out
         // every 2 seconds
         if (Time.time >= nextTime) {
             CancelOutValues();
-            nextTime += interval; 
+            nextTime += interval;
         }
     }
 
@@ -48,7 +48,7 @@ public class SeesawController : MonoBehaviour
         {
             currangle = this.transform.rotation.eulerAngles.z - 360;
         }
-        
+
         if (tilt > 0)
         {
             this.transform.Rotate(0, 0, 0.05f, Space.Self);
@@ -56,8 +56,8 @@ public class SeesawController : MonoBehaviour
         else if (tilt < 0)
         {
             this.transform.Rotate(0, 0, -0.05f, Space.Self);
-        } 
-        else 
+        }
+        else
         {   // tilt == 0
             // Unity doesn't move it by exact values so give it a slight bit of wiggle room when
             // returning to horizontal
@@ -65,14 +65,14 @@ public class SeesawController : MonoBehaviour
             {
                 if (this.transform.rotation.eulerAngles.z < 180)
                 {
-                    this.transform.Rotate(0, 0, -0.05f, Space.Self);
-                } else 
+                    this.transform.Rotate(0, 0, -0.1f, Space.Self);
+                } else
                 {
-                    this.transform.Rotate(0, 0, 0.05f, Space.Self);
+                    this.transform.Rotate(0, 0, 0.1f, Space.Self);
                 }
             }
         }
-    
+
     }
 
     // update the current numerical tilt representing how unbalanced the seesaw is
@@ -81,7 +81,7 @@ public class SeesawController : MonoBehaviour
         // update current tilt
         int lhs = 0;
         int rhs = 0;
-         
+
         foreach(Transform child in leftHandSidePositive.transform)
         {
             lhs = lhs + child.gameObject.GetComponent<HasValue>().GetValue();
@@ -137,12 +137,12 @@ public class SeesawController : MonoBehaviour
         {
             return rightHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
         }
-        
+
         if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
         {
             return leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
         }
-        
+
         return false;
     }
 
@@ -159,7 +159,7 @@ public class SeesawController : MonoBehaviour
         foreach(Transform child in rightHandSidePositive.transform)
             {
                 rhs = rhs + child.gameObject.GetComponent<HasValue>().GetValue();
-                
+
             }
 
         foreach(Transform child in rightHandSideNegative.transform)
@@ -177,7 +177,7 @@ public class SeesawController : MonoBehaviour
         foreach(Transform child in leftHandSidePositive.transform)
             {
                 lhs = lhs + child.gameObject.GetComponent<HasValue>().GetValue();
-                
+
             }
 
         foreach(Transform child in leftHandSideNegative.transform)
@@ -243,6 +243,6 @@ public class SeesawController : MonoBehaviour
             }
             pool.ReturnObject(top);
             pool.ReturnObject(bottom);
-        } 
+        }
     }
 }
