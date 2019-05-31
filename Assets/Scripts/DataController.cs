@@ -33,9 +33,19 @@ public class DataController : MonoBehaviour
     }
 
     // get current equation to show depending on provided difficulty
-    public EquationData GetCurrentEquationData(int difficulty)
-    {
-        return allEquationsUsed[0];
+    public EquationData GetCurrentEquationData()
+    {   
+        if (currentDifficulty == 0)
+        {
+            return allEquationsUsed[0];
+        }
+        else if (currentDifficulty == 8) {
+            // for testing
+            return allEquationsUsed[1];
+        }
+        else {
+            return allEquationsUsed[0];
+        }
     }
 
     public int GetDifficulty()

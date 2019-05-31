@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 /* Game Controller for the main scene where the question is solved.
  */
-public class GameController : MonoBehaviour
+public class T2GameController : MonoBehaviour
 {    
     public Text timeUsedText;
     public GameObject seesaw;
@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
     private bool isRoundActive; 
     private float timeUsed;
     private int difficultyLevel; // difficulty levels 0 to 5? 1 to 5? 0 being tutorial?
-    private int equationsCompleted; // currently not being used
     private int playerScore; // currently not being used
     private bool dialogueActive;
 
@@ -32,7 +31,6 @@ public class GameController : MonoBehaviour
         dataController = FindObjectOfType<DataController>();
         equation = dataController.GetCurrentEquationData();
         difficultyLevel = dataController.GetDifficulty();
-        equationsCompleted = dataController.GetEquationsCompleted();
         timeUsed = 0;
         
         // set up seesaw according to equation
@@ -46,6 +44,11 @@ public class GameController : MonoBehaviour
             dialogueActive = true;
             dialogueController.ExecuteTutorialDialogue();
         }
+        else if (difficultyLevel == 8)
+        {
+            isRoundActive = true;
+            dialogueActive = false;
+        }
     }
 
     // set up the seesaw according to the equation data
@@ -54,86 +57,64 @@ public class GameController : MonoBehaviour
         Expression lhs = equation.lhs;
         Expression rhs = equation.rhs;
         
-        
         if (lhs.numVars > 0)
         {
-            for (int i = 0; i < lhs.numVars; i++)
-            {
-                Transform lhsPositive = seesaw.transform.Find("LHSPositive");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(lhsPositive);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
+            SetUpCoefficient(variablePool, seesaw.transform.Find("LHSPositive"), lhs.numVars, true);
+            
         }
         else if (lhs.numVars < 0)
         {
-            for (int i = 0; i < 0 - lhs.numVars; i++)
-            {
-                Transform lhsNegative = seesaw.transform.Find("LHSNegative");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(lhsNegative);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
+            SetUpCoefficient(variablePool, seesaw.transform.Find("LHSNegative"), lhs.numVars, true);
+            
         }
 
         if (lhs.numValues > 0)
         {
-            for (int i = 0; i < lhs.numValues; i++)
-            {
-                Transform lhsPositive = seesaw.transform.Find("LHSPositive");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(lhsPositive);
-            }
+            SetUpCoefficient(toyPool, seesaw.transform.Find("LHSPositive"), lhs.numValues, false);
+            
         }
         else if (lhs.numValues < 0)
         {
-            for (int i = 0; i < 0 - lhs.numValues; i++)
-            {
-                Transform lhsNegative = seesaw.transform.Find("LHSNegative");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(lhsNegative);
-            }
+            SetUpCoefficient(toyPool, seesaw.transform.Find("LHSNegative"), lhs.numValues, false);
+
         }
 
         if (rhs.numVars > 0)
         {
-            for (int i = 0; i < rhs.numVars; i++)
-            {
-                Transform rhsPositive = seesaw.transform.Find("RHSPositive");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(rhsPositive);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
+            SetUpCoefficient(variablePool, seesaw.transform.Find("RHSPositive"), rhs.numVars, true);
+
         }
         else if (rhs.numVars < 0)
         {
-            for (int i = 0; i < 0 - rhs.numVars; i++)
-            {
-                Transform rhsNegative = seesaw.transform.Find("RHSNegative");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(rhsNegative);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
+            SetUpCoefficient(variablePool, seesaw.transform.Find("RHSNegative"), rhs.numVars, true);
+
         }
 
         if (rhs.numValues > 0)
         {
-            for (int i = 0; i < rhs.numValues; i++)
-            {
-                Transform rhsPositive = seesaw.transform.Find("RHSPositive");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(rhsPositive);
-            }
+            SetUpCoefficient(toyPool, seesaw.transform.Find("RHSPositive"), rhs.numValues, false);
+            
         }
         else if (rhs.numValues < 0)
         {
-            for (int i = 0; i < 0 - rhs.numValues; i++)
-            {
-                Transform rhsNegative = seesaw.transform.Find("RHSNegative");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(rhsNegative);
-            }
+            SetUpCoefficient(toyPool, seesaw.transform.Find("RHSNegative"), rhs.numValues, false);
+            
         }
+    }
+
+    private void SetUpCoefficient(SimpleObjectPool pool, Transform side, int number, bool isVar)
+    {
+        // Transform rhsPositive = seesaw.transform.Find("RHSPositive");
+        GameObject newVar = pool.GetObject();
+        newVar.transform.SetParent(side);
+
+        if (isVar)
+        {
+            newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
+        }
+
+        // currently defaulting initial value is whole number
+        newVar.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetIntValue(number);
     }
 
     private void UpdateTimeUsedDisplay()
@@ -152,10 +133,10 @@ public class GameController : MonoBehaviour
         }
 
         // if seesaw fell over end game
-        if (seesaw.GetComponent<SeesawController>().FellOver())
+        /* if (seesaw.GetComponent<SeesawController>().FellOver())
         {
             EndRound("Scale Tipped");
-        }
+        } */
 
         // if dialogue currently active check until dialogue no longer active
         if (dialogueActive)

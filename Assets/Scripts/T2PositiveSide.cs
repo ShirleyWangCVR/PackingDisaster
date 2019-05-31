@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 /* The Positive part of an equation side
 */
-public class PositiveSide : MonoBehaviour, IDropHandler
+public class T2PositiveSide : MonoBehaviour, IDropHandler
 {
     public Draggable.Slot typeOfItems = Draggable.Slot.All;
 
@@ -21,12 +21,13 @@ public class PositiveSide : MonoBehaviour, IDropHandler
             dragged.parentToReturnTo = this.transform;
 
             // requires checking as integer due to floating point errors
-            int check = (int) Mathf.Round(eventData.pointerDrag.transform.localScale.x);
+            int check = (int) Mathf.Round(eventData.pointerDrag.transform.Find("Image").localScale.x);
             if (check == -1)
             {
                 eventData.pointerDrag.transform.Find("Image").localScale = new Vector3(1, 1, 1);
                 eventData.pointerDrag.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-
+                Coefficient coef = eventData.pointerDrag.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
+                coef.NegativeCurrentValue();
                 
                 // eventData.pointerDrag.transform.localScale = new Vector3(1, 1, 1);
                 // eventData.pointerDrag.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
@@ -43,6 +44,37 @@ public class PositiveSide : MonoBehaviour, IDropHandler
             if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
             {
                 num++;
+            }
+        }
+        return num;
+    }
+
+    public double TotalNumericalValue()
+    {
+        return NumericalValues() + NumericalVariables();
+    }
+    
+    public double NumericalVariables()
+    {
+        double num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                num = num + child.gameObject.GetComponent<HasValue>().GetValue() * child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
+            }
+        }
+        return num;
+    }
+
+    public double NumericalValues()
+    {
+        double num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                num = num + child.gameObject.GetComponent<HasValue>().GetValue() * child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
             }
         }
         return num;
