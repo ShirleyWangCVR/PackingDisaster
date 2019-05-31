@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /* GameObjects with this class are Draggable, and can be dragged by
  * the mouse.  They can be Variables, Values, or Dummys.
  */
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public Transform parentToReturnTo = null;
     public enum Slot {Variable, Value, All, Dummy};
@@ -64,6 +64,83 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void DestroyPlaceholder()
     {
         Destroy(placeholder);
+    }
+
+    // when an item is dropped on it check if it's the same type
+    // then cancel it out (T1) / combine its coefficient's values
+    public void OnDrop(PointerEventData eventData)
+    {
+        Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
+        if (dragged != null)
+        {
+            Transform coef = eventData.pointerDrag.transform.Find("Coefficient");
+            if (coef == null)
+            {
+                // still T1
+                // check if opposite (u negative it positive or vice versa) then return both else do nothing
+                int droppedorient = (int) Mathf.Round(eventData.pointerDrag.transform.Find("Image").localScale.x);
+                int thisorient = (int) Mathf.Round(this.transform.Find("Image").localScale.x);
+                if (droppedorient == 0 - thisorient)
+                {
+                    eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
+                    Debug.Log("Destroying");
+
+                    // try and use the pool more efficient
+                    // would need to search for the right pool
+                    Destroy(eventData.pointerDrag);
+                    Destroy(this.gameObject);
+                }
+
+            } else {
+                // has coefficient, T2 and above
+                // for now only doing whole numbers
+                // handle fractions later
+                double droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
+                double thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
+                int newvalue = (int) thisvalue + (int) droppedvalue;
+                // if you drag a larger thing onto a smaller thing it needs to go to the right parent
+                if (newvalue == 0)
+                {
+                    Destroy(eventData.pointerDrag);
+                    Destroy(this.gameObject);
+
+                } else if (newvalue > 0) {
+                    // new one on positive side
+                    if (this.transform.parent.name.EndsWith("Positive"))
+                    {
+                        this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                        Destroy(eventData.pointerDrag);
+                    } else {
+                        eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                        Destroy(this.gameObject);
+                    }
+
+                } else {
+                    // new one on negative side
+                    if (this.transform.parent.name.EndsWith("Negative"))
+                    {
+                        this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                        Destroy(eventData.pointerDrag);
+                    } else {
+                        eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                        Destroy(this.gameObject);
+                    }
+
+                }
+
+            }
+        }
+
+
+        
+        /* Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
+
+        Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
+        if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
+        {
+            objectPool.ReturnObject(eventData.pointerDrag);
+        } */
+    
     }
 
 }

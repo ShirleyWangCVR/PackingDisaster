@@ -34,7 +34,7 @@ public class SeesawController : MonoBehaviour
         // check if any positive and negative values cancel each other out
         // every 2 seconds
         if (Time.time >= nextTime) {
-            CancelOutValues();
+            // CancelOutValues();
             nextTime += interval;
         }
     }
@@ -187,7 +187,7 @@ public class SeesawController : MonoBehaviour
 
         return lhs;
     }
-
+/* 
     // if there are values to be cancelled out on either side then cancel them out
     public void CancelOutValues()
     {
@@ -244,5 +244,5 @@ public class SeesawController : MonoBehaviour
             pool.ReturnObject(top);
             pool.ReturnObject(bottom);
         }
-    }
+    } */
 }
