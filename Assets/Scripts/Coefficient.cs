@@ -19,7 +19,7 @@ public class Coefficient : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        isWholeNumber = true;
     }
 
     // Update is called once per frame
@@ -50,6 +50,8 @@ public class Coefficient : MonoBehaviour
 
     public void SetIntValue(int newValue)
     {
+        Debug.Log(wholeNumber);
+        Debug.Log(newValue);
         isWholeNumber = true;
         wholeNumber = newValue;
         numberText.gameObject.SetActive(true);

@@ -133,10 +133,10 @@ public class T2GameController : MonoBehaviour
         }
 
         // if seesaw fell over end game
-        /* if (seesaw.GetComponent<SeesawController>().FellOver())
+        if (seesaw.GetComponent<T2SeesawController>().FellOver())
         {
             EndRound("Scale Tipped");
-        } */
+        }
 
         // if dialogue currently active check until dialogue no longer active
         if (dialogueActive)
@@ -164,16 +164,16 @@ public class T2GameController : MonoBehaviour
         } 
         else if (howEnded == "Finished Check") 
         {
-            if (seesaw.GetComponent<SeesawController>().CheckIfComplete())
+            if (seesaw.GetComponent<T2SeesawController>().CheckIfComplete())
             {
-                if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced())
+                if (seesaw.GetComponent<T2SeesawController>().CorrectlyBalanced())
                 {
                     finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
                 } 
                 else 
                 {
                     // lost because wrong answer, get whatever they answered
-                    int side = seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
+                    int side = (int) seesaw.GetComponent<T2SeesawController>().GetLeftHandSideValue();
                     if (equation.variableValue != side)
                     {
                         finishedDisplayManager.DisplayWrongBalanced(side);

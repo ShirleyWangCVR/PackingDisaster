@@ -18,6 +18,8 @@ public class T2PositiveSide : MonoBehaviour, IDropHandler
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
         {
+            Debug.Log("Setting parent to return to");
+            
             dragged.parentToReturnTo = this.transform;
 
             // requires checking as integer due to floating point errors
@@ -28,9 +30,6 @@ public class T2PositiveSide : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 Coefficient coef = eventData.pointerDrag.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
                 coef.NegativeCurrentValue();
-                
-                // eventData.pointerDrag.transform.localScale = new Vector3(1, 1, 1);
-                // eventData.pointerDrag.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
         }
     }

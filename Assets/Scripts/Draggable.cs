@@ -9,12 +9,17 @@ using UnityEngine.UI;
  */
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    public Transform parentToReturnTo = null;
+    public Transform parentToReturnTo;
     public enum Slot {Variable, Value, All, Dummy};
     public Slot typeOfItem = Slot.Value;
 
     // to make dragging from side of equation look slightly nicer
     GameObject placeholder = null;
+
+    public void Start()
+    {
+        parentToReturnTo = this.transform.parent;
+    }
     
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -51,6 +56,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         // set it to wherever it should go
         this.transform.SetParent(parentToReturnTo);
+        this.transform.position = parentToReturnTo.position;
 
         // set it to return to where the placeholder is
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
@@ -95,51 +101,63 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 // has coefficient, T2 and above
                 // for now only doing whole numbers
                 // handle fractions later
-                double droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
-                double thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
-                int newvalue = (int) thisvalue + (int) droppedvalue;
-                // if you drag a larger thing onto a smaller thing it needs to go to the right parent
-                if (newvalue == 0)
+                Debug.Log("Draggged On");
+
+                // make sure same type of item
+                if (eventData.pointerDrag.GetComponent<HasValue>().typeOfItem == this.gameObject.GetComponent<HasValue>().typeOfItem)
                 {
-                    Destroy(eventData.pointerDrag);
-                    Destroy(this.gameObject);
+                    // make sure can only combine if on same side
+                    string draggedParent = eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo.name;
+                    string thisParent = this.gameObject.GetComponent<Draggable>().parentToReturnTo.name;
 
-                } else if (newvalue > 0) {
-                    // new one on positive side
-                    if (this.transform.parent.name.EndsWith("Positive"))
+                    Debug.Log("Same Type");
+
+                    if ((draggedParent.StartsWith("RHS") && thisParent.StartsWith("RHS")) || (draggedParent.StartsWith("LHS") && thisParent.StartsWith("LHS")))
                     {
-                        this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
-                        Destroy(eventData.pointerDrag);
-                    } else {
-                        eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
-                        Destroy(this.gameObject);
-                    }
+                        Debug.Log("Same Side");
+                        
+                        double droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
+                        double thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
+                        int newvalue = (int) thisvalue + (int) droppedvalue;
+                        // if you drag a larger thing onto a smaller thing it needs to go to the right parent
+                        if (newvalue == 0)
+                        {
+                            eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
+                            Destroy(eventData.pointerDrag);
+                            Destroy(this.gameObject);
 
-                } else {
-                    // new one on negative side
-                    if (this.transform.parent.name.EndsWith("Negative"))
-                    {
-                        this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
-                        Destroy(eventData.pointerDrag);
-                    } else {
-                        eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
-                        Destroy(this.gameObject);
-                    }
+                        } else if (newvalue > 0) {
+                            // new one on positive side
+                            if (this.transform.parent.name.EndsWith("Positive"))
+                            {
+                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
+                                Destroy(eventData.pointerDrag);
+                            } else {
+                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                Destroy(this.gameObject);
+                            }
 
-                }
+                        } else {
+                            // new one on negative side
+                            if (this.transform.parent.name.EndsWith("Negative"))
+                            {
+                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                Destroy(eventData.pointerDrag);
+                            } else {
+                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                Destroy(this.gameObject);
+                            }
+
+                        }
+
+
+                    }
+                    
+                }                
 
             }
         }
-
-
-        
-        /* Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
-
-        Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
-        if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
-        {
-            objectPool.ReturnObject(eventData.pointerDrag);
-        } */
     
     }
 
