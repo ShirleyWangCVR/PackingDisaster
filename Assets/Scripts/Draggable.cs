@@ -12,17 +12,36 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Transform parentToReturnTo;
     public enum Slot {Variable, Value, All, Dummy};
     public Slot typeOfItem = Slot.Value;
+    public GameController gameController;
+    public T2GameController gameController2;
+    public SimpleObjectPool toyPool;
+    public SimpleObjectPool variablePool;
 
     // to make dragging from side of equation look slightly nicer
     GameObject placeholder = null;
+    private SimpleObjectPool pool;
 
     public void Start()
     {
         parentToReturnTo = this.transform.parent;
+        gameController = FindObjectOfType<GameController>();
+        gameController2 = FindObjectOfType<T2GameController>();
+        toyPool = GameObject.Find("Toy Pool").GetComponent<SimpleObjectPool>();
+        variablePool = GameObject.Find("Box Pool").GetComponent<SimpleObjectPool>();
+        
+        if (typeOfItem == Slot.Value)
+        {
+            pool = toyPool;
+        } else if (typeOfItem == Slot.Variable)
+        {
+            pool = variablePool;
+        }
     }
     
     public void OnBeginDrag(PointerEventData eventData)
     {
+        SetIsDragging(true);
+        
         // create gap when dragging object
         placeholder = new GameObject();
         placeholder.transform.SetParent(this.transform.parent);
@@ -54,6 +73,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        SetIsDragging(false);
+        
         // set it to wherever it should go
         this.transform.SetParent(parentToReturnTo);
         this.transform.position = parentToReturnTo.position;
@@ -65,6 +86,18 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         Destroy(placeholder);
+    }
+
+    public void SetIsDragging(bool dragging)
+    {
+        if (gameController != null)
+        {
+            gameController.SetDragging(dragging);
+        }
+        if (gameController2 != null)
+        {
+            gameController2.SetDragging(dragging);
+        }
     }
 
     public void DestroyPlaceholder()
@@ -93,8 +126,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                     // try and use the pool more efficient
                     // would need to search for the right pool
-                    Destroy(eventData.pointerDrag);
-                    Destroy(this.gameObject);
+                    pool.ReturnObject(eventData.pointerDrag);
+                    pool.ReturnObject(this.gameObject);
+                    // Destroy(eventData.pointerDrag);
+                    // Destroy(this.gameObject);
                 }
 
             } else {
@@ -110,11 +145,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     string draggedParent = eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo.name;
                     string thisParent = this.gameObject.GetComponent<Draggable>().parentToReturnTo.name;
 
-                    Debug.Log("Same Type");
-
                     if ((draggedParent.StartsWith("RHS") && thisParent.StartsWith("RHS")) || (draggedParent.StartsWith("LHS") && thisParent.StartsWith("LHS")))
                     {
-                        Debug.Log("Same Side");
                         
                         Fraction droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
                         Fraction thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
@@ -125,8 +157,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                         if ((int) newvalue.ToDouble() == 0)
                         {
                             eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
-                            Destroy(eventData.pointerDrag);
-                            Destroy(this.gameObject);
+                            pool.ReturnObject(eventData.pointerDrag);
+                            pool.ReturnObject(this.gameObject);
+                            // Destroy(eventData.pointerDrag);
+                            // Destroy(this.gameObject);
 
                         } else if (newvalue.ToDouble() > 0) {
                             // new one on positive side
@@ -134,10 +168,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             {
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
-                                Destroy(eventData.pointerDrag);
+                                // Destroy(eventData.pointerDrag);
+                                pool.ReturnObject(eventData.pointerDrag);
                             } else {
                                 eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                Destroy(this.gameObject);
+                                // Destroy(this.gameObject);
+                                pool.ReturnObject(this.gameObject);
                             }
 
                         } else {
@@ -145,10 +181,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             if (this.transform.parent.name.EndsWith("Negative"))
                             {
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                Destroy(eventData.pointerDrag);
+                                // Destroy(eventData.pointerDrag);
+                                pool.ReturnObject(eventData.pointerDrag);
                             } else {
                                 eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                Destroy(this.gameObject);
+                                // Destroy(this.gameObject);
+                                pool.ReturnObject(this.gameObject);
                             }
 
                         }

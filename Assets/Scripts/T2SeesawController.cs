@@ -15,21 +15,30 @@ public class T2SeesawController : MonoBehaviour
     public SimpleObjectPool variablePool;
 
     private double tilt;
+    private bool currentlyDragging;
 
     // Start is called before the first frame update
     void Start()
     {
         // set initial tilt to 0
         tilt = 0;
+        currentlyDragging = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         // update the seesaw's current tilt
-        UpdateTilt();
-        UpdatePositions();
+        if (! currentlyDragging)
+        {
+            UpdateTilt();
+            UpdatePositions();
+        }
+    }
 
+    public void SetDragging(bool dragging)
+    {
+        currentlyDragging = dragging;
     }
 
     // make the seesaw tilt if it needs to

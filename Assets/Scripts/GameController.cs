@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     private int equationsCompleted; // currently not being used
     private int playerScore; // currently not being used
     private bool dialogueActive;
+    private bool currentlyDragging;
 
     // Start is called before the first frame update
     void Start()
@@ -220,5 +221,11 @@ public class GameController : MonoBehaviour
     public void FinishedCheck()
     {
         EndRound("Finished Check");
+    }
+
+    public void SetDragging(bool dragging)
+    {
+        currentlyDragging = dragging;
+        seesaw.GetComponent<SeesawController>().SetDragging(dragging);
     }
 }

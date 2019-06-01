@@ -16,27 +16,30 @@ public class SeesawController : MonoBehaviour
     private int tilt;
     private int interval = 2; // cancel out values every 2 seconds
     private float nextTime = 0;
+    private bool currentlyDragging;
 
     // Start is called before the first frame update
     void Start()
     {
         // set initial tilt to 0
         tilt = 0;
+        // InvokeRepeating("DebugTilt", 0, 3.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
         // update the seesaw's current tilt
-        UpdateTilt();
-        UpdatePositions();
-
-        // check if any positive and negative values cancel each other out
-        // every 2 seconds
-        if (Time.time >= nextTime) {
-            // CancelOutValues();
-            nextTime += interval;
+        if (! currentlyDragging)
+        {
+            UpdateTilt();
+            UpdatePositions();
         }
+    }
+
+    public void SetDragging(bool dragging)
+    {
+        currentlyDragging = dragging;
     }
 
     // make the seesaw tilt if it needs to
@@ -114,7 +117,7 @@ public class SeesawController : MonoBehaviour
             currangle = this.transform.rotation.eulerAngles.z - 360;
         }
         Debug.Log(currangle);
-        Debug.Log(this.transform.localRotation);
+        Debug.Log(tilt);
     }
 
     // if it's tipped over more than 40 then the seesaw it too tipped over and they lose

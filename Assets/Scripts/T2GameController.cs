@@ -23,6 +23,7 @@ public class T2GameController : MonoBehaviour
     private int difficultyLevel; // difficulty levels 0 to 5? 1 to 5? 0 being tutorial?
     private int playerScore; // currently not being used
     private bool dialogueActive;
+    private bool currentlyDragging;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,7 @@ public class T2GameController : MonoBehaviour
         equation = dataController.GetCurrentEquationData();
         difficultyLevel = dataController.GetDifficulty();
         timeUsed = 0;
+        currentlyDragging = false;
         
         // set up seesaw according to equation
         SetUpSeesaw();
@@ -221,6 +223,12 @@ public class T2GameController : MonoBehaviour
         {
             seesaw.GetComponent<T2SeesawController>().DivideBothSides(number);
         }
+    }
+
+    public void SetDragging(bool dragging)
+    {
+        currentlyDragging = dragging;
+        seesaw.GetComponent<T2SeesawController>().SetDragging(dragging);
     }
 
 }

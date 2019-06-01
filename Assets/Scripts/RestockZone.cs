@@ -60,6 +60,7 @@ public class RestockZone : MonoBehaviour, IDropHandler
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
         {
+            eventData.pointerDrag.GetComponent<Draggable>().SetIsDragging(false);
             objectPool.ReturnObject(eventData.pointerDrag);
         }
     
