@@ -48,7 +48,7 @@ public class BothSideOperations : MonoBehaviour
 
         gameController.ProcessBothSideOperation(operation, number);
 
-        
+        BackToMainScreen();        
     }
 
     public void SetOperation(string op)

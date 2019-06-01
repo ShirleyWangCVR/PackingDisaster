@@ -30,8 +30,6 @@ public class T2NegativeSide : MonoBehaviour, IDropHandler
                 Coefficient coef = eventData.pointerDrag.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
                 coef.NegativeCurrentValue();
 
-                // eventData.pointerDrag.transform.localScale = new Vector3(-1, -1, 1);
-                // eventData.pointerDrag.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
             }
         }  
     }

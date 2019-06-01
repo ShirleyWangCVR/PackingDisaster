@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /* Controller for the Game Seesaw
  */
@@ -141,85 +142,99 @@ public class T2SeesawController : MonoBehaviour
         return leftHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
     }
 
-    
-    
-    // change to player has to cancel it out themselves
-    
-    // if there are values to be cancelled out on either side then cancel them out
-    /* public void CancelOutValues()
-    {
-        if (leftHandSidePositive.transform.childCount > 0 && leftHandSideNegative.transform.childCount > 0)
-        {
-            if (leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() > 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumVariables() > 0)
-            {
-                CancelOutSide(leftHandSidePositive, leftHandSideNegative, Draggable.Slot.Variable, variablePool);
-            }
-            if (leftHandSidePositive.GetComponent<PositiveSide>().NumValues() > 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumValues() > 0)
-            {
-                CancelOutSide(leftHandSidePositive, leftHandSideNegative, Draggable.Slot.Value, toyPool);
-            }
-        }
-
-        if (rightHandSidePositive.transform.childCount > 0 && rightHandSideNegative.transform.childCount > 0)
-        {
-            if (rightHandSidePositive.GetComponent<PositiveSide>().NumVariables() > 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumVariables() > 0)
-            {
-                CancelOutSide(rightHandSidePositive, rightHandSideNegative, Draggable.Slot.Variable, variablePool);
-            }
-            if (rightHandSidePositive.GetComponent<PositiveSide>().NumValues() > 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumValues() > 0)
-            {
-                CancelOutSide(rightHandSidePositive, rightHandSideNegative, Draggable.Slot.Value, toyPool);
-            }
-        }
-    } */
-
-    // cancels out from the positive and negative side a certain type of value
-    /* private void CancelOutSide(GameObject positiveSide, GameObject negativeSide, Draggable.Slot slot, SimpleObjectPool pool)
-    {
-        GameObject top = null;
-        GameObject bottom = null;
-
-        int num = Mathf.Min(positiveSide.GetComponent<PositiveSide>().NumValues(), negativeSide.GetComponent<NegativeSide>().NumValues());
-        for (int i = 0; i < num; i++)
-        {
-            foreach(Transform child in positiveSide.transform)
-            {
-                if (child.GetComponent<HasValue>().typeOfItem == slot)
-                {
-                    top = child.gameObject;
-                    break;
-                }
-            }
-            foreach(Transform child in negativeSide.transform)
-            {
-                if (child.GetComponent<HasValue>().typeOfItem == slot)
-                {
-                    bottom = child.gameObject;
-                    break;
-                }
-            }
-            pool.ReturnObject(top);
-            pool.ReturnObject(bottom);
-        }
-    } */
-
     public void AddBothSides(int num)
     {
+        GameObject newObject = toyPool.GetObject();
+        newObject.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(num);
+        newObject.transform.SetParent(leftHandSidePositive.transform);
 
+        GameObject new2Object = toyPool.GetObject();
+        new2Object.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(num);
+        new2Object.transform.SetParent(rightHandSidePositive.transform);
     }
 
     public void SubtractBothSides(int num)
     {
+        GameObject newObject = toyPool.GetObject();
+        newObject.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(0 - num);
+        newObject.transform.SetParent(leftHandSideNegative.transform);
+        newObject.transform.Find("Image").localScale = new Vector3(-1, -1, 1);
+        newObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
 
+        GameObject new2Object = toyPool.GetObject();
+        new2Object.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(0 - num);
+        new2Object.transform.SetParent(rightHandSideNegative.transform);
+        new2Object.transform.Find("Image").localScale = new Vector3(-1, -1, 1);
+        new2Object.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
     }
 
     public void MultiplyBothSides(int num)
     {
+        foreach(Transform child in leftHandSidePositive.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = num * value;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
 
+        foreach(Transform child in leftHandSideNegative.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = num * value;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
+
+        foreach(Transform child in rightHandSidePositive.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = num * value;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
+
+        foreach(Transform child in rightHandSideNegative.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = num * value;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
     }
 
     public void DivideBothSides(int num)
     {
-        
+        foreach(Transform child in leftHandSidePositive.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = value / num;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
+
+        foreach(Transform child in leftHandSideNegative.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = value / num;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
+
+        foreach(Transform child in rightHandSidePositive.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = value / num;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
+
+        foreach(Transform child in rightHandSideNegative.transform)
+        {
+            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction newValue = value / num;
+            Fraction.ReduceFraction(newValue);
+            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+        }
     }
 }
