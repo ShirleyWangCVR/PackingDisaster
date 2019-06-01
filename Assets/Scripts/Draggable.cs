@@ -101,7 +101,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 // has coefficient, T2 and above
                 // for now only doing whole numbers
                 // handle fractions later
-                Debug.Log("Draggged On");
+                Debug.Log("Dragged On");
 
                 // make sure same type of item
                 if (eventData.pointerDrag.GetComponent<HasValue>().typeOfItem == this.gameObject.GetComponent<HasValue>().typeOfItem)
@@ -116,25 +116,27 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     {
                         Debug.Log("Same Side");
                         
-                        double droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
-                        double thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetValue();
-                        int newvalue = (int) thisvalue + (int) droppedvalue;
+                        Fraction droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+                        Fraction thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+                        Fraction newvalue = thisvalue + droppedvalue;
+                        Fraction.ReduceFraction(newvalue);
+
                         // if you drag a larger thing onto a smaller thing it needs to go to the right parent
-                        if (newvalue == 0)
+                        if ((int) newvalue.ToDouble() == 0)
                         {
                             eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
                             Destroy(eventData.pointerDrag);
                             Destroy(this.gameObject);
 
-                        } else if (newvalue > 0) {
+                        } else if (newvalue.ToDouble() > 0) {
                             // new one on positive side
                             if (this.transform.parent.name.EndsWith("Positive"))
                             {
-                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
                                 Destroy(eventData.pointerDrag);
                             } else {
-                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 Destroy(this.gameObject);
                             }
 
@@ -142,10 +144,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             // new one on negative side
                             if (this.transform.parent.name.EndsWith("Negative"))
                             {
-                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 Destroy(eventData.pointerDrag);
                             } else {
-                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetIntValue(newvalue);
+                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 Destroy(this.gameObject);
                             }
 

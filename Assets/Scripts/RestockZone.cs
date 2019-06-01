@@ -48,7 +48,7 @@ public class RestockZone : MonoBehaviour, IDropHandler
         Coefficient coef = newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
         if (coef != null)
         {
-            coef.SetIntValue(1);
+            coef.SetValue(1);
         }
     }
 

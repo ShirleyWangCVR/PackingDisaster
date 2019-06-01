@@ -15,6 +15,7 @@ public class Coefficient : MonoBehaviour
     private int wholeNumber;
     private double exactNumber;
     private bool isWholeNumber;
+    private Fraction value;
     
     // Start is called before the first frame update
     void Start()
@@ -22,13 +23,7 @@ public class Coefficient : MonoBehaviour
         isWholeNumber = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public double GetValue()
+    /* public double GetValue()
     {
         if (isWholeNumber)
         {
@@ -36,22 +31,81 @@ public class Coefficient : MonoBehaviour
         } else {
             return exactNumber;
         }
+    } */
+
+    public double GetValue()
+    {
+        if (value.Denominator == 1)
+        {
+            return value.Numerator;
+        } else {
+            return value.ToDouble();
+        }
+    }
+
+    public Fraction GetFractionValue()
+    {
+        return value;
     }
     
     public void NegativeCurrentValue()
     {
-        if (isWholeNumber)
+        /* if (isWholeNumber)
         {
             SetIntValue(0 - wholeNumber);
         } else {
             SetFractionValue(0 - numerator, denominator);
+        } */
+        SetValue(-value);
+    }
+
+    public void SetValue(Fraction newvalue)
+    {
+        value = newvalue;
+        if (value.Denominator == 1)
+        {
+            isWholeNumber = true;
+
+            numberText.gameObject.SetActive(true);
+            numberText.text = ((int) GetValue()).ToString();
+
+            numeratorText.gameObject.SetActive(false);
+            denominatorText.gameObject.SetActive(false);
+            fractionLineText.gameObject.SetActive(false);
+
+        } else {
+            isWholeNumber = false;
+
+            numberText.gameObject.SetActive(false);
+
+            numeratorText.gameObject.SetActive(true);
+            numeratorText.text = value.Numerator.ToString();
+
+            fractionLineText.gameObject.SetActive(true);
+
+            denominatorText.gameObject.SetActive(true);
+            denominatorText.text = value.Denominator.ToString();
         }
     }
 
+
+    public void SetValue(int newvalue)
+    {
+        value = new Fraction(newvalue);
+        isWholeNumber = true;
+
+        numberText.gameObject.SetActive(true);
+        numberText.text = ((int) GetValue()).ToString();
+
+        numeratorText.gameObject.SetActive(false);
+        denominatorText.gameObject.SetActive(false);
+        fractionLineText.gameObject.SetActive(false);
+    }
+    
+
+
     public void SetIntValue(int newValue)
     {
-        Debug.Log(wholeNumber);
-        Debug.Log(newValue);
         isWholeNumber = true;
         wholeNumber = newValue;
         numberText.gameObject.SetActive(true);

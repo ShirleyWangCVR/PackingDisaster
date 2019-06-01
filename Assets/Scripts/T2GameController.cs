@@ -114,7 +114,7 @@ public class T2GameController : MonoBehaviour
         }
 
         // currently defaulting initial value is whole number
-        newVar.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetIntValue(number);
+        newVar.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(number);
     }
 
     private void UpdateTimeUsedDisplay()
@@ -202,4 +202,25 @@ public class T2GameController : MonoBehaviour
     {
         EndRound("Finished Check");
     }
+
+    public void ProcessBothSideOperation(string operation, int number)
+    {
+        if (operation == "Addition")
+        {
+            seesaw.GetComponent<T2SeesawController>().AddBothSides(number);
+        } 
+        else if (operation == "Subtraction")
+        {
+            seesaw.GetComponent<T2SeesawController>().SubtractBothSides(number);
+        } 
+        else if (operation == "Multiplication")
+        {
+            seesaw.GetComponent<T2SeesawController>().MultiplyBothSides(number);
+        } 
+        else if (operation == "Division")
+        {
+            seesaw.GetComponent<T2SeesawController>().DivideBothSides(number);
+        }
+    }
+
 }

@@ -44,7 +44,7 @@ public class FinishedPanelManager : MonoBehaviour
                 if (check == -1)
                 {
                     toy.transform.localScale = new Vector3(1, 1, 1);
-                    toy.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    toy.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 }
             }
         }
@@ -60,7 +60,7 @@ public class FinishedPanelManager : MonoBehaviour
                 if (check == 1)
                 {
                     toy.transform.localScale = new Vector3(-1, -1, 1);
-                    toy.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
+                    toy.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
                 }
             }
         }     

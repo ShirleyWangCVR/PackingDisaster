@@ -112,12 +112,12 @@ public class T2SeesawController : MonoBehaviour
         // check if there is only 1 variable on the left hand side
         if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
         {
-            return rightHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
+            return rightHandSidePositive.GetComponent<T2PositiveSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<T2NegativeSide>().NumVariables() == 0;
         }
 
         if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
         {
-            return leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
+            return leftHandSidePositive.GetComponent<T2PositiveSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<T2NegativeSide>().NumVariables() == 0;
         }
 
         return false;
@@ -202,4 +202,24 @@ public class T2SeesawController : MonoBehaviour
             pool.ReturnObject(bottom);
         }
     } */
+
+    public void AddBothSides(int num)
+    {
+
+    }
+
+    public void SubtractBothSides(int num)
+    {
+
+    }
+
+    public void MultiplyBothSides(int num)
+    {
+
+    }
+
+    public void DivideBothSides(int num)
+    {
+        
+    }
 }
