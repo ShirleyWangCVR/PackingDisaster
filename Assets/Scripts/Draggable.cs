@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // to make dragging from side of equation look slightly nicer
     GameObject placeholder = null;
     private SimpleObjectPool pool;
+    private bool allowDrag;
 
     public void Start()
     {
@@ -64,11 +66,32 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // set blockRaycasts to false while dragging so pointer can be detected 
         // so object can be detected on drop zones
         GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+        string[] names = new string[eventData.hovered.Count];
+        int i = 0;
+        foreach (GameObject thing in eventData.hovered)
+        {
+            names[i] = eventData.hovered[i].name;
+            i++;
+        }
+
+        if (names.Contains("Image"))
+        {
+            allowDrag = true;
+        } else {
+            allowDrag = false;
+        }
+        
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        this.transform.position = eventData.position;
+        if (allowDrag)
+        {
+            this.transform.position = eventData.position;
+        }
+
+        // this.transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
