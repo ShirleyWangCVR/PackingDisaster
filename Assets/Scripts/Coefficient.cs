@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Coefficient : MonoBehaviour
 {
@@ -10,10 +11,6 @@ public class Coefficient : MonoBehaviour
     public Text fractionLineText;
     public Text numberText;
 
-    private int numerator;
-    private int denominator;
-    private int wholeNumber;
-    private double exactNumber;
     private bool isWholeNumber;
     private Fraction value;
     
@@ -22,16 +19,6 @@ public class Coefficient : MonoBehaviour
     {
         isWholeNumber = true;
     }
-
-    /* public double GetValue()
-    {
-        if (isWholeNumber)
-        {
-            return wholeNumber;
-        } else {
-            return exactNumber;
-        }
-    } */
 
     public double GetValue()
     {
@@ -50,12 +37,6 @@ public class Coefficient : MonoBehaviour
     
     public void NegativeCurrentValue()
     {
-        /* if (isWholeNumber)
-        {
-            SetIntValue(0 - wholeNumber);
-        } else {
-            SetFractionValue(0 - numerator, denominator);
-        } */
         SetValue(-value);
     }
 
@@ -102,50 +83,4 @@ public class Coefficient : MonoBehaviour
         fractionLineText.gameObject.SetActive(false);
     }
     
-
-
-    public void SetIntValue(int newValue)
-    {
-        isWholeNumber = true;
-        wholeNumber = newValue;
-        numberText.gameObject.SetActive(true);
-        numberText.text = wholeNumber.ToString();
-
-        numeratorText.gameObject.SetActive(false);
-        denominatorText.gameObject.SetActive(false);
-        fractionLineText.gameObject.SetActive(false);
-    }
-
-    public void SetFractionValue(int num, int denom)
-    {
-        if (num % denom == 0)
-        {
-            isWholeNumber = true;
-            wholeNumber = (int) num / denom;
-            numberText.gameObject.SetActive(true);
-            numberText.text = wholeNumber.ToString();
-
-            numeratorText.gameObject.SetActive(false);
-            fractionLineText.gameObject.SetActive(false);
-            denominatorText.gameObject.SetActive(false);
-        } 
-        else
-        {
-            isWholeNumber = false;
-            exactNumber = (double) num / (double) denom;
-            numerator = num;
-            denominator = denom;
-
-            numberText.gameObject.SetActive(false);
-
-            numeratorText.gameObject.SetActive(true);
-            numeratorText.text = numerator.ToString();
-
-            fractionLineText.gameObject.SetActive(true);
-
-            denominatorText.gameObject.SetActive(true);
-            denominatorText.text = denominator.ToString();
-        }
-    }
-
 }

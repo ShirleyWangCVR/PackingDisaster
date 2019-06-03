@@ -8,18 +8,31 @@ using UnityEngine.SceneManagement;
 public class LevelSelectController : MonoBehaviour
 {
     private DataController dataController;
+    private int level;
 
     // Start is called before the first frame update
     void Start()
     {
         dataController = FindObjectOfType<DataController>();
+
+        // eventually set up buttons according to how much they've completed.
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartLevel(int level)
     {
+        dataController.SetDifficulty(level);
         
+        if (level <= 5)
+        {
+            SceneManager.LoadScene("Main");
+        }
+        else
+        {
+            SceneManager.LoadScene("T2Main");
+        }
     }
+
+
 
     public void ToLevel0()
     {
