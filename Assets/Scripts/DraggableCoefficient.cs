@@ -26,6 +26,14 @@ public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandl
         coefPosition = this.transform.position;
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
+        this.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        // this.transform.parent.gameObject.GetComponent<CanvasGroup>().interactable = false;
+
+        foreach (Transform child in this.transform.parent.Find("TermsInBracket"))
+        {
+            child.gameObject.GetComponent<CanvasGroup>().ignoreParentGroups = true;
+        }
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -38,6 +46,12 @@ public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandl
         this.transform.position = coefPosition;
 
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        this.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        foreach (Transform child in this.transform.parent.Find("TermsInBracket"))
+        {
+            child.gameObject.GetComponent<CanvasGroup>().ignoreParentGroups = false;
+        }
     }
 
     

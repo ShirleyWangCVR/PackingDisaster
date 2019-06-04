@@ -22,21 +22,21 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // to make dragging from side of equation look slightly nicer
     private GameObject placeholder = null;
     private SimpleObjectPool pool;
-    private bool allowDrag;
+    public bool allowDrag;
 
     public void Start()
     {
         parentToReturnTo = this.transform.parent;
         gameController = FindObjectOfType<GameController>();
         gameController2 = FindObjectOfType<T2GameController>();
-        toyPool = GameObject.Find("Toy Pool").GetComponent<SimpleObjectPool>();
-        variablePool = GameObject.Find("Box Pool").GetComponent<SimpleObjectPool>();
         
         if (typeOfItem == Slot.Value)
         {
+            toyPool = GameObject.Find("Toy Pool").GetComponent<SimpleObjectPool>();
             pool = toyPool;
         } else if (typeOfItem == Slot.Variable)
         {
+            variablePool = GameObject.Find("Box Pool").GetComponent<SimpleObjectPool>();
             pool = variablePool;
         }
 
