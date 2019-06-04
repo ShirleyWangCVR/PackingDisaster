@@ -22,18 +22,13 @@ public class Bracket : MonoBehaviour
 
         // for testing
         // erase this on finish
-        this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(3);
+        /* this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(3);
         foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
         {
             child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(2);
-        }
+        } */
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void TermDroppedOn()
     {
@@ -73,6 +68,8 @@ public class Bracket : MonoBehaviour
                 {
                     // Transform parent = this.gameObject.transform.parent;
                     child.SetParent(this.gameObject.transform.parent);
+
+                    // also need to set parentToReturnTo in Draggable
                 }
 
                 i++;
@@ -84,4 +81,16 @@ public class Bracket : MonoBehaviour
         }
     }
 
+    public double GetValue()
+    {
+        double coefficient = this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
+
+        double value = 0;
+        foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
+        {
+            value = value + child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() * child.gameObject.GetComponent<HasValue>().GetValue();
+        }
+
+        return coefficient * value;
+    }
 }

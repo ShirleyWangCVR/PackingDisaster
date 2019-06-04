@@ -43,6 +43,9 @@ public class DataController : MonoBehaviour
             // for testing
             return allEquationsUsed[1];
         }
+        else if (currentDifficulty == 16) {
+            return allEquationsUsed[2];
+        }
         else {
             return allEquationsUsed[0];
         }

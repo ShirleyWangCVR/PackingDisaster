@@ -11,6 +11,7 @@ public class BothSideOperations : MonoBehaviour
     public GameObject operationsPanel;
     public GameObject numbersPanel;
     public T2GameController gameController;
+    public T3GameController gameController3;
 
     private string operation;
     private int number;
@@ -21,6 +22,7 @@ public class BothSideOperations : MonoBehaviour
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);
         gameController = FindObjectOfType<T2GameController>();
+        gameController3 = FindObjectOfType<T3GameController>();
     }
 
     public void InitiateBothSideOperations()
@@ -46,7 +48,14 @@ public class BothSideOperations : MonoBehaviour
         Debug.Log(operation);
         Debug.Log(number);
 
-        gameController.ProcessBothSideOperation(operation, number);
+        if (gameController != null)
+        {
+            gameController.ProcessBothSideOperation(operation, number);
+        } else if (gameController3 != null)
+        {
+            gameController3.ProcessBothSideOperation(operation, number);
+        }
+        // gameController.ProcessBothSideOperation(operation, number);
 
         BackToMainScreen();        
     }

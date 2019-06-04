@@ -12,6 +12,7 @@ public class T3GameController : MonoBehaviour
     public GameObject seesaw;
     public SimpleObjectPool variablePool;
     public SimpleObjectPool toyPool;
+    public GameObject bracketPrefab;
     public FinishedPanelManager finishedDisplayManager;
     public DialogueController dialogueController;
 
@@ -81,6 +82,76 @@ public class T3GameController : MonoBehaviour
 
         }
 
+        for (int i = 0; i < lhs.numBrackets; i++)
+        {
+            int coefficient = lhs.bracketCoefficients[i];
+            Expression expression = lhs.bracketExpressions[i];
+
+            if (coefficient > 0)
+            {
+                GameObject newObject = (GameObject) Instantiate(bracketPrefab);
+                newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(coefficient);
+                newObject.transform.SetParent(seesaw.transform.Find("LHSPositive"));
+
+                if (expression.numVars > 0)
+                {
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+                else if (expression.numVars < 0)
+                {
+                    // change the color and upside down
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+
+                if (expression.numValues > 0)
+                {
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+                    
+                }
+                else if (expression.numValues < 0)
+                {
+                    
+                    // change the color and upside down
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+
+                }
+            } 
+            else if (coefficient < 0)
+            {
+                GameObject newObject = (GameObject) Instantiate(bracketPrefab);
+                newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(coefficient);
+                newObject.transform.SetParent(seesaw.transform.Find("LHSNegative"));
+                // also maybe change the color of the brackets too
+
+                if (expression.numVars > 0)
+                {
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+                else if (expression.numVars < 0)
+                {
+                    // change the color and upside down
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+
+                if (expression.numValues > 0)
+                {
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+                    
+                }
+                else if (expression.numValues < 0)
+                {
+                    
+                    // change the color and upside down
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+
+                }
+            }
+        }
+
         if (rhs.numVars > 0)
         {
             SetUpCoefficient(variablePool, seesaw.transform.Find("RHSPositive"), rhs.numVars, true);
@@ -101,6 +172,76 @@ public class T3GameController : MonoBehaviour
         {
             SetUpCoefficient(toyPool, seesaw.transform.Find("RHSNegative"), rhs.numValues, false);
             
+        }
+
+        for (int i = 0; i < rhs.numBrackets; i++)
+        {
+            int coefficient = rhs.bracketCoefficients[i];
+            Expression expression = rhs.bracketExpressions[i];
+
+            if (coefficient > 0)
+            {
+                GameObject newObject = (GameObject) Instantiate(bracketPrefab);
+                newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(coefficient);
+                newObject.transform.SetParent(seesaw.transform.Find("RHSPositive"));
+
+                if (expression.numVars > 0)
+                {
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+                else if (expression.numVars < 0)
+                {
+                    // change the color and upside down
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+
+                if (expression.numValues > 0)
+                {
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+                    
+                }
+                else if (expression.numValues < 0)
+                {
+                    
+                    // change the color and upside down
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+
+                }
+            } 
+            else if (coefficient < 0)
+            {
+                GameObject newObject = (GameObject) Instantiate(bracketPrefab);
+                newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(coefficient);
+                newObject.transform.SetParent(seesaw.transform.Find("RHSNegative"));
+                // also maybe change the color of the brackets too
+
+                if (expression.numVars > 0)
+                {
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+                else if (expression.numVars < 0)
+                {
+                    // change the color and upside down
+                    SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+                    
+                }
+
+                if (expression.numValues > 0)
+                {
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+                    
+                }
+                else if (expression.numValues < 0)
+                {
+                    
+                    // change the color and upside down
+                    SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+
+                }
+            }
         }
     }
 
@@ -135,7 +276,7 @@ public class T3GameController : MonoBehaviour
         }
 
         // if seesaw fell over end game
-        if (seesaw.GetComponent<T2SeesawController>().FellOver())
+        if (seesaw.GetComponent<T3SeesawController>().FellOver())
         {
             EndRound("Scale Tipped");
         }
@@ -166,21 +307,21 @@ public class T3GameController : MonoBehaviour
         } 
         else if (howEnded == "Finished Check") 
         {
-            if (seesaw.GetComponent<T2SeesawController>().CheckIfComplete())
+            if (seesaw.GetComponent<T3SeesawController>().CheckIfComplete())
             {
-                if (seesaw.GetComponent<T2SeesawController>().CorrectlyBalanced())
+                if (seesaw.GetComponent<T3SeesawController>().CorrectlyBalanced())
                 {
                     finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
                 } 
                 else 
                 {
                     // lost because wrong answer, get whatever they answered
-                    int side = (int) seesaw.GetComponent<T2SeesawController>().GetLeftHandSideValue();
+                    int side = (int) seesaw.GetComponent<T3SeesawController>().GetLeftHandSideValue();
                     if (equation.variableValue != side)
                     {
                         finishedDisplayManager.DisplayWrongBalanced(side);
                     } else {
-                        side = seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
+                        side = (int) seesaw.GetComponent<T3SeesawController>().GetRightHandSideValue();
                         finishedDisplayManager.DisplayWrongBalanced(side);
                     }
                 }
@@ -209,26 +350,26 @@ public class T3GameController : MonoBehaviour
     {
         if (operation == "Addition")
         {
-            seesaw.GetComponent<T2SeesawController>().AddBothSides(number);
+            seesaw.GetComponent<T3SeesawController>().AddBothSides(number);
         } 
         else if (operation == "Subtraction")
         {
-            seesaw.GetComponent<T2SeesawController>().SubtractBothSides(number);
+            seesaw.GetComponent<T3SeesawController>().SubtractBothSides(number);
         } 
         else if (operation == "Multiplication")
         {
-            seesaw.GetComponent<T2SeesawController>().MultiplyBothSides(number);
+            seesaw.GetComponent<T3SeesawController>().MultiplyBothSides(number);
         } 
         else if (operation == "Division")
         {
-            seesaw.GetComponent<T2SeesawController>().DivideBothSides(number);
+            seesaw.GetComponent<T3SeesawController>().DivideBothSides(number);
         }
     }
 
     public void SetDragging(bool dragging)
     {
         currentlyDragging = dragging;
-        seesaw.GetComponent<T2SeesawController>().SetDragging(dragging);
+        seesaw.GetComponent<T3SeesawController>().SetDragging(dragging);
     }
 
 }

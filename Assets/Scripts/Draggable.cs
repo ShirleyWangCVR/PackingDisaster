@@ -54,6 +54,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         HasValue hasValue = placeholder.AddComponent<HasValue>();
         hasValue.typeOfItem = Slot.Dummy;
 
+        Draggable draggable = placeholder.AddComponent<Draggable>();
+        draggable.typeOfItem = Slot.Dummy;
+
         placeholder.GetComponent<RectTransform>().sizeDelta = new Vector2(this.GetComponent<RectTransform>().sizeDelta.x, this.GetComponent<RectTransform>().sizeDelta.y);
         le.preferredWidth = this.GetComponent<LayoutElement>().preferredWidth;
         le.preferredHeight = this.GetComponent<LayoutElement>().preferredHeight;

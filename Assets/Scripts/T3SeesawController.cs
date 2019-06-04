@@ -83,9 +83,9 @@ public class T3SeesawController : MonoBehaviour
         double lhs = 0;
         double rhs = 0;
 
-        lhs = leftHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        lhs = leftHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
 
-        rhs = rightHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        rhs = rightHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
 
         tilt = lhs - rhs;
     }
@@ -140,13 +140,13 @@ public class T3SeesawController : MonoBehaviour
     // get total numerical value of right hand side
     public double GetRightHandSideValue()
     {
-        return rightHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() - rightHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        return rightHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
     }
 
     // get total numerical value of left hand side
     public double GetLeftHandSideValue()
     {
-        return leftHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        return leftHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
     }
 
     public void AddBothSides(int num)
