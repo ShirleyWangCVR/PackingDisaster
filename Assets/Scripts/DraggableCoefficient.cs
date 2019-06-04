@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public Transform parentToReturnTo;
+    public Vector3 coefPosition;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        parentToReturnTo = this.transform.parent;
     }
 
     // Update is called once per frame
@@ -20,21 +23,22 @@ public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandl
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        coefPosition = this.transform.position;
 
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        
+        this.transform.position = eventData.position + new Vector2(-10, 0);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        this.transform.position = coefPosition;
+
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
-    public void OnDrop(PointerEventData eventData)
-    {
-        
-    }
+    
 }

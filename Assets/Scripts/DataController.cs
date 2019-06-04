@@ -39,7 +39,7 @@ public class DataController : MonoBehaviour
         {
             return allEquationsUsed[0];
         }
-        else if (currentDifficulty == 8) {
+        else if (currentDifficulty == 6) {
             // for testing
             return allEquationsUsed[1];
         }

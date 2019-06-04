@@ -11,15 +11,16 @@ using UnityEngine.UI;
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public Transform parentToReturnTo;
-    public enum Slot {Variable, Value, All, Dummy};
+    public enum Slot {Variable, Value, All, Dummy, Bracket};
     public Slot typeOfItem = Slot.Value;
     public GameController gameController;
     public T2GameController gameController2;
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
+    public bool inBracket;
 
     // to make dragging from side of equation look slightly nicer
-    GameObject placeholder = null;
+    private GameObject placeholder = null;
     private SimpleObjectPool pool;
     private bool allowDrag;
 
@@ -38,6 +39,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             pool = variablePool;
         }
+
+        inBracket = false;
     }
     
     public void OnBeginDrag(PointerEventData eventData)
@@ -67,7 +70,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // so object can be detected on drop zones
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        string[] names = new string[eventData.hovered.Count];
+        if (! inBracket)
+        {
+            allowDrag = true;
+        } else {
+            allowDrag = false;
+        }
+
+        /* string[] names = new string[eventData.hovered.Count];
         int i = 0;
         foreach (GameObject thing in eventData.hovered)
         {
@@ -80,7 +90,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             allowDrag = true;
         } else {
             allowDrag = false;
-        }
+        } */
         
     }
 
@@ -121,6 +131,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             gameController2.SetDragging(dragging);
         }
+    }
+
+    public void SetBracketStatus(bool inside)
+    {
+        inBracket = inside;
     }
 
     public void DestroyPlaceholder()
