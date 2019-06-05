@@ -15,8 +15,8 @@ public class GameController : MonoBehaviour
     public FinishedPanelManager finishedDisplayManager;
     public DialogueController dialogueController;
 
-    private DataController dataController;
-    private EquationData equation; // current equation being displayed
+    protected DataController dataController;
+    protected EquationData equation; // current equation being displayed
     
     private bool isRoundActive; 
     private float timeUsed;
@@ -50,7 +50,7 @@ public class GameController : MonoBehaviour
     }
 
     // set up the seesaw according to the equation data
-    private void SetUpSeesaw()
+    public void SetUpSeesaw()
     {
         Expression lhs = equation.lhs;
         Expression rhs = equation.rhs;
@@ -225,6 +225,8 @@ public class GameController : MonoBehaviour
 
     public void SetDragging(bool dragging)
     {
+        Debug.Log("Set Dragging in parent controller");
+        
         currentlyDragging = dragging;
         seesaw.GetComponent<SeesawController>().SetDragging(dragging);
     }

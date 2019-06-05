@@ -102,6 +102,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (allowDrag)
         {
             this.transform.position = eventData.position;
+
+            // might work for screen space camera
+            /* Vector3 screenPoint = Input.mousePosition;
+            screenPoint.z = 100.0f; //distance of the plane from the camera
+            this.transform.position = Camera.main.ScreenToWorldPoint(screenPoint); */
         }
 
         // this.transform.position = eventData.position;

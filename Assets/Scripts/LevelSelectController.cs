@@ -22,7 +22,11 @@ public class LevelSelectController : MonoBehaviour
     {
         dataController.SetDifficulty(level);
         
-        if (level <= 5)
+        if (level == 1)
+        {
+            SceneManager.LoadScene(6);
+        }
+        else if (level <= 5)
         {
             SceneManager.LoadScene("Main");
         }

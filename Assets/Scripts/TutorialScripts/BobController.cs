@@ -8,10 +8,23 @@ public class BobController : MonoBehaviour
 
     void Start() {
         anim = GetComponent(typeof(Animator)) as Animator;
+
+        if (anim == null)
+        {
+            Debug.Log("did not find anim");
+        }
     }
 
     public void dialogueEnterLeft() {
         Debug.Log("About to set trigger: dialogueEnterLeft.");
+
+        anim = GetComponent(typeof(Animator)) as Animator;
+
+        if (anim == null)
+        {
+            Debug.Log("did not find anim");
+        }
+
         anim.SetTrigger("dialogueEnterLeft");
     }
 

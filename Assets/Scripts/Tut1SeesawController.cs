@@ -4,25 +4,24 @@ using UnityEngine;
 
 /* Controller for the Game Seesaw
  */
-public class SeesawController : MonoBehaviour
+public class Tut1SeesawController : SeesawController
 {
-    public GameObject leftHandSidePositive;
-    public GameObject rightHandSidePositive;
-    public GameObject leftHandSideNegative;
-    public GameObject rightHandSideNegative;
-    public SimpleObjectPool toyPool;
-    public SimpleObjectPool variablePool;
-
-    protected bool currentlyDragging;
+    // public GameObject leftHandSidePositive;
+    // public GameObject rightHandSidePositive;
+    // public GameObject leftHandSideNegative;
+    // public GameObject rightHandSideNegative;
+    // public SimpleObjectPool toyPool;
+    // public SimpleObjectPool variablePool;
 
     private int tilt;
-    private int interval = 2; // cancel out values every 2 seconds
     private float nextTime = 0;
+    // private bool currentlyDragging;
 
     // Start is called before the first frame update
     void Start()
     {
         // set initial tilt to 0
+        currentlyDragging = false;
         tilt = 0;
         // InvokeRepeating("DebugTilt", 0, 3.0f);
     }
@@ -55,17 +54,17 @@ public class SeesawController : MonoBehaviour
 
         if (tilt > 0)
         {
-            this.transform.Rotate(0, 0, 0.05f, Space.Self);
+            this.transform.Rotate(0, 0, 0.01f, Space.Self);
         }
         else if (tilt < 0)
         {
-            this.transform.Rotate(0, 0, -0.05f, Space.Self);
+            this.transform.Rotate(0, 0, -0.01f, Space.Self);
         }
         else
         {   // tilt == 0
             // Unity doesn't move it by exact values so give it a slight bit of wiggle room when
             // returning to horizontal
-            if (currangle > 0.05 || currangle < -0.05)
+            if (currangle >= 0.03 || currangle <= -0.03)
             {
                 if (this.transform.rotation.eulerAngles.z < 180)
                 {
@@ -77,6 +76,33 @@ public class SeesawController : MonoBehaviour
             }
         }
 
+    }
+
+    public bool CheckOneDraggedUnbalanced()
+    {
+        // this assumes that they're dragging a toy fix this
+        return (tilt == 2 || tilt == -2) && currentlyDragging == false;
+    }
+
+    public bool CheckAnotherDraggedBalanced()
+    {
+        return (tilt == 0 && currentlyDragging == false);
+    }
+
+    public bool CheckDraggedToToyBoxUnBalanced()
+    {
+        return (tilt == 1 || tilt == -1) && currentlyDragging == false;
+    }
+
+    public bool CheckDraggedFromToyBoxBalanced()
+    {
+        // not very thorough checking
+        return (tilt == 0 && currentlyDragging == false);
+    }
+
+    public bool CheckDraggedStillBalanced()
+    {
+        return leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<PositiveSide>().NumValues() == 1 && rightHandSidePositive.GetComponent<PositiveSide>().NumValues() == 4 && tilt == 0 && ! currentlyDragging;
     }
 
     // update the current numerical tilt representing how unbalanced the seesaw is

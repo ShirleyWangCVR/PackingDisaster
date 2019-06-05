@@ -26,6 +26,11 @@ public class TutorialManager : MonoBehaviour
         dialogueModMgr.InitDialogue("BOB", dialogueContents);
     }
 
+    public IEnumerator BobDialogue(string[] dialogueContents) {
+        dialogueModMgr.ContinueDialogue("BOB", dialogueContents);
+        yield return new WaitForSeconds(0.1f);
+    }
+
     public void kickBob() {
         bobCtrl.dialogueExitLeft();
     }
