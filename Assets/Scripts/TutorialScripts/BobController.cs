@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bob : MonoBehaviour
+public class BobController : MonoBehaviour
 {
     private Animator anim;
 

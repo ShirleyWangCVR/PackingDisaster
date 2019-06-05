@@ -8,6 +8,8 @@ public class DialogueTrigger : MonoBehaviour
     public string[] dialogueSentences;
 
     public void TriggerDialogue() {
-        FindObjectOfType<DialogueManager>().StartDialogue(dialogueSentences);
+        Debug.Log("TriggerDialogue() in DialogueTrigger entered.");
+        // FindObjectOfType<TutorialManager>().InitBobDialogue(dialogueSentences);
+        StartCoroutine(FindObjectOfType<TutorialManager>().InitBobDialogue(dialogueSentences));
     }
 }

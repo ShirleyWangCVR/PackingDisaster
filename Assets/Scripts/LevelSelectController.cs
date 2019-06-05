@@ -26,7 +26,7 @@ public class LevelSelectController : MonoBehaviour
         {
             SceneManager.LoadScene("Main");
         }
-        else if (level > 6 && level < 16)
+        else if (level >= 6 && level < 16)
         {
             SceneManager.LoadScene("T2Main");
         } else if (level == 16)
