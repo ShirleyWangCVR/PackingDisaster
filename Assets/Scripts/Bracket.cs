@@ -1,16 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Bracket : MonoBehaviour
 {
     public Expression expression;
     public int numTerms;
     public int numDroppedOn;
+    public Sprite solidArrow;
+    public Sprite dashedArrow;
+    public Image arrow1;
+    public Image arrow2;
+    public GameObject arrow1Text;
+    public GameObject arrow2Text;
+    private bool expanded;
     
     // Start is called before the first frame update
     void Start()
     {
+        expanded = false;
         numDroppedOn = 0;
         numTerms = this.gameObject.transform.Find("TermsInBracket").childCount;
 
@@ -22,11 +31,19 @@ public class Bracket : MonoBehaviour
 
         // for testing
         // erase this on finish
-        /* this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(3);
+        this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(3);
         foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
         {
             child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(2);
-        } */
+        }
+    }
+
+    public void CheckExpanded()
+    {
+        if (expanded)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
 
@@ -40,14 +57,8 @@ public class Bracket : MonoBehaviour
             // we have successfully expanded the bracket
             Debug.Log("Expanded");
 
-            /* for(int i = 0; i < this.gameobject.transform.GetChildCount(); i++)
-            {
-            GameObject Go = this.gameobject.transform.GetChild(i);
-            } */
-
             int i = 0;
             int numChildren = this.gameObject.transform.Find("TermsInBracket").childCount;
-            
             while (i < numChildren)
             {
                 Transform child = this.gameObject.transform.Find("TermsInBracket").GetChild(0);
@@ -71,15 +82,62 @@ public class Bracket : MonoBehaviour
 
                     // also need to set parentToReturnTo in Draggable
                 }
-
                 i++;
             }
 
-            // destroy bracket since no longer needed
-            Destroy(this.gameObject);
+            Coefficient coeff = this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
 
+            arrow1.gameObject.SetActive(true);
+            arrow1.sprite = solidArrow;
+            arrow1Text.SetActive(true);
+            arrow1Text.transform.Find("Text").gameObject.GetComponent<Text>().text = coeff.GetValue().ToString() + "x";
+
+            arrow2.gameObject.SetActive(true);
+            arrow2.gameObject.GetComponent<Image>().sprite = solidArrow;
+            arrow2Text.SetActive(true);
+            arrow2Text.transform.Find("Text").gameObject.GetComponent<Text>().text = coeff.GetValue().ToString() + "x";
+
+            // destroy bracket since no longer needed
+            // yield return new WaitForSeconds(1);
+
+            Debug.Log("Destroying");
+            expanded = true;
+
+        } 
+        else // first drop
+        {
+            int coef = (int) this.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
+
+            if (this.transform.Find("TermsInBracket").GetChild(0).Find("Coefficient").gameObject.GetComponent<BracketInsideCoefficient>().droppedOn)
+            {
+                // first item in bracket was dropped on
+                arrow1.gameObject.SetActive(true);
+                arrow1.sprite = solidArrow;
+                arrow1Text.SetActive(true);
+                arrow1Text.transform.Find("Text").gameObject.GetComponent<Text>().text = coef.ToString() + "x";
+
+                arrow2.gameObject.SetActive(true);
+                arrow2.gameObject.GetComponent<Image>().sprite = dashedArrow;
+            } else 
+            {
+                arrow2.gameObject.SetActive(true);
+                arrow2.sprite = solidArrow;
+                arrow2Text.SetActive(true);
+                arrow2Text.transform.Find("Text").gameObject.GetComponent<Text>().text = coef.ToString() + "x";
+
+                arrow1.gameObject.SetActive(true);
+                arrow1.gameObject.GetComponent<Image>().sprite = dashedArrow;
+            }
+            
+            // this.transform.Find("Arrow 1");
         }
     }
+
+    public void DestroyThis()
+    {
+        Destroy(this.gameObject);
+    }
+
 
     public double GetValue()
     {

@@ -33,6 +33,10 @@ public class BracketInsideCoefficient : MonoBehaviour, IDropHandler
         {
             droppedOn = true;
             bracket.TermDroppedOn();
+            // StartCoroutine(bracket.TermDroppedOn());
+            
+            bracket.Invoke("CheckExpanded", 1f);
+            Debug.Log("Waited");
         }
     }
 }
