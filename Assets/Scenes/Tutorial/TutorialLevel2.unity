@@ -1552,7 +1552,6 @@ MonoBehaviour:
   tutorialManager: {fileID: 780772440}
   dialogueModuleManager: {fileID: 246812144}
   interactivePanel: {fileID: 397961181}
-  dialogueModuleManager: {fileID: 246812144}
   dialogueTrigger1: {fileID: 512351024}
   dialogueTrigger2: {fileID: 773458288}
   dialogueTrigger3: {fileID: 1767525210}
@@ -1839,7 +1838,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - Okay, here's Order 2.
-  - 'Oh, that box is upside down on the bottom of the seesaw instead of on the top. '
+  - 'Oh, that box is upside down on the bottom of the seesaw in the red part instead
+    of on the top in the blue part. '
+  - The red part under the seesaw is the negative part of the seesaw.  All objects
+    in it have reversed gravity and press upwards.
   - That means its weight is being subtracted from that side instead of added.
   - When an object is on the bottom instead of the top that results in its weight
     being subtracted rather than added.
