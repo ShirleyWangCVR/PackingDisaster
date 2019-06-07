@@ -270,7 +270,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -52}
+  m_AnchoredPosition: {x: 150, y: -55}
   m_SizeDelta: {x: 260, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &66404442
@@ -430,7 +430,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191794855}
+      - m_Target: {fileID: 362771283}
         m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -627,53 +627,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 140283586}
   m_CullTransparentMesh: 0
---- !u!1 &146684281
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 146684283}
-  - component: {fileID: 146684282}
-  m_Layer: 0
-  m_Name: DialogueTrigger7
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &146684282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146684281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15837033acd8fbb46b0a683277049d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSentences:
-  - Great job, you did it!
-  - But there's still a lot of orders left to fix.
-  - Press Next Question to go onto the next order.
---- !u!4 &146684283
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146684281}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &156441274
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +709,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191794855}
+      - m_Target: {fileID: 362771283}
         m_MethodName: NextQuestion
         m_Mode: 1
         m_Arguments:
@@ -844,7 +797,7 @@ RectTransform:
   - {fileID: 1039685496}
   - {fileID: 299493757}
   m_Father: {fileID: 858786911}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1539,7 +1492,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &362771281
 GameObject:
@@ -1570,7 +1523,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &362771283
 MonoBehaviour:
@@ -1581,7 +1534,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 362771281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fb36b8584e84644899741d0f7969815, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fb2caad8e17a6647ba27d7244be109f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeUsedText: {fileID: 0}
@@ -1593,64 +1546,10 @@ MonoBehaviour:
   dialogueController: {fileID: 0}
   tutorialManager: {fileID: 780772440}
   dialogueModuleManager: {fileID: 246812144}
+  interactivePanel: {fileID: 397961181}
   dialogueTrigger1: {fileID: 512351024}
   dialogueTrigger2: {fileID: 773458288}
-  dialogueTrigger3: {fileID: 1767525210}
-  dialogueTrigger4: {fileID: 1037295402}
-  dialogueTrigger5: {fileID: 1284709977}
-  dialogueTrigger6: {fileID: 391136827}
-  dialogueTrigger7: {fileID: 146684282}
-  interactivePanel: {fileID: 397961181}
---- !u!1 &391136826
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 391136828}
-  - component: {fileID: 391136827}
-  m_Layer: 0
-  m_Name: DialogueTrigger6
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &391136827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 391136826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15837033acd8fbb46b0a683277049d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSentences:
-  - Oh I see!
-  - By taking away a toy from both sides we subtract the number of extra toys from
-    the side with the box,
-  - while also keeping the seesaw balanced!
-  - Keep going!  I'm sure you can isolate the box on one side now!
-  - Once you've done it, press Finished Check in the corner!
---- !u!4 &391136828
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 391136826}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  dialogueTrigger3: {fileID: 0}
 --- !u!1 &397961181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1683,9 +1582,8 @@ RectTransform:
   m_Children:
   - {fileID: 1952886648}
   - {fileID: 1273995708}
-  - {fileID: 1565226222}
   m_Father: {fileID: 858786911}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1784,7 +1682,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466808575
 GameObject:
@@ -1930,14 +1828,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Oh, I'm so happy you're here!
-  - It's a disaster!  I lost the record detailing how many toys are in each box!
-  - And the customers are coming to pick up the packages real soon!
-  - I'm managed to balance the seesaw with the boxes and some other toys.
-  - But I can't figure out how to isolate the box to figure out exactly how many toys
-    are in each box!
-  - I'm sure you can help me figure this out!
-  - You can move a toy from one side of the equation to the other by dragging it.
+  - Here's Order 3.
+  - It must be tiring to run back and forth between the seesaw and the toy crate and
+    box pile all the time.
+  - But there's a short cut!
+  - Remember how anything on the bottom of the seesaw subtracts its weight instead
+    of adds it?
+  - If you drag an object from the positive side of one side to the negative side
+    of the other side,
+  - Then that's the same as subtracting the object from both sides!
+  - Since you're taking away an object from the first side, and adding a negative
+    value to the other side.
+  - Go ahead, try it!
 --- !u!4 &512351025
 Transform:
   m_ObjectHideFlags: 0
@@ -2071,7 +1973,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -52}
+  m_AnchoredPosition: {x: -150, y: -55}
   m_SizeDelta: {x: 260, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &532067070
@@ -2369,7 +2271,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 732550606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cfd0dc0d96039443b1b56e5b1a18b08, type: 3}
+  m_Script: {fileID: 11500000, guid: c881120efa15223499c1dd1f309d657f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftHandSidePositive: {fileID: 60944026}
@@ -2408,10 +2310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Yeah, like that!
-  - Oh no, but now the seesaw is tilting over!  We can't let it tilt over too much!
-  - Then the toys will fall off and hit the ground and break!
-  - Quick, drag the toy back to its original side!
+  - Yeah, like that!  The seesaw is still balanced!
+  - Now you can just cancel out the extra bears on right side of the seesaw.
+  - I'm sure you can solve it from here.  I believe in you!
 --- !u!4 &773458289
 Transform:
   m_ObjectHideFlags: 0
@@ -2486,7 +2387,7 @@ PrefabInstance:
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}
@@ -2689,11 +2590,11 @@ RectTransform:
   - {fileID: 1318269255}
   - {fileID: 1565480372}
   - {fileID: 632699470}
-  - {fileID: 193419126}
   - {fileID: 397961182}
+  - {fileID: 193419126}
   - {fileID: 246812143}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2862,54 +2763,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 956242866}
   m_CullTransparentMesh: 0
---- !u!1 &1037295401
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1037295403}
-  - component: {fileID: 1037295402}
-  m_Layer: 0
-  m_Name: DialogueTrigger4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1037295402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1037295401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15837033acd8fbb46b0a683277049d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSentences:
-  - Oh, but now the seesaw is unbalanced again.
-  - Don't worry, you can also get toys from the toy box again.
-  - Click on the toy box to get another toy and drag it back onto the seesaw to balance
-    it again.
---- !u!4 &1037295403
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1037295401}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1039685495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3053,7 +2906,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1191794853
 GameObject:
@@ -3084,7 +2937,7 @@ RectTransform:
   m_LocalScale: {x: 1.05375, y: 1.05375, z: 1.05375}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3135,17 +2988,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273995707}
-  m_LocalRotation: {x: -0, y: -0, z: -0.19134429, w: 0.98152304}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7156239, w: 0.69848585}
   m_LocalPosition: {x: 0, y: 0, z: -810.08606}
   m_LocalScale: {x: -1.529637, y: 1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -22.062}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -91.38901}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -160, y: 158}
-  m_SizeDelta: {x: 180, y: 30}
+  m_AnchoredPosition: {x: 298, y: -17}
+  m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273995709
 MonoBehaviour:
@@ -3184,54 +3037,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273995707}
   m_CullTransparentMesh: 0
---- !u!1 &1284709976
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1284709978}
-  - component: {fileID: 1284709977}
-  m_Layer: 0
-  m_Name: DialogueTrigger5
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1284709977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1284709976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15837033acd8fbb46b0a683277049d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSentences:
-  - Nice, the seesaw is balanced again!
-  - But how do we isolate the box then?
-  - Hmmm...
-  - If only we could take away toys from the seesaw but keep it balanced...
---- !u!4 &1284709978
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1284709976}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1318269254
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,7 +3394,7 @@ PrefabInstance:
     - target: {fileID: 7595298374544821102, guid: 76cb9961e25486e4b8cadb5cfb4fe3f8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7595298374544821102, guid: 76cb9961e25486e4b8cadb5cfb4fe3f8,
         type: 3}
@@ -3703,80 +3508,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1555662332}
-  m_CullTransparentMesh: 0
---- !u!1 &1565226221
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1565226222}
-  - component: {fileID: 1565226224}
-  - component: {fileID: 1565226223}
-  m_Layer: 0
-  m_Name: Seesaw Arrow 3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &1565226222
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565226221}
-  m_LocalRotation: {x: -0, y: -0, z: -0.13854943, w: 0.99035555}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
-  m_LocalScale: {x: -1.529637, y: 1.529637, z: 1.5296367}
-  m_Children: []
-  m_Father: {fileID: 397961182}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15.928}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16, y: 162}
-  m_SizeDelta: {x: 300, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1565226223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565226221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: fcc2fecd8f3c3054fadd80f38232abae, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
---- !u!222 &1565226224
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565226221}
   m_CullTransparentMesh: 0
 --- !u!1 &1565480371
 GameObject:
@@ -4040,7 +3771,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191794855}
+      - m_Target: {fileID: 362771283}
         m_MethodName: TryAgain
         m_Mode: 1
         m_Arguments:
@@ -4214,17 +3945,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952886647}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.13123181, w: 0.9913518}
   m_LocalPosition: {x: 0, y: 0, z: -810.08606}
-  m_LocalScale: {x: 1.529637, y: 1.529637, z: 1.5296367}
+  m_LocalScale: {x: 1.529637, y: -1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15.082001}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68, y: 112}
-  m_SizeDelta: {x: 100, y: 50}
+  m_AnchoredPosition: {x: -1, y: -49}
+  m_SizeDelta: {x: 150, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1952886649
 MonoBehaviour:

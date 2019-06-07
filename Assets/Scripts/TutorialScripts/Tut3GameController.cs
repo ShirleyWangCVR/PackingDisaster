@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 /* Game Controller for the main scene where the question is solved.
  */
-public class Tut2GameController : TutGameController
+public class Tut3GameController : TutGameController
 {    
     // other variables inherited from GameController
 /*     public TutorialManager tutorialManager; */
@@ -14,14 +14,14 @@ public class Tut2GameController : TutGameController
     public DialogueTrigger dialogueTrigger1;
     public DialogueTrigger dialogueTrigger2;
     public DialogueTrigger dialogueTrigger3;
-    public DialogueTrigger dialogueTrigger4;
+    // public DialogueTrigger dialogueTrigger4;
     // public DialogueTrigger dialogueTrigger5;
     // public DialogueTrigger dialogueTrigger6;
     // public DialogueTrigger dialogueTrigger7;
 /*     public GameObject interactivePanel; */
 
     private bool waitForFirstDrag;
-    private bool waitForSecondDrag;
+    // private bool waitForSecondDrag;
     // private bool waitForThirdDrag;
     // private bool waitForFourthDrag;
     // private bool waitForFifthDrag;
@@ -42,13 +42,13 @@ public class Tut2GameController : TutGameController
         // set up tutorial dialogue
         isRoundActive = false;
         waitForFirstDrag = false;
-        waitForSecondDrag = false;
+        // waitForSecondDrag = false;
         // waitForThirdDrag = false;
         // waitForFourthDrag = false;
         // waitForFifthDrag = false;
 
         dialogueTrigger1.TriggerInitialDialogue();
-        interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(true);
+        // interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -56,84 +56,44 @@ public class Tut2GameController : TutGameController
     {
         if (waitForFirstDrag)
         {
-            if (seesaw.GetComponent<Tut2SeesawController>().CheckOneMoreBoxOnBothSides())
+            if (seesaw.GetComponent<Tut3SeesawController>().CheckDraggedToNegative())
             {
                 waitForFirstDrag = false;
-                AddedBoxToBothSides();
+                DraggedToyOver();
             }
         }
 
-        if (waitForSecondDrag)
-        {
-            if (seesaw.GetComponent<Tut2SeesawController>().CheckCancelledOut())
-            {
-                waitForSecondDrag = false;
-                CancelledOutValues();
-            }
-        }
-
-        //
-/* 
-        if (waitForThirdDrag)
-        {
-            if (seesaw.GetComponent<Tut1SeesawController>().CheckDraggedToToyBoxUnBalanced())
-            {
-                waitForThirdDrag = false;
-                DraggedToToyBox();
-            }
-        }
-
-        if (waitForFourthDrag)
-        {
-            if (seesaw.GetComponent<Tut1SeesawController>().CheckDraggedFromToyBoxBalanced())
-            {
-                waitForFourthDrag = false;
-                DraggedFromToyBox();
-            }
-        } */
-
-        /* if (waitForFifthDrag)
-        {
-            if (seesaw.GetComponent<Tut1SeesawController>().CheckDraggedStillBalanced())
-            {
-                waitForFifthDrag = false;
-                DraggedCorrectly();
-            }
-        } */
-        
-        // no timer on tutorials
-        // no tip over on tutorials
     }
 
     public override void FinishedFirstDialogue()
     {
-        Debug.Log("Finished first dialogue");
+        // Debug.Log("Finished first dialogue");
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(false);
-        interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
-        interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(true);
-        interactivePanel.transform.Find("Seesaw Arrow 4").gameObject.SetActive(true);
+        interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(true);
+        // interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
+        // interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(true);
+        // interactivePanel.transform.Find("Seesaw Arrow 4").gameObject.SetActive(true);
         waitForFirstDrag = true;
     }
-    
-    public void AddedBoxToBothSides()
+
+    public void DraggedToyOver()
     {
         Debug.Log("Completed First Task");
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(false);
-        interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(false);
-        interactivePanel.transform.Find("Seesaw Arrow 4").gameObject.SetActive(false);
+        interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(false);
+        // interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(false);
+        // interactivePanel.transform.Find("Seesaw Arrow 4").gameObject.SetActive(false);
         dialogueTrigger2.TriggerDialogue();
     }
 
     public override void FinishedSecondDialogue()
     {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        interactivePanel.transform.Find("Seesaw Arrow 5").gameObject.SetActive(true);
-        waitForSecondDrag = true;
+        interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
+        // waitForSecondDrag = true;
     }
 
-    public void CancelledOutValues()
+    /* public void CancelledOutValues()
     {
         Debug.Log("Completed Second Task");
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -146,15 +106,7 @@ public class Tut2GameController : TutGameController
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         // interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
     }
-
-
-
-
-
-
-
-
-
+ */
 
     //
 

@@ -8,6 +8,7 @@ public class DialogueModuleManager : MonoBehaviour
     public Text speakerText;
     public Text dialogueText;
     public TutGameController gameController;
+    public GameObject continueButton;
 
     private Queue<string> dialogueQueue;
     private string speaker;
@@ -21,6 +22,7 @@ public class DialogueModuleManager : MonoBehaviour
         dialogueQueue = new Queue<string>();
         anim = GetComponent(typeof(Animator)) as Animator;
         gameController = FindObjectOfType<TutGameController>();
+        continueButton.SetActive(true);
         batch = 1;
     }
 
@@ -36,6 +38,7 @@ public class DialogueModuleManager : MonoBehaviour
 
     public void InitDialogue(string speaker, string[] dialogueSentences) {
         Debug.Log("Starting a dialogue.");
+        continueButton.SetActive(true);
         
         dialogueQueue.Clear();
         foreach (string sentence in dialogueSentences) {
@@ -47,6 +50,7 @@ public class DialogueModuleManager : MonoBehaviour
 
     public void ContinueDialogue(string speaker, string[] dialogueSentences) {
         Debug.Log("Starting a dialogue.");
+        continueButton.SetActive(true);
         
         dialogueQueue.Clear();
         foreach (string sentence in dialogueSentences) {
@@ -107,6 +111,7 @@ public class DialogueModuleManager : MonoBehaviour
 
     void EndDialogue() {
         Debug.Log("A conversation has ended.");
+        continueButton.SetActive(false);
 
         if (batch == 1)
         {

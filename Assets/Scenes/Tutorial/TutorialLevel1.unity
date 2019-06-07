@@ -1593,6 +1593,7 @@ MonoBehaviour:
   dialogueController: {fileID: 0}
   tutorialManager: {fileID: 780772440}
   dialogueModuleManager: {fileID: 246812144}
+  interactivePanel: {fileID: 397961181}
   dialogueTrigger1: {fileID: 512351024}
   dialogueTrigger2: {fileID: 773458288}
   dialogueTrigger3: {fileID: 1767525210}
@@ -1600,7 +1601,6 @@ MonoBehaviour:
   dialogueTrigger5: {fileID: 1284709977}
   dialogueTrigger6: {fileID: 391136827}
   dialogueTrigger7: {fileID: 146684282}
-  interactivePanel: {fileID: 397961181}
 --- !u!1 &391136826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3135,16 +3135,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273995707}
-  m_LocalRotation: {x: -0, y: -0, z: -0.19134429, w: 0.98152304}
+  m_LocalRotation: {x: -0, y: -0, z: -0.23208307, w: 0.97269607}
   m_LocalPosition: {x: 0, y: 0, z: -810.08606}
   m_LocalScale: {x: -1.529637, y: 1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -22.062}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -26.839}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -160, y: 158}
+  m_AnchoredPosition: {x: -203, y: 150}
   m_SizeDelta: {x: 180, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1273995709
@@ -3738,7 +3738,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15.928}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16, y: 162}
+  m_AnchoredPosition: {x: -38, y: 167}
   m_SizeDelta: {x: 300, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1565226223
@@ -4223,7 +4223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 68, y: 112}
+  m_AnchoredPosition: {x: 2, y: 114}
   m_SizeDelta: {x: 100, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1952886649
