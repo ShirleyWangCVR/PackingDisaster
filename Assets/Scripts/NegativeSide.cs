@@ -22,12 +22,14 @@ public class NegativeSide : MonoBehaviour, IDropHandler
             dragged.parentToReturnTo = this.transform;
             
             // requires checking as integer due to floating point errors
-            int check = (int) Mathf.Round(eventData.pointerDrag.transform.Find("Image").localScale.x);
+            dragged.ShowOnNegativeSide();
+
+            /* int check = (int) Mathf.Round(eventData.pointerDrag.transform.Find("Image").localScale.x);
             if (check == 1)
             {
                 eventData.pointerDrag.transform.Find("Image").localScale = new Vector3(-1, -1, 1);
                 eventData.pointerDrag.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
-            }
+            } */
         }  
     }
 

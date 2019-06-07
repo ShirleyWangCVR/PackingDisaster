@@ -194,21 +194,43 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                                 eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 pool.ReturnObject(this.gameObject);
                             }
-
                         }
-
-
                     }
-                    
                 }                
-
             }
         }
-    
     }
 
     public void DestroyPlaceholder()
     {
         Destroy(placeholder);
+    }
+
+    public void ShowOnPositiveSide()
+    {
+        if (typeOfItem == Slot.Value || typeOfItem == Slot.Variable)
+        {
+            this.gameObject.transform.Find("Image").localScale = new Vector3(1, 1, 1);
+            this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        } 
+        else if (typeOfItem == Slot.Bracket)
+        {
+            this.gameObject.transform.Find("Image").localScale = new Vector3(1, 1, 1);
+            this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 139);
+        }
+    }
+
+    public void ShowOnNegativeSide()
+    {
+        if (typeOfItem == Slot.Value || typeOfItem == Slot.Variable)
+        {
+            this.gameObject.transform.Find("Image").localScale = new Vector3(-1, -1, 1);
+            this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
+        }
+        else if (typeOfItem == Slot.Bracket)
+        {
+            this.gameObject.transform.Find("Image").localScale = new Vector3(1, -1, 1);
+            this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 43, 43, 139);
+        }
     }
 }

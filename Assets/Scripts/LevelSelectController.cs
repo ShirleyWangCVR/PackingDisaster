@@ -21,25 +21,7 @@ public class LevelSelectController : MonoBehaviour
     {
         // eventually load tutorial scenes accordingly
         dataController.SetDifficulty(level);
-        
-        if (level == 1)
-        {
-            SceneManager.LoadScene(6);
-        }
-        else if (level <= 5)
-        {
-            SceneManager.LoadScene("Main");
-        }
-        else if (level >= 6 && level < 16)
-        {
-            SceneManager.LoadScene("T2Main");
-        } else if (level >= 16)
-        {
-            SceneManager.LoadScene("T3Main");
-        } else 
-        {
-            SceneManager.LoadScene("Main");
-        }
+        dataController.StartLevel(level);
     }
 
     public void BackToMenu()

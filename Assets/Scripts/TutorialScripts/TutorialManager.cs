@@ -31,7 +31,7 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
     }
 
-    public void kickBob() {
+    public void KickBob() {
         bobCtrl.dialogueExitLeft();
     }
 }

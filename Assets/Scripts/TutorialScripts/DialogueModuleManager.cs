@@ -7,7 +7,7 @@ public class DialogueModuleManager : MonoBehaviour
 {
     public Text speakerText;
     public Text dialogueText;
-    public Tut1GameController gameController;
+    public TutGameController gameController;
 
     private Queue<string> dialogueQueue;
     private string speaker;
@@ -20,7 +20,7 @@ public class DialogueModuleManager : MonoBehaviour
     {
         dialogueQueue = new Queue<string>();
         anim = GetComponent(typeof(Animator)) as Animator;
-        gameController = FindObjectOfType<Tut1GameController>();
+        gameController = FindObjectOfType<TutGameController>();
         batch = 1;
     }
 
@@ -137,6 +137,11 @@ public class DialogueModuleManager : MonoBehaviour
         {
             batch = 7;
             gameController.FinishedSixthDialogue();
+        }
+        else if (batch == 7)
+        {
+            batch = 8;
+            // gameController.FinishedSixthDialogue();
         }
         
     }

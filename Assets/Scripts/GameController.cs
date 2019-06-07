@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {    
     public Text timeUsedText;
+    public Text levelText;
     public GameObject seesaw;
     public SimpleObjectPool variablePool;
     public SimpleObjectPool toyPool;
@@ -31,6 +32,7 @@ public class GameController : MonoBehaviour
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
+        levelText.text = "Level " + level.ToString();
         timeUsed = 0;
         isRoundActive = true;
         
@@ -70,6 +72,7 @@ public class GameController : MonoBehaviour
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(lhsNegative);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
+                newVar.GetComponent<Draggable>().ShowOnNegativeSide();
             }
         }
 
@@ -89,6 +92,7 @@ public class GameController : MonoBehaviour
                 Transform lhsNegative = seesaw.transform.Find("LHSNegative");
                 GameObject newVar = toyPool.GetObject();
                 newVar.transform.SetParent(lhsNegative);
+                newVar.GetComponent<Draggable>().ShowOnNegativeSide();
             }
         }
 
@@ -110,6 +114,7 @@ public class GameController : MonoBehaviour
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(rhsNegative);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
+                newVar.GetComponent<Draggable>().ShowOnNegativeSide();
             }
         }
 
@@ -129,6 +134,7 @@ public class GameController : MonoBehaviour
                 Transform rhsNegative = seesaw.transform.Find("RHSNegative");
                 GameObject newVar = toyPool.GetObject();
                 newVar.transform.SetParent(rhsNegative);
+                newVar.GetComponent<Draggable>().ShowOnNegativeSide();
             }
         }
     }
@@ -213,5 +219,25 @@ public class GameController : MonoBehaviour
     {        
         currentlyDragging = dragging;
         seesaw.GetComponent<SeesawController>().SetDragging(dragging);
+    }
+
+    // pressed try question again button
+    public void TryAgain()
+    {
+        // restart scene with the same equation
+        dataController.StartLevel(level);
+        // SceneManager.LoadScene("Main");
+    }
+
+    // move onto next question
+    public void NextQuestion()
+    {
+        // tell DataController to move to next question and then load main scene again
+        // SceneManager.LoadScene("Main");
+        if (level > dataController.GetLevelsCompleted())
+        {
+            dataController.SetLevelsCompleted(level);
+        }
+        dataController.StartLevel(level + 1);
     }
 }

@@ -87,23 +87,4 @@ public class FinishedPanelManager : MonoBehaviour
         userMessage.text = "The Seesaw Tipped Over!\nYou Lose!";
     }
 
-    // pressed go back to main menu button
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene("Menu");
-    }
-
-    // pressed try question again button
-    public void TryAgain()
-    {
-        // restart scene with the same equation
-        SceneManager.LoadScene("Main");
-    }
-
-    // move onto next question
-    public void NextQuestion()
-    {
-        // tell DataController to move to next question and then load main scene again
-        SceneManager.LoadScene("Main");
-    }
 }

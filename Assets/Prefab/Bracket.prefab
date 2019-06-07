@@ -510,7 +510,6 @@ MonoBehaviour:
   parentToReturnTo: {fileID: 0}
   typeOfItem: 4
   gameController: {fileID: 0}
-  gameController2: {fileID: 0}
   toyPool: {fileID: 0}
   variablePool: {fileID: 0}
   inBracket: 0

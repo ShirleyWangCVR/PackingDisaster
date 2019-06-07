@@ -6,18 +6,19 @@ using UnityEngine.SceneManagement;
 
 /* Game Controller for the main scene where the question is solved.
  */
-public class Tut1GameController : GameController
+public class Tut1GameController : TutGameController
 {    
     // other variables inherited from GameController
-    public TutorialManager tutorialManager;
-    public DialogueModuleManager dialogueModuleManager;
+/*     public TutorialManager tutorialManager;
+    public DialogueModuleManager dialogueModuleManager; */
     public DialogueTrigger dialogueTrigger1;
     public DialogueTrigger dialogueTrigger2;
     public DialogueTrigger dialogueTrigger3;
     public DialogueTrigger dialogueTrigger4;
     public DialogueTrigger dialogueTrigger5;
     public DialogueTrigger dialogueTrigger6;
-    public GameObject interactivePanel;
+    public DialogueTrigger dialogueTrigger7;/* 
+    public GameObject interactivePanel; */
 
     private bool waitForFirstDrag;
     private bool waitForSecondDrag;
@@ -101,7 +102,7 @@ public class Tut1GameController : GameController
         // no tip over on tutorials
     }
 
-    public void FinishedFirstDialogue()
+    public override void FinishedFirstDialogue()
     {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(true);
@@ -116,7 +117,7 @@ public class Tut1GameController : GameController
         dialogueTrigger2.TriggerDialogue();
     }
 
-    public void FinishedSecondDialogue()
+    public override void FinishedSecondDialogue()
     {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(true);
@@ -132,7 +133,7 @@ public class Tut1GameController : GameController
         dialogueTrigger3.TriggerDialogue();
     }
 
-    public void FinishedThirdDialogue()
+    public override void FinishedThirdDialogue()
     {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
@@ -147,7 +148,7 @@ public class Tut1GameController : GameController
         dialogueTrigger4.TriggerDialogue();
     }
 
-    public void FinishedFourthDialogue()
+    public override void FinishedFourthDialogue()
     {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
@@ -163,7 +164,7 @@ public class Tut1GameController : GameController
         dialogueTrigger5.TriggerDialogue(); 
     }
 
-    public void FinishedFifthDialogue()
+    public override void FinishedFifthDialogue()
     {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
@@ -182,11 +183,50 @@ public class Tut1GameController : GameController
         dialogueTrigger6.TriggerDialogue();
     }
 
-    public void FinishedSixthDialogue()
+    public override void FinishedSixthDialogue()
     {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     // set up seesaw using GameController setup
+    public override void EndRound(string howEnded)
+    {
+        // deactivate game logic
+        isRoundActive = false;
+        // playerScore = (int) Mathf.Round(timeRemaining);
+        // dataController.SubmitNewPlayerScore(playerScore);
+        // int highestScore = dataController.GetHighestPlayerScore();
+
+        if (howEnded == "Finished Check") 
+        {
+            if (seesaw.GetComponent<SeesawController>().CheckIfComplete())
+            {
+                if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced())
+                {
+                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
+                    dialogueTrigger7.TriggerDialogue();
+                } 
+                else 
+                {
+                    // lost because wrong answer, get whatever they answered
+                    int side = (int) seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
+                    if (equation.variableValue != side)
+                    {
+                        finishedDisplayManager.DisplayWrongBalanced(side);
+                    } else {
+                        side = (int) seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
+                        finishedDisplayManager.DisplayWrongBalanced(side);
+                    }
+                }
+            }
+            else 
+            {
+                finishedDisplayManager.DisplayNotYetBalanced();
+            }
+        } else if (howEnded == "Scale Tipped") 
+        {
+            finishedDisplayManager.DisplaySeesawTipped();
+        }
+    }
     
 }
