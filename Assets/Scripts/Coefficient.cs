@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/* The coefficient of a term.
+ */
 public class Coefficient : MonoBehaviour
 {
     public Text numeratorText;
@@ -11,15 +13,15 @@ public class Coefficient : MonoBehaviour
     public Text fractionLineText;
     public Text numberText;
 
-    private bool isWholeNumber;
     private Fraction value;
     
     // Start is called before the first frame update
     void Start()
     {
-        isWholeNumber = true;
+        value.Denominator = 1;
     }
 
+    // get the value of the coefficient as a double
     public double GetValue()
     {
         if (value.Denominator == 1)
@@ -30,23 +32,24 @@ public class Coefficient : MonoBehaviour
         }
     }
 
+    // get the value of the coefficient as a fraction
     public Fraction GetFractionValue()
     {
         return value;
     }
     
+    // set the value to the negative of its current value
     public void NegativeCurrentValue()
     {
         SetValue(-value);
     }
 
+    // set the value according to the given fraction
     public void SetValue(Fraction newvalue)
     {
         value = newvalue;
         if (value.Denominator == 1)
         {
-            isWholeNumber = true;
-
             numberText.gameObject.SetActive(true);
             numberText.text = ((int) GetValue()).ToString();
 
@@ -55,8 +58,6 @@ public class Coefficient : MonoBehaviour
             fractionLineText.gameObject.SetActive(false);
 
         } else {
-            isWholeNumber = false;
-
             numberText.gameObject.SetActive(false);
 
             numeratorText.gameObject.SetActive(true);
@@ -70,10 +71,10 @@ public class Coefficient : MonoBehaviour
     }
 
 
+    // set the value according to the given integer
     public void SetValue(int newvalue)
     {
         value = new Fraction(newvalue);
-        isWholeNumber = true;
 
         numberText.gameObject.SetActive(true);
         numberText.text = ((int) GetValue()).ToString();
@@ -82,5 +83,4 @@ public class Coefficient : MonoBehaviour
         denominatorText.gameObject.SetActive(false);
         fractionLineText.gameObject.SetActive(false);
     }
-    
 }

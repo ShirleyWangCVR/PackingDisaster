@@ -26,10 +26,6 @@ public class PositiveSide : MonoBehaviour, IDropHandler
             {
                 eventData.pointerDrag.transform.Find("Image").localScale = new Vector3(1, 1, 1);
                 eventData.pointerDrag.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-
-                
-                // eventData.pointerDrag.transform.localScale = new Vector3(1, 1, 1);
-                // eventData.pointerDrag.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             }
         }
     }
@@ -60,5 +56,39 @@ public class PositiveSide : MonoBehaviour, IDropHandler
             }
         }
         return num;
+    }
+    
+    // get the total value of all variables on this side
+    public virtual double NumericalVariables()
+    {
+        double num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                num = num + child.gameObject.GetComponent<HasValue>().GetValue();
+            }
+        }
+        return num;
+    }
+
+    // get the total value of all values on this side
+    public virtual double NumericalValues()
+    {
+        double num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                num = num + child.gameObject.GetComponent<HasValue>().GetValue();
+            }
+        }
+        return num;
+    }
+
+    // get the total value of everything on this side
+    public virtual double TotalNumericalValue()
+    {
+        return NumericalValues() + NumericalVariables();
     }
 }

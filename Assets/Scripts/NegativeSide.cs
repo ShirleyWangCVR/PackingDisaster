@@ -58,4 +58,38 @@ public class NegativeSide : MonoBehaviour, IDropHandler
         }
         return num;
     }
+
+    // get the total value of all variables on this side
+    public virtual double NumericalVariables()
+    {
+        double num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            {
+                num = num + child.gameObject.GetComponent<HasValue>().GetValue();
+            }
+        }
+        return num;
+    }
+
+    // get the total value of all values on this side
+    public virtual double NumericalValues()
+    {
+        double num = 0;
+        foreach(Transform child in this.transform)
+        {
+            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            {
+                num = num + child.gameObject.GetComponent<HasValue>().GetValue();
+            }
+        }
+        return num;
+    }
+
+    // get the total value of everything on this side
+    public virtual double TotalNumericalValue()
+    {
+        return NumericalValues() + NumericalVariables();
+    }
 }

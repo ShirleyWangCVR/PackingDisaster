@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /* GameObjects with this class are Draggable, and can be dragged by
- * the mouse.  They can be Variables, Values, or Dummys.
+ * the mouse.  They can be Variables, Values, Brackets, or Dummys.
  */
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -14,7 +14,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public enum Slot {Variable, Value, All, Dummy, Bracket};
     public Slot typeOfItem = Slot.Value;
     public GameController gameController;
-    public T2GameController gameController2;
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
     public bool inBracket;
@@ -28,7 +27,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         parentToReturnTo = this.transform.parent;
         gameController = FindObjectOfType<GameController>();
-        gameController2 = FindObjectOfType<T2GameController>();
         
         if (typeOfItem == Slot.Value)
         {
@@ -79,21 +77,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         } else {
             allowDrag = false;
         }
-
-        /* string[] names = new string[eventData.hovered.Count];
-        int i = 0;
-        foreach (GameObject thing in eventData.hovered)
-        {
-            names[i] = eventData.hovered[i].name;
-            i++;
-        }
-
-        if (names.Contains("Image"))
-        {
-            allowDrag = true;
-        } else {
-            allowDrag = false;
-        } */
         
     }
 
@@ -108,8 +91,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             screenPoint.z = 100.0f; //distance of the plane from the camera
             this.transform.position = Camera.main.ScreenToWorldPoint(screenPoint); */
         }
-
-        // this.transform.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -131,24 +112,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void SetIsDragging(bool dragging)
     {
-        if (gameController != null)
-        {
-            gameController.SetDragging(dragging);
-        }
-        if (gameController2 != null)
-        {
-            gameController2.SetDragging(dragging);
-        }
+        gameController.SetDragging(dragging);
     }
 
     public void SetBracketStatus(bool inside)
     {
         inBracket = inside;
-    }
-
-    public void DestroyPlaceholder()
-    {
-        Destroy(placeholder);
     }
 
     // when an item is dropped on it check if it's the same type
@@ -170,18 +139,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
                     Debug.Log("Destroying");
 
-                    // try and use the pool more efficient
-                    // would need to search for the right pool
                     pool.ReturnObject(eventData.pointerDrag);
                     pool.ReturnObject(this.gameObject);
-                    // Destroy(eventData.pointerDrag);
-                    // Destroy(this.gameObject);
                 }
 
             } else {
                 // has coefficient, T2 and above
-                // for now only doing whole numbers
-                // handle fractions later
                 Debug.Log("Dragged On");
 
                 // make sure same type of item
@@ -193,7 +156,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                     if ((draggedParent.StartsWith("RHS") && thisParent.StartsWith("RHS")) || (draggedParent.StartsWith("LHS") && thisParent.StartsWith("LHS")))
                     {
-                        
                         Fraction droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
                         Fraction thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
                         Fraction newvalue = thisvalue + droppedvalue;
@@ -205,8 +167,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
                             pool.ReturnObject(eventData.pointerDrag);
                             pool.ReturnObject(this.gameObject);
-                            // Destroy(eventData.pointerDrag);
-                            // Destroy(this.gameObject);
 
                         } else if (newvalue.ToDouble() > 0) {
                             // new one on positive side
@@ -214,11 +174,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             {
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
-                                // Destroy(eventData.pointerDrag);
                                 pool.ReturnObject(eventData.pointerDrag);
-                            } else {
+                            } 
+                            else 
+                            {
                                 eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                // Destroy(this.gameObject);
                                 pool.ReturnObject(this.gameObject);
                             }
 
@@ -227,11 +187,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             if (this.transform.parent.name.EndsWith("Negative"))
                             {
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                // Destroy(eventData.pointerDrag);
                                 pool.ReturnObject(eventData.pointerDrag);
-                            } else {
+                            } 
+                            else 
+                            {
                                 eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                // Destroy(this.gameObject);
                                 pool.ReturnObject(this.gameObject);
                             }
 
@@ -247,4 +207,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     
     }
 
+    public void DestroyPlaceholder()
+    {
+        Destroy(placeholder);
+    }
 }

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/* Controller for the Game Seesaw
+/* Controller for the game seesaw.
+ * Used for type 1 questions.
  */
 public class SeesawController : MonoBehaviour
 {
@@ -14,17 +15,14 @@ public class SeesawController : MonoBehaviour
     public SimpleObjectPool variablePool;
 
     protected bool currentlyDragging;
-
-    private int tilt;
-    private int interval = 2; // cancel out values every 2 seconds
-    private float nextTime = 0;
+    protected double tilt;
 
     // Start is called before the first frame update
     void Start()
     {
         // set initial tilt to 0
         tilt = 0;
-        // InvokeRepeating("DebugTilt", 0, 3.0f);
+        currentlyDragging = false;
     }
 
     // Update is called once per frame
@@ -44,7 +42,7 @@ public class SeesawController : MonoBehaviour
     }
 
     // make the seesaw tilt if it needs to
-    void UpdatePositions()
+    protected virtual void UpdatePositions()
     {
         // tilt seesaw ominously
         float currangle = this.transform.rotation.eulerAngles.z;
@@ -80,7 +78,7 @@ public class SeesawController : MonoBehaviour
     }
 
     // update the current numerical tilt representing how unbalanced the seesaw is
-    void UpdateTilt()
+    public virtual void UpdateTilt()
     {
         // update current tilt
         int lhs = 0;
@@ -110,7 +108,7 @@ public class SeesawController : MonoBehaviour
     }
 
     // in case tilt isn't working debug this by invokerepeating in start
-    void DebugTilt()
+    public void DebugTilt()
     {
         float currangle = this.transform.rotation.eulerAngles.z;
         if (currangle > 180)
@@ -157,96 +155,15 @@ public class SeesawController : MonoBehaviour
     }
 
     // get total numerical value of right hand side
-    public int GetRightHandSideValue()
+    public virtual double GetRightHandSideValue()
     {
-        int rhs = 0;
-        foreach(Transform child in rightHandSidePositive.transform)
-            {
-                rhs = rhs + child.gameObject.GetComponent<HasValue>().GetValue();
-
-            }
-
-        foreach(Transform child in rightHandSideNegative.transform)
-            {
-                rhs = rhs - child.gameObject.GetComponent<HasValue>().GetValue();
-            }
-
-        return rhs;
+        return rightHandSidePositive.GetComponent<PositiveSide>().TotalNumericalValue() - rightHandSideNegative.GetComponent<NegativeSide>().TotalNumericalValue();
     }
 
     // get total numerical value of left hand side
-    public int GetLeftHandSideValue()
+    public virtual double GetLeftHandSideValue()
     {
-        int lhs = 0;
-        foreach(Transform child in leftHandSidePositive.transform)
-            {
-                lhs = lhs + child.gameObject.GetComponent<HasValue>().GetValue();
-
-            }
-
-        foreach(Transform child in leftHandSideNegative.transform)
-            {
-                lhs = lhs - child.gameObject.GetComponent<HasValue>().GetValue();
-            }
-
-        return lhs;
-    }
-/* 
-    // if there are values to be cancelled out on either side then cancel them out
-    public void CancelOutValues()
-    {
-        if (leftHandSidePositive.transform.childCount > 0 && leftHandSideNegative.transform.childCount > 0)
-        {
-            if (leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() > 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumVariables() > 0)
-            {
-                CancelOutSide(leftHandSidePositive, leftHandSideNegative, Draggable.Slot.Variable, variablePool);
-            }
-            if (leftHandSidePositive.GetComponent<PositiveSide>().NumValues() > 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumValues() > 0)
-            {
-                CancelOutSide(leftHandSidePositive, leftHandSideNegative, Draggable.Slot.Value, toyPool);
-            }
-        }
-
-        if (rightHandSidePositive.transform.childCount > 0 && rightHandSideNegative.transform.childCount > 0)
-        {
-            if (rightHandSidePositive.GetComponent<PositiveSide>().NumVariables() > 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumVariables() > 0)
-            {
-                CancelOutSide(rightHandSidePositive, rightHandSideNegative, Draggable.Slot.Variable, variablePool);
-            }
-            if (rightHandSidePositive.GetComponent<PositiveSide>().NumValues() > 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumValues() > 0)
-            {
-                CancelOutSide(rightHandSidePositive, rightHandSideNegative, Draggable.Slot.Value, toyPool);
-            }
-        }
+        return leftHandSidePositive.GetComponent<PositiveSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<NegativeSide>().TotalNumericalValue();
     }
 
-    // cancels out from the positive and negative side a certain type of value
-    private void CancelOutSide(GameObject positiveSide, GameObject negativeSide, Draggable.Slot slot, SimpleObjectPool pool)
-    {
-        GameObject top = null;
-        GameObject bottom = null;
-
-        int num = Mathf.Min(positiveSide.GetComponent<PositiveSide>().NumValues(), negativeSide.GetComponent<NegativeSide>().NumValues());
-        for (int i = 0; i < num; i++)
-        {
-            foreach(Transform child in positiveSide.transform)
-            {
-                if (child.GetComponent<HasValue>().typeOfItem == slot)
-                {
-                    top = child.gameObject;
-                    break;
-                }
-            }
-            foreach(Transform child in negativeSide.transform)
-            {
-                if (child.GetComponent<HasValue>().typeOfItem == slot)
-                {
-                    bottom = child.gameObject;
-                    break;
-                }
-            }
-            pool.ReturnObject(top);
-            pool.ReturnObject(bottom);
-        }
-    } */
 }

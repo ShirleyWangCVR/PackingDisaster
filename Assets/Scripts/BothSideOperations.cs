@@ -25,24 +25,28 @@ public class BothSideOperations : MonoBehaviour
         gameController3 = FindObjectOfType<T3GameController>();
     }
 
+    // Show choose operation panel
     public void InitiateBothSideOperations()
     {
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(false);
     }
 
+    // Show choose number panel
     public void ChooseNumber()
     {
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(true);
     }
 
+    // Back to main play screen
     public void BackToMainScreen()
     {
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);
     }
 
+    // Process the operation chosen
     public void ProcessOperation()
     {
         Debug.Log(operation);
@@ -55,11 +59,11 @@ public class BothSideOperations : MonoBehaviour
         {
             gameController3.ProcessBothSideOperation(operation, number);
         }
-        // gameController.ProcessBothSideOperation(operation, number);
-
+        
         BackToMainScreen();        
     }
 
+    // set the chosen operation
     public void SetOperation(string op)
     {
         operation = op;
@@ -67,6 +71,7 @@ public class BothSideOperations : MonoBehaviour
         // maybe make the chosen button glow too
     }
 
+    // set the chosen number
     public void SetNumber(int num)
     {
         number = num;

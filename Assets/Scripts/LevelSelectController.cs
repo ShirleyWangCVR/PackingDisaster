@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // optimize this at a later date once we figure out levels
-
 public class LevelSelectController : MonoBehaviour
 {
     private DataController dataController;
@@ -20,6 +19,7 @@ public class LevelSelectController : MonoBehaviour
 
     public void StartLevel(int level)
     {
+        // eventually load tutorial scenes accordingly
         dataController.SetDifficulty(level);
         
         if (level == 1)
@@ -33,27 +33,13 @@ public class LevelSelectController : MonoBehaviour
         else if (level >= 6 && level < 16)
         {
             SceneManager.LoadScene("T2Main");
-        } else if (level == 16)
+        } else if (level >= 16)
         {
             SceneManager.LoadScene("T3Main");
         } else 
         {
             SceneManager.LoadScene("Main");
         }
-    }
-
-
-
-    public void ToLevel0()
-    {
-        dataController.SetDifficulty(0);
-        SceneManager.LoadScene("Main");
-    }
-
-    public void ToLevel8()
-    {
-        dataController.SetDifficulty(8);
-        SceneManager.LoadScene("T2Main");
     }
 
     public void BackToMenu()

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* Possibly no longer needed since we have the other method of dialogue now
+ */
 public class DialogueController : MonoBehaviour
 {
     public DialogueData dialogueData;

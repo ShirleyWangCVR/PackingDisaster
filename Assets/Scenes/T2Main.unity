@@ -814,6 +814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPool: {fileID: 459925433}
   typeOfItems: 0
+  gameController: {fileID: 362771283}
 --- !u!114 &140283589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2253,6 +2254,7 @@ MonoBehaviour:
   operationsPanel: {fileID: 1471430795}
   numbersPanel: {fileID: 1785064180}
   gameController: {fileID: 0}
+  gameController3: {fileID: 0}
 --- !u!114 &456365247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5631,6 +5633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPool: {fileID: 355683331}
   typeOfItems: 1
+  gameController: {fileID: 362771283}
 --- !u!114 &1361371997
 MonoBehaviour:
   m_ObjectHideFlags: 0

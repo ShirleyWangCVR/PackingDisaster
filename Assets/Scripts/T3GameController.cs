@@ -6,57 +6,32 @@ using UnityEngine.SceneManagement;
 
 /* Game Controller for the main scene where the question is solved.
  */
-public class T3GameController : MonoBehaviour
+public class T3GameController : GameController
 {    
-    public Text timeUsedText;
-    public GameObject seesaw;
-    public SimpleObjectPool variablePool;
-    public SimpleObjectPool toyPool;
     public GameObject bracketPrefab;
-    public FinishedPanelManager finishedDisplayManager;
-    public DialogueController dialogueController;
-
-    private DataController dataController;
-    private EquationData equation; // current equation being displayed
-    
-    private bool isRoundActive; 
-    private float timeUsed;
-    private int difficultyLevel; // difficulty levels 0 to 5? 1 to 5? 0 being tutorial?
-    private int playerScore; // currently not being used
-    private bool dialogueActive;
-    private bool currentlyDragging;
+    // other variables inherited from GameController
 
     // Start is called before the first frame update
     void Start()
     {
         // get data from dataController
         dataController = FindObjectOfType<DataController>();
-        equation = dataController.GetCurrentEquationData();
-        difficultyLevel = dataController.GetDifficulty();
+        level = dataController.GetDifficulty();
+        equation = dataController.GetCurrentEquationData(level);
         timeUsed = 0;
         currentlyDragging = false;
+        isRoundActive = true;
         
         // set up seesaw according to equation
         SetUpSeesaw();
         timeUsedText.text = "Time Used: " + timeUsed.ToString();
-
-        // set up tutorial dialogue
-        if (difficultyLevel == 0)
-        {
-            isRoundActive = false;
-            dialogueActive = true;
-            dialogueController.ExecuteTutorialDialogue();
-        }
-        else
-        {
-            isRoundActive = true;
-            dialogueActive = false;
-        }
     }
 
     // set up the seesaw according to the equation data
-    private void SetUpSeesaw()
+    // probably create another method to make this less lengthy at some point
+    protected override void SetUpSeesaw()
     {
+        Debug.Log("Setting up in T3");
         Expression lhs = equation.lhs;
         Expression rhs = equation.rhs;
         
@@ -245,9 +220,8 @@ public class T3GameController : MonoBehaviour
         }
     }
 
-    private void SetUpCoefficient(SimpleObjectPool pool, Transform side, int number, bool isVar)
+    protected void SetUpCoefficient(SimpleObjectPool pool, Transform side, int number, bool isVar)
     {
-        // Transform rhsPositive = seesaw.transform.Find("RHSPositive");
         GameObject newVar = pool.GetObject();
         newVar.transform.SetParent(side);
 
@@ -258,11 +232,6 @@ public class T3GameController : MonoBehaviour
 
         // currently defaulting initial value is whole number
         newVar.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(number);
-    }
-
-    private void UpdateTimeUsedDisplay()
-    {
-        timeUsedText.text = "Time Used: " + Mathf.Round(timeUsed).ToString();
     }
 
     // Update is called once per frame
@@ -280,20 +249,10 @@ public class T3GameController : MonoBehaviour
         {
             EndRound("Scale Tipped");
         }
-
-        // if dialogue currently active check until dialogue no longer active
-        if (dialogueActive)
-        {
-            isRoundActive = dialogueController.FinishedDialogue();
-            if (isRoundActive)
-            {
-                dialogueActive = false;
-            }
-        }
     }
 
     // end the current round
-    public void EndRound(string howEnded)
+    public override void EndRound(string howEnded)
     {
         // deactivate game logic
         isRoundActive = false;
@@ -336,16 +295,6 @@ public class T3GameController : MonoBehaviour
         }
     }
 
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene("Menu");
-    }
-
-    public void FinishedCheck()
-    {
-        EndRound("Finished Check");
-    }
-
     public void ProcessBothSideOperation(string operation, int number)
     {
         if (operation == "Addition")
@@ -364,12 +313,6 @@ public class T3GameController : MonoBehaviour
         {
             seesaw.GetComponent<T3SeesawController>().DivideBothSides(number);
         }
-    }
-
-    public void SetDragging(bool dragging)
-    {
-        currentlyDragging = dragging;
-        seesaw.GetComponent<T3SeesawController>().SetDragging(dragging);
     }
 
 }

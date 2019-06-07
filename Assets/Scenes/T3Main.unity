@@ -814,6 +814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPool: {fileID: 459925433}
   typeOfItems: 0
+  gameController: {fileID: 362771283}
 --- !u!114 &140283589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2196,10 +2197,10 @@ MonoBehaviour:
   seesaw: {fileID: 732550606}
   variablePool: {fileID: 459925433}
   toyPool: {fileID: 355683331}
-  bracketPrefab: {fileID: 8234705338115385404, guid: bb422baec1401d94ab0fc205984079bd,
-    type: 3}
   finishedDisplayManager: {fileID: 1191794855}
   dialogueController: {fileID: 77138581}
+  bracketPrefab: {fileID: 8234705338115385404, guid: bb422baec1401d94ab0fc205984079bd,
+    type: 3}
 --- !u!1 &456365244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2255,6 +2256,7 @@ MonoBehaviour:
   operationsPanel: {fileID: 1471430795}
   numbersPanel: {fileID: 1785064180}
   gameController: {fileID: 0}
+  gameController3: {fileID: 0}
 --- !u!114 &456365247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5633,6 +5635,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectPool: {fileID: 355683331}
   typeOfItems: 1
+  gameController: {fileID: 362771283}
 --- !u!114 &1361371997
 MonoBehaviour:
   m_ObjectHideFlags: 0

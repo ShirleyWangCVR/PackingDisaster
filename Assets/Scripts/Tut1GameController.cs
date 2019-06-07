@@ -8,11 +8,7 @@ using UnityEngine.SceneManagement;
  */
 public class Tut1GameController : GameController
 {    
-    // public GameObject seesaw;
-    public SimpleObjectPool variablePool;
-    public SimpleObjectPool toyPool;
-    // public FinishedPanelManager finishedDisplayManager;
-    // public DialogueController dialogueController;
+    // other variables inherited from GameController
     public TutorialManager tutorialManager;
     public DialogueModuleManager dialogueModuleManager;
     public DialogueTrigger dialogueTrigger1;
@@ -23,17 +19,6 @@ public class Tut1GameController : GameController
     public DialogueTrigger dialogueTrigger6;
     public GameObject interactivePanel;
 
-    // DataController dataController;
-    // EquationData equation; // current equation being displayed
-    
-    private bool isRoundActive; 
-    private float timeUsed;
-    private int difficultyLevel; // difficulty levels 0 to 5? 1 to 5? 0 being tutorial?
-    private int equationsCompleted; // currently not being used
-    private int playerScore; // currently not being used
-    private bool dialogueActive;
-    private bool currentlyDragging;
-    private int dialogueBatch;
     private bool waitForFirstDrag;
     private bool waitForSecondDrag;
     private bool waitForThirdDrag;
@@ -46,20 +31,15 @@ public class Tut1GameController : GameController
         // get data from dataController
         dataController = FindObjectOfType<DataController>();
         tutorialManager = FindObjectOfType<TutorialManager>();
-        equation = dataController.GetCurrentEquationData();
-        difficultyLevel = dataController.GetDifficulty();
-        equationsCompleted = dataController.GetEquationsCompleted();
+        level = dataController.GetDifficulty();
+        equation = dataController.GetCurrentEquationData(level);
         timeUsed = 0;
-
-        dialogueBatch = 1;
         
         // set up seesaw according to equation
         SetUpSeesaw();
 
         // set up tutorial dialogue
-        
         isRoundActive = false;
-        dialogueActive = true;
         waitForFirstDrag = false;
         waitForSecondDrag = false;
         waitForThirdDrag = false;
@@ -69,7 +49,7 @@ public class Tut1GameController : GameController
         dialogueTrigger1.TriggerInitialDialogue();
     }
 
-        // Update is called once per frame
+    // Update is called once per frame
     void Update()
     {
         if (waitForFirstDrag)
@@ -117,39 +97,9 @@ public class Tut1GameController : GameController
             }
         }
         
-        
-        // if round active count down time display
-        if (isRoundActive) 
-        {
-            // timeUsed += Time.deltaTime;
-            // UpdateTimeUsedDisplay();
-        }
-
-        // if seesaw fell over end game
-        /* if (seesaw.GetComponent<SeesawController>().FellOver())
-        {
-            // EndRound("Scale Tipped");
-        } */
-
-        // if dialogue currently active check until dialogue no longer active
-        if (dialogueActive)
-        {
-            // isRoundActive = dialogueController.FinishedDialogue();
-            if (isRoundActive)
-            {
-                dialogueActive = false;
-            }
-        }
+        // no timer on tutorials
+        // no tip over on tutorials
     }
-
-    public void SetDragging(bool dragging)
-    {
-        Debug.Log("Set Dragging in Tut1");
-        
-        currentlyDragging = dragging;
-        seesaw.GetComponent<Tut1SeesawController>().SetDragging(dragging);
-    }
-
 
     public void FinishedFirstDialogue()
     {
@@ -157,7 +107,6 @@ public class Tut1GameController : GameController
         interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(true);
         waitForFirstDrag = true;
     }
-
     
     public void DraggedToOneSide()
     {
@@ -238,149 +187,6 @@ public class Tut1GameController : GameController
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
-/*     // set up the seesaw according to the equation data
-    private void SetUpSeesaw()
-    {
-        Expression lhs = equation.lhs;
-        Expression rhs = equation.rhs;
-        
-        
-        if (lhs.numVars > 0)
-        {
-            for (int i = 0; i < lhs.numVars; i++)
-            {
-                Transform lhsPositive = seesaw.transform.Find("LHSPositive");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(lhsPositive);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
-        }
-        else if (lhs.numVars < 0)
-        {
-            for (int i = 0; i < 0 - lhs.numVars; i++)
-            {
-                Transform lhsNegative = seesaw.transform.Find("LHSNegative");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(lhsNegative);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
-        }
-
-        if (lhs.numValues > 0)
-        {
-            for (int i = 0; i < lhs.numValues; i++)
-            {
-                Transform lhsPositive = seesaw.transform.Find("LHSPositive");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(lhsPositive);
-            }
-        }
-        else if (lhs.numValues < 0)
-        {
-            for (int i = 0; i < 0 - lhs.numValues; i++)
-            {
-                Transform lhsNegative = seesaw.transform.Find("LHSNegative");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(lhsNegative);
-            }
-        }
-
-        if (rhs.numVars > 0)
-        {
-            for (int i = 0; i < rhs.numVars; i++)
-            {
-                Transform rhsPositive = seesaw.transform.Find("RHSPositive");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(rhsPositive);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
-        }
-        else if (rhs.numVars < 0)
-        {
-            for (int i = 0; i < 0 - rhs.numVars; i++)
-            {
-                Transform rhsNegative = seesaw.transform.Find("RHSNegative");
-                GameObject newVar = variablePool.GetObject();
-                newVar.transform.SetParent(rhsNegative);
-                newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
-            }
-        }
-
-        if (rhs.numValues > 0)
-        {
-            for (int i = 0; i < rhs.numValues; i++)
-            {
-                Transform rhsPositive = seesaw.transform.Find("RHSPositive");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(rhsPositive);
-            }
-        }
-        else if (rhs.numValues < 0)
-        {
-            for (int i = 0; i < 0 - rhs.numValues; i++)
-            {
-                Transform rhsNegative = seesaw.transform.Find("RHSNegative");
-                GameObject newVar = toyPool.GetObject();
-                newVar.transform.SetParent(rhsNegative);
-            }
-        }
-    } */
-
-    /* private void UpdateTimeUsedDisplay()
-    {
-        timeUsedText.text = "Time Used: " + Mathf.Round(timeUsed).ToString();
-    } */
-
-
-
-    // end the current round
-    /* public void EndRound(string howEnded)
-    {
-        // deactivate game logic
-        isRoundActive = false;
-        // playerScore = (int) Mathf.Round(timeRemaining);
-        // dataController.SubmitNewPlayerScore(playerScore);
-        // int highestScore = dataController.GetHighestPlayerScore();
-
-        if (howEnded == "Time Out")
-        {
-            finishedDisplayManager.DisplayTimeOut();
-        } 
-        else if (howEnded == "Finished Check") 
-        {
-            if (seesaw.GetComponent<SeesawController>().CheckIfComplete())
-            {
-                if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced())
-                {
-                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
-                } 
-                else 
-                {
-                    // lost because wrong answer, get whatever they answered
-                    int side = seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
-                    if (equation.variableValue != side)
-                    {
-                        finishedDisplayManager.DisplayWrongBalanced(side);
-                    } else {
-                        side = seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
-                        finishedDisplayManager.DisplayWrongBalanced(side);
-                    }
-                }
-            }
-            else 
-            {
-                finishedDisplayManager.DisplayNotYetBalanced();
-            }
-        } else if (howEnded == "Scale Tipped") 
-        {
-            finishedDisplayManager.DisplaySeesawTipped();
-        }
-    } */
-
-    /* public void FinishedCheck()
-    {
-        EndRound("Finished Check");
-    } */
-
+    // set up seesaw using GameController setup
     
 }

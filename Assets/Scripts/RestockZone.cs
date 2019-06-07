@@ -12,13 +12,12 @@ public class RestockZone : MonoBehaviour, IDropHandler
     // the object pool of the game object that this zone will restock
     public SimpleObjectPool objectPool;
     public Draggable.Slot typeOfItems;
-    private DataController dataController;
-    private int variableValue;
+    // private DataController dataController;
+    public GameController gameController;
 
     public void Start()
     {
-        dataController = FindObjectOfType<DataController>();
-        variableValue = dataController.GetCurrentEquationData().variableValue;
+        gameController = FindObjectOfType<GameController>();
     }
 
     // When clicked on create another object
@@ -42,10 +41,10 @@ public class RestockZone : MonoBehaviour, IDropHandler
         } 
         else if (typeOfItems == Draggable.Slot.Variable)
         {
-            newObject.GetComponent<HasValue>().SetValue(variableValue);
+            newObject.GetComponent<HasValue>().SetValue(gameController.GetEquation().variableValue);
         }
 
-        if (newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>() != null)
+        if (newObject.transform.Find("Coefficient") != null)
         {
             Coefficient coef = newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
             coef.SetValue(1);

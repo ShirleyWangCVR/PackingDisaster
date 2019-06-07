@@ -5,17 +5,9 @@ using UnityEngine.UI;
 
 /* Controller for the Game Seesaw
  */
-public class T2SeesawController : MonoBehaviour
+public class T2SeesawController : SeesawController
 {
-    public GameObject leftHandSidePositive;
-    public GameObject rightHandSidePositive;
-    public GameObject leftHandSideNegative;
-    public GameObject rightHandSideNegative;
-    public SimpleObjectPool toyPool;
-    public SimpleObjectPool variablePool;
-
-    private double tilt;
-    private bool currentlyDragging;
+    // variables inherited from SeesawController
 
     // Start is called before the first frame update
     void Start()
@@ -36,48 +28,8 @@ public class T2SeesawController : MonoBehaviour
         }
     }
 
-    public void SetDragging(bool dragging)
-    {
-        currentlyDragging = dragging;
-    }
-
-    // make the seesaw tilt if it needs to
-    void UpdatePositions()
-    {
-        // tilt seesaw ominously
-        float currangle = this.transform.rotation.eulerAngles.z;
-        if (currangle > 180)
-        {
-            currangle = this.transform.rotation.eulerAngles.z - 360;
-        }
-
-        if (tilt > 0.05)
-        {
-            this.transform.Rotate(0, 0, 0.05f, Space.Self);
-        }
-        else if (tilt < 0 - 0.05)
-        {
-            this.transform.Rotate(0, 0, -0.05f, Space.Self);
-        }
-        else
-        {   // tilt == 0
-            // Unity doesn't move it by exact values so give it a slight bit of wiggle room when
-            // returning to horizontal
-            if (currangle > 0.05 || currangle < -0.05)
-            {
-                if (this.transform.rotation.eulerAngles.z < 180)
-                {
-                    this.transform.Rotate(0, 0, -0.1f, Space.Self);
-                } else
-                {
-                    this.transform.Rotate(0, 0, 0.1f, Space.Self);
-                }
-            }
-        }
-    }
-
     // update the current numerical tilt representing how unbalanced the seesaw is
-    void UpdateTilt()
+    public override void UpdateTilt()
     {
         // update current tilt
         double lhs = 0;
@@ -92,63 +44,16 @@ public class T2SeesawController : MonoBehaviour
         tilt = lhs - rhs;
     }
 
-    // in case tilt isn't working debug this by invokerepeating in start
-    void DebugTilt()
-    {
-        float currangle = this.transform.rotation.eulerAngles.z;
-        if (currangle > 180)
-        {
-            currangle = this.transform.rotation.eulerAngles.z - 360;
-        }
-        Debug.Log(currangle);
-        Debug.Log(this.transform.localRotation);
-    }
-
-    // if it's tipped over more than 40 then the seesaw it too tipped over and they lose
-    public bool FellOver()
-    {
-        float currangle = this.transform.rotation.eulerAngles.z;
-        if (currangle > 180)
-        {
-            currangle = 360 - this.transform.rotation.eulerAngles.z;
-        }
-
-        return currangle > 40;
-    }
-
-    // check if a variable is correctly isolated
-    public bool CheckIfComplete()
-    {
-        // check if there is only 1 variable on the left hand side
-        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
-        {
-            return rightHandSidePositive.GetComponent<T2PositiveSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<T2NegativeSide>().NumVariables() == 0;
-        }
-
-        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
-        {
-            return leftHandSidePositive.GetComponent<T2PositiveSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<T2NegativeSide>().NumVariables() == 0;
-        }
-
-        return false;
-    }
-
-    // check if both sides of equation are equal
-    public bool CorrectlyBalanced()
-    {
-        return tilt == 0;
-    }
-
     // get total numerical value of right hand side
-    public double GetRightHandSideValue()
+    public override double GetRightHandSideValue()
     {
-        return rightHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() - rightHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        return rightHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
     }
 
     // get total numerical value of left hand side
-    public double GetLeftHandSideValue()
+    public override double GetLeftHandSideValue()
     {
-        return leftHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        return leftHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
     }
 
     public void AddBothSides(int num)

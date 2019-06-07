@@ -6,13 +6,10 @@ using UnityEngine.UI;
 
 /* The Negative part of an equation side.
  */
-public class T2NegativeSide : MonoBehaviour, IDropHandler
+public class T2NegativeSide : NegativeSide, IDropHandler
 {
-    // Equation sides can hold all types of draggable items.
-    public Draggable.Slot typeOfItems = Draggable.Slot.All;
-
     // if Draggable object dropped onto this. Assuming all items dropped on it are Draggable.
-    public void OnDrop(PointerEventData eventData)
+    public new void OnDrop(PointerEventData eventData)
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
     
@@ -33,27 +30,8 @@ public class T2NegativeSide : MonoBehaviour, IDropHandler
             }
         }  
     }
-
-    // get the number of variables currently on this side
-    public int NumVariables()
-    {
-        int num = 0;
-        foreach(Transform child in this.transform)
-        {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
-            {
-                num++;
-            }
-        }
-        return num;
-    }
-
-    public double TotalNumericalValue()
-    {
-        return NumericalValues() + NumericalVariables();
-    }
     
-    public double NumericalVariables()
+    public override double NumericalVariables()
     {
         double num = 0;
         foreach(Transform child in this.transform)
@@ -66,7 +44,7 @@ public class T2NegativeSide : MonoBehaviour, IDropHandler
         return num;
     }
 
-    public double NumericalValues()
+    public override double NumericalValues()
     {
         double num = 0;
         foreach(Transform child in this.transform)
@@ -74,20 +52,6 @@ public class T2NegativeSide : MonoBehaviour, IDropHandler
             if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
             {
                 num = num + child.gameObject.GetComponent<HasValue>().GetValue() * child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
-            }
-        }
-        return num;
-    }
-
-    // get the number of values currently on this side
-    public int NumValues()
-    {
-        int num = 0;
-        foreach(Transform child in this.transform)
-        {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
-            {
-                num++;
             }
         }
         return num;

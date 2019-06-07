@@ -9,12 +9,14 @@ using System.IO;
  */
 public class DataController : MonoBehaviour
 {
-    // list of all equations from the loaded json. For now just 1.
+    // list of all equations from the loaded json. 
     public EquationData[] allEquationsUsed;
     public DialogueData dialogue;
 
-    private int currentDifficulty;
-    private int equationsCompleted;
+    private int currentLevel; // current level clicked on level select screen
+    
+    private int levelsCompleted; // use this to set how many levels available on level select
+    
     // Player Progress used to store between sessions. Currently only in use for storing high scores.
     private PlayerProgress playerProgress;
     private string equationDataFileName = "equations.json";
@@ -28,22 +30,23 @@ public class DataController : MonoBehaviour
         LoadDialogueData();
         LoadPlayerProgress();
         SceneManager.LoadScene("Menu");
-        currentDifficulty = 0;
-        equationsCompleted = 0;
+        currentLevel = 1;
+        levelsCompleted = 0;
     }
 
-    // get current equation to show depending on provided difficulty
-    public EquationData GetCurrentEquationData()
+    // get current equation to show depending on provided level
+    // eventually have just allEquationsUsed[level] once we have 25 equations in the json
+    public EquationData GetCurrentEquationData(int level)
     {   
-        if (currentDifficulty == 0)
+        if (level == 0)
         {
             return allEquationsUsed[0];
         }
-        else if (currentDifficulty == 6) {
+        else if (level == 6) {
             // for testing
             return allEquationsUsed[1];
         }
-        else if (currentDifficulty == 16) {
+        else if (level == 16) {
             return allEquationsUsed[2];
         }
         else {
@@ -53,55 +56,12 @@ public class DataController : MonoBehaviour
 
     public int GetDifficulty()
     {
-        return currentDifficulty;
+        return currentLevel;
     }
 
     public void SetDifficulty(int difficulty)
     {
-        currentDifficulty = difficulty;
-    }
-
-    public int GetEquationsCompleted()
-    {
-        return equationsCompleted;
-    }
-
-    public void SetEquationsCompleted(int newNum)
-    {
-        equationsCompleted = newNum;
-    }
-    
-
-    // submit a new score and store it if it's the highest
-    public void SubmitNewPlayerScore(int newScore)
-    {
-        if (newScore > playerProgress.highestScore)
-        {
-            playerProgress.highestScore = newScore;
-            SavePlayerProgress();
-        }
-    }
-
-    public int GetHighestPlayerScore()
-    {
-        return playerProgress.highestScore;
-    }
-
-    // load current player progress
-    private void LoadPlayerProgress()
-    {
-        playerProgress = new PlayerProgress();
-
-        if (PlayerPrefs.HasKey("highestScore"))
-        {
-            playerProgress.highestScore = PlayerPrefs.GetInt("highestScore");
-        }
-    }
-
-    // save current player progress in player prefs
-    private void SavePlayerProgress()
-    {
-        PlayerPrefs.SetInt("highestScore", playerProgress.highestScore);
+        currentLevel = difficulty;
     }
 
     // load game data from json
@@ -132,6 +92,52 @@ public class DataController : MonoBehaviour
 
         } else {
             Debug.LogError("Cannot Load Dialogue Data");
+        }
+    }
+
+    
+    // methods past this point work but currently not in use
+
+    public int GetLevelsCompleted()
+    {
+        return levelsCompleted;
+    }
+
+    public void SetLevelsCompleted(int newNum)
+    {
+        levelsCompleted = newNum;
+    }
+    
+
+    // submit a new score and store it if it's the highest
+    public void SubmitNewPlayerScore(int newScore)
+    {
+        if (newScore > playerProgress.highestScore)
+        {
+            playerProgress.highestScore = newScore;
+            SavePlayerProgress();
+        }
+    }
+
+    public int GetHighestPlayerScore()
+    {
+        return playerProgress.highestScore;
+    }
+
+    // save current player progress in player prefs
+    private void SavePlayerProgress()
+    {
+        PlayerPrefs.SetInt("highestScore", playerProgress.highestScore);
+    }
+
+    // load current player progress
+    private void LoadPlayerProgress()
+    {
+        playerProgress = new PlayerProgress();
+
+        if (PlayerPrefs.HasKey("highestScore"))
+        {
+            playerProgress.highestScore = PlayerPrefs.GetInt("highestScore");
         }
     }
 }

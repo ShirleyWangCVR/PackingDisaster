@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/* Draggable coefficient on brackets
+ */
 public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform parentToReturnTo;
@@ -15,25 +17,18 @@ public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandl
         parentToReturnTo = this.transform.parent;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         coefPosition = this.transform.position;
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         this.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        // this.transform.parent.gameObject.GetComponent<CanvasGroup>().interactable = false;
 
+        // make sure bracket coefficients can still be dropped onto
         foreach (Transform child in this.transform.parent.Find("TermsInBracket"))
         {
             child.gameObject.GetComponent<CanvasGroup>().ignoreParentGroups = true;
         }
-
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -53,6 +48,4 @@ public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandl
             child.gameObject.GetComponent<CanvasGroup>().ignoreParentGroups = false;
         }
     }
-
-    
 }

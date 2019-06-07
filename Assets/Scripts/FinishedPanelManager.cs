@@ -32,7 +32,6 @@ public class FinishedPanelManager : MonoBehaviour
         boxDisplay.SetActive(true);
 
         // Should we also set playerScore and highScore at some point??? 
-
         if (correctValue > 0)
         {
             for (int i = 0; i < correctValue; i++)

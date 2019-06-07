@@ -23,30 +23,48 @@ public class Bracket : MonoBehaviour
         numDroppedOn = 0;
         numTerms = this.gameObject.transform.Find("TermsInBracket").childCount;
 
+        // give them the BracketInsideCoefficient component so that they can sense it being dropped on
         foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
         {
             child.gameObject.GetComponent<Draggable>().SetBracketStatus(true);
             child.gameObject.transform.Find("Coefficient").gameObject.AddComponent<BracketInsideCoefficient>();
         }
 
-        // for testing
-        // erase this on finish
-        this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(3);
-        foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
-        {
-            child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(2);
-        }
     }
 
+    // if it's expanded then get rid of the bracket
     public void CheckExpanded()
     {
         if (expanded)
         {
+            int i = 0;
+            int numChildren = this.gameObject.transform.Find("TermsInBracket").childCount;
+            while (i < numChildren)
+            {
+                Transform child = this.gameObject.transform.Find("TermsInBracket").GetChild(0);
+
+                // TODO: put it where it should be
+                // need to put negative values onto the negative sides and positive values onto the positive sides.
+                // for now just do the positive one
+                Fraction newCoef = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();                                
+                if (newCoef > 0) // and current side is positive one
+                {
+                    // Transform parent = this.gameObject.transform.parent;
+                    Transform parent = this.gameObject.transform.parent;
+                    child.SetParent(parent);
+
+                    // also need to set parentToReturnTo in Draggable
+                    child.gameObject.GetComponent<Draggable>().parentToReturnTo = parent;
+                }
+
+                i++;
+            }
+            
             Destroy(this.gameObject);
         }
     }
 
-
+    // when a term has been dropped on it react accordingly
     public void TermDroppedOn()
     {
         numDroppedOn++;
@@ -61,7 +79,7 @@ public class Bracket : MonoBehaviour
             int numChildren = this.gameObject.transform.Find("TermsInBracket").childCount;
             while (i < numChildren)
             {
-                Transform child = this.gameObject.transform.Find("TermsInBracket").GetChild(0);
+                Transform child = this.gameObject.transform.Find("TermsInBracket").GetChild(i);
 
                 // multiply out coefficients
                 Coefficient coef = child.Find("Coefficient").gameObject.GetComponent<Coefficient>();
@@ -71,20 +89,11 @@ public class Bracket : MonoBehaviour
                 // reset as draggable
                 child.gameObject.GetComponent<Draggable>().SetBracketStatus(false);
                 Destroy(child.gameObject.transform.Find("Coefficient").GetComponent<BracketInsideCoefficient>());
-            
-                // TODO: put it where it should be
-                // need to put negative values onto the negative sides and positive values onto the positive sides.
-                // for now just do the positive one
-                if (newCoef > 0) // and current side is positive one
-                {
-                    // Transform parent = this.gameObject.transform.parent;
-                    child.SetParent(this.gameObject.transform.parent);
-
-                    // also need to set parentToReturnTo in Draggable
-                }
+                
                 i++;
             }
 
+            // update arrows
             Coefficient coeff = this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
 
             arrow1.gameObject.SetActive(true);
@@ -97,17 +106,12 @@ public class Bracket : MonoBehaviour
             arrow2Text.SetActive(true);
             arrow2Text.transform.Find("Text").gameObject.GetComponent<Text>().text = coeff.GetValue().ToString() + "x";
 
-            // destroy bracket since no longer needed
-            // yield return new WaitForSeconds(1);
-
-            Debug.Log("Destroying");
             expanded = true;
-
         } 
         else // first drop
         {
-            int coef = (int) this.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
-
+            // show the arrows 
+            double coef = this.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
             if (this.transform.Find("TermsInBracket").GetChild(0).Find("Coefficient").gameObject.GetComponent<BracketInsideCoefficient>().droppedOn)
             {
                 // first item in bracket was dropped on
@@ -128,17 +132,10 @@ public class Bracket : MonoBehaviour
                 arrow1.gameObject.SetActive(true);
                 arrow1.gameObject.GetComponent<Image>().sprite = dashedArrow;
             }
-            
-            // this.transform.Find("Arrow 1");
         }
     }
 
-    public void DestroyThis()
-    {
-        Destroy(this.gameObject);
-    }
-
-
+    // get total value of all values in bracket
     public double GetValue()
     {
         double coefficient = this.gameObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();

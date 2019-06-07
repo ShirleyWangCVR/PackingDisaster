@@ -15,28 +15,21 @@ public class BracketInsideCoefficient : MonoBehaviour, IDropHandler
         droppedOn = false;
 
         bracket = this.gameObject.transform.parent.parent.parent.GetComponent<Bracket>();
-
-        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    // when the bracket's external coefficient is dropped on it
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("Dropped On");
-
-        if (! droppedOn)
+        if (eventData.pointerDrag.name == "Coefficient")
         {
-            droppedOn = true;
-            bracket.TermDroppedOn();
-            // StartCoroutine(bracket.TermDroppedOn());
-            
-            bracket.Invoke("CheckExpanded", 1f);
-            Debug.Log("Waited");
+            Debug.Log("Dropped On");
+
+            if (! droppedOn)
+            {
+                droppedOn = true;
+                bracket.TermDroppedOn();
+                bracket.Invoke("CheckExpanded", 1f);
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 /* Game Controller for the main scene where the question is solved.
+ * Mainly used for Type 1 questions.
  */
 public class GameController : MonoBehaviour
 {    
@@ -17,44 +18,39 @@ public class GameController : MonoBehaviour
 
     protected DataController dataController;
     protected EquationData equation; // current equation being displayed
-    
-    private bool isRoundActive; 
-    private float timeUsed;
-    private int difficultyLevel; // difficulty levels 0 to 5? 1 to 5? 0 being tutorial?
-    private int equationsCompleted; // currently not being used
-    private int playerScore; // currently not being used
-    private bool dialogueActive;
-    private bool currentlyDragging;
+    protected bool currentlyDragging;
+    protected bool isRoundActive; 
+    protected float timeUsed;
+    protected int level; 
+    // private int playerScore; // currently not being used
 
     // Start is called before the first frame update
     void Start()
     {
         // get data from dataController
         dataController = FindObjectOfType<DataController>();
-        equation = dataController.GetCurrentEquationData();
-        difficultyLevel = dataController.GetDifficulty();
-        equationsCompleted = dataController.GetEquationsCompleted();
+        level = dataController.GetDifficulty();
+        equation = dataController.GetCurrentEquationData(level);
         timeUsed = 0;
+        isRoundActive = true;
         
         // set up seesaw according to equation
         SetUpSeesaw();
         timeUsedText.text = "Time Used: " + timeUsed.ToString();
 
-        // set up tutorial dialogue
-        if (difficultyLevel == 0)
-        {
-            isRoundActive = false;
-            dialogueActive = true;
-            dialogueController.ExecuteTutorialDialogue();
-        }
+        // tutorials have their own game controllers
+    }
+
+    public EquationData GetEquation()
+    {
+        return equation;
     }
 
     // set up the seesaw according to the equation data
-    public void SetUpSeesaw()
+    protected virtual void SetUpSeesaw()
     {
         Expression lhs = equation.lhs;
-        Expression rhs = equation.rhs;
-        
+        Expression rhs = equation.rhs; 
         
         if (lhs.numVars > 0)
         {
@@ -137,7 +133,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void UpdateTimeUsedDisplay()
+    protected void UpdateTimeUsedDisplay()
     {
         timeUsedText.text = "Time Used: " + Mathf.Round(timeUsed).ToString();
     }
@@ -157,20 +153,10 @@ public class GameController : MonoBehaviour
         {
             EndRound("Scale Tipped");
         }
-
-        // if dialogue currently active check until dialogue no longer active
-        if (dialogueActive)
-        {
-            isRoundActive = dialogueController.FinishedDialogue();
-            if (isRoundActive)
-            {
-                dialogueActive = false;
-            }
-        }
     }
 
     // end the current round
-    public void EndRound(string howEnded)
+    public virtual void EndRound(string howEnded)
     {
         // deactivate game logic
         isRoundActive = false;
@@ -193,12 +179,12 @@ public class GameController : MonoBehaviour
                 else 
                 {
                     // lost because wrong answer, get whatever they answered
-                    int side = seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
+                    int side = (int) seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
                     if (equation.variableValue != side)
                     {
                         finishedDisplayManager.DisplayWrongBalanced(side);
                     } else {
-                        side = seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
+                        side = (int) seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
                         finishedDisplayManager.DisplayWrongBalanced(side);
                     }
                 }
@@ -224,9 +210,7 @@ public class GameController : MonoBehaviour
     }
 
     public void SetDragging(bool dragging)
-    {
-        Debug.Log("Set Dragging in parent controller");
-        
+    {        
         currentlyDragging = dragging;
         seesaw.GetComponent<SeesawController>().SetDragging(dragging);
     }
