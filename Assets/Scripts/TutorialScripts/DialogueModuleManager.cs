@@ -76,6 +76,8 @@ public class DialogueModuleManager : MonoBehaviour
         // DisplayNextSentence();
     }
     public void DisplayNextSentence() {
+        
+        Debug.Log("Display next sentence");
         if (dialogueQueue.Count == 0) {
             return;
         }
@@ -83,6 +85,7 @@ public class DialogueModuleManager : MonoBehaviour
         string nextSentence = dialogueQueue.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeDialogue(nextSentence));
+        Debug.Log("Typed next sentence");
 
         if (dialogueQueue.Count == 0)
         {

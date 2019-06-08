@@ -632,7 +632,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191794855}
+      - m_Target: {fileID: 362771283}
         m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191794855}
+      - m_Target: {fileID: 362771283}
         m_MethodName: NextQuestion
         m_Mode: 1
         m_Arguments:
@@ -3095,7 +3095,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 362771283}
         m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -6495,7 +6495,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 362771283}
         m_MethodName: FinishedCheck
         m_Mode: 1
         m_Arguments:
@@ -6789,7 +6789,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1191794855}
+      - m_Target: {fileID: 362771283}
         m_MethodName: TryAgain
         m_Mode: 1
         m_Arguments:

@@ -8,6 +8,8 @@ using System.IO;
  */
 public class GameDataEditor : EditorWindow
 {
+    Vector2 scrollPosition = Vector2.zero;
+
     public GameData gameData;
 
     private string gameDataProjectFilePath = "/StreamingAssets/equations.json";
@@ -21,6 +23,11 @@ public class GameDataEditor : EditorWindow
 
     void OnGUI()
     {
+        // GUILayout.BeginArea(new Rect(0, 0, 256, 600));
+        GUILayout.BeginVertical();
+ 
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true, GUILayout.ExpandHeight(true));
+        
         if (gameData != null)
         {
             SerializedObject serializedObject = new SerializedObject(this);
@@ -39,6 +46,10 @@ public class GameDataEditor : EditorWindow
         {
             LoadGameData();
         }
+
+        GUILayout.EndScrollView();
+        GUILayout.EndVertical();
+        // GUILayout.EndArea();
     }
     
     private void LoadGameData()
