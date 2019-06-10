@@ -25,6 +25,7 @@ public class T3SeesawController : T2SeesawController
         {
             UpdateTilt();
             UpdatePositions();
+            UpdateCurrentEquation();
         }
     }
 

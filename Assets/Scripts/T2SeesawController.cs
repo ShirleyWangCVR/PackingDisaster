@@ -25,6 +25,7 @@ public class T2SeesawController : SeesawController
         {
             UpdateTilt();
             UpdatePositions();
+            UpdateCurrentEquation();
         }
     }
 
@@ -152,5 +153,133 @@ public class T2SeesawController : SeesawController
             Fraction.ReduceFraction(newValue);
             child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
         }
+    }
+
+    public override void UpdateCurrentEquation()
+    {
+        string lside = "";
+        string rside = "";
+
+        foreach(Transform child in leftHandSidePositive.transform)
+        {
+            if (lside.Length > 0)
+            {
+                lside = lside + " + ";
+            }
+            lside = lside + StringTerm(child);
+        }
+
+        foreach(Transform child in leftHandSideNegative.transform)
+        {
+            if (lside.Length > 0)
+            {
+                lside = lside + " - ";
+            } 
+            else {
+                lside = lside + "-";
+            }
+            lside = lside + StringTerm(child);
+        }
+
+        if (lside.Length == 0)
+        {
+            lside = lside + "0";
+        }
+
+        foreach(Transform child in rightHandSidePositive.transform)
+        {
+            if (rside.Length > 0)
+            {
+                rside = rside + " + ";
+            }
+            rside = rside + StringTerm(child);
+        }
+
+        foreach(Transform child in rightHandSideNegative.transform)
+        {
+            if (rside.Length > 0)
+            {
+                rside = rside + " - ";
+            } 
+            else {
+                rside = rside + "-";
+            }
+            rside = rside + StringTerm(child);
+        }
+
+        if (rside.Length == 0)
+        {
+            rside = rside + "0";
+        }
+
+        string equation;
+        if (tilt == 0)
+        {
+            equation = lside + " = " + rside;
+        }
+        else {
+            equation = lside + " ≠ " + rside;
+        }
+
+        equationText.text = equation;
+    }
+
+    public string StringTerm(Transform term)
+    {
+        string termString = "";
+
+        Fraction value = term.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
+        if (value < 0)
+        {
+            value = -value;
+        }
+
+        if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
+        {
+            if (value != 1)
+            {
+                termString = termString + value.ToString();
+            }
+            termString = termString + "x";
+        } 
+        else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
+        {
+            termString = termString + value.ToString();
+        }
+        else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Bracket)
+        {
+            if (value != 1)
+            {
+                termString = termString + value.ToString();
+            }
+            termString = termString + "(";
+
+            string bracket = "";
+            foreach(Transform kid in term.Find("TermsInBracket"))
+            {
+                Fraction val = kid.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
+
+                if (bracket.Length > 0)
+                {
+                    bracket = bracket + " + ";
+                }
+
+                if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
+                {
+                    if (val != 1)
+                    {
+                        bracket = bracket + val.ToString();
+                    }
+                    bracket = bracket + "x";
+                } 
+                else if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
+                {
+                    bracket = bracket + val.ToString();
+                }
+            }
+            termString = termString + bracket + ")";
+        }
+
+        return termString;
     }
 }

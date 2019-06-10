@@ -124,6 +124,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // then cancel it out (T1) / combine its coefficient's values
     public void OnDrop(PointerEventData eventData)
     {
+        SetIsDragging(false);
+
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (dragged != null)
         {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /* Controller for the game seesaw.
  * Used for type 1 questions.
@@ -13,6 +14,7 @@ public class SeesawController : MonoBehaviour
     public GameObject rightHandSideNegative;
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
+    public Text equationText;
 
     protected bool currentlyDragging;
     protected double tilt;
@@ -33,6 +35,7 @@ public class SeesawController : MonoBehaviour
         {
             UpdateTilt();
             UpdatePositions();
+            UpdateCurrentEquation();
         }
     }
 
@@ -164,6 +167,139 @@ public class SeesawController : MonoBehaviour
     public virtual double GetLeftHandSideValue()
     {
         return leftHandSidePositive.GetComponent<PositiveSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<NegativeSide>().TotalNumericalValue();
+    }
+
+    public virtual void UpdateCurrentEquation()
+    {
+        string equation = "";
+        string lside = "";
+        string rside = "";
+
+        int lhsPosVars = leftHandSidePositive.GetComponent<PositiveSide>().NumVariables();
+        int lhsPosValues = leftHandSidePositive.GetComponent<PositiveSide>().NumValues();
+        if (lhsPosVars > 0)
+        {
+            if (lhsPosVars == 1)
+            {
+                lside = lside + "x";
+            } 
+            else 
+            {
+                lside = lside + lhsPosVars.ToString() + "x";
+            }
+        }
+        if (lhsPosValues > 0)
+        {
+            if (lhsPosVars > 0)
+            {
+                lside = lside + " + ";
+            }
+            lside = lside + lhsPosValues.ToString();
+        }
+
+        int lhsNegVars = leftHandSideNegative.GetComponent<NegativeSide>().NumVariables();
+        int lhsNegValues = leftHandSideNegative.GetComponent<NegativeSide>().NumValues();
+        if (lhsNegVars > 0)
+        {
+            if (lside.Length > 0)
+            {
+                lside = lside + " - ";
+            } 
+            else
+            {
+                lside = lside + "-";
+            }
+
+            if (lhsNegVars > 1)
+            {
+                lside = lside + lhsNegVars.ToString();
+            }
+            lside = lside + "x";
+        }
+        if (lhsNegValues > 0)
+        {
+            if (lside.Length > 0)
+            {
+                lside = lside + " - ";
+            } 
+            else
+            {
+                lside = lside + "-";
+            }
+            lside = lside + lhsNegValues.ToString();
+        }
+
+        if (lside.Length == 0)
+        {
+            lside = lside + "0";
+        }
+
+        // right hand side calculation
+        int rhsPosVars = rightHandSidePositive.GetComponent<PositiveSide>().NumVariables();
+        int rhsPosValues = rightHandSidePositive.GetComponent<PositiveSide>().NumValues();
+        if (rhsPosVars > 0)
+        {
+            if (rhsPosVars > 1)
+            {
+                rside = rside + rhsPosVars.ToString();
+            } 
+            rside = rside + "x";
+        }
+        if (rhsPosValues > 0)
+        {
+            if (rhsPosVars > 0)
+            {
+                rside = rside + " + ";
+            }
+            rside = rside + rhsPosValues.ToString();
+        }
+
+        int rhsNegVars = rightHandSideNegative.GetComponent<NegativeSide>().NumVariables();
+        int rhsNegValues = rightHandSideNegative.GetComponent<NegativeSide>().NumValues();
+        if (rhsNegVars > 0)
+        {
+            if (rside.Length > 0)
+            {
+                rside = rside + " - ";
+            } 
+            else
+            {
+                rside = rside + "-";
+            }
+
+            if (rhsNegVars > 1)
+            {
+                rside = rside + rhsNegVars.ToString();
+            }
+            rside = rside + "x";
+        }
+        if (rhsNegValues > 0)
+        {
+            if (rside.Length > 0)
+            {
+                rside = rside + " - ";
+            } 
+            else
+            {
+                rside = rside + "-";
+            }
+            rside = rside + rhsNegValues.ToString();
+        }
+
+        if (rside.Length == 0)
+        {
+            rside = rside + "0";
+        }
+        
+        if (tilt == 0)
+        {
+            equation = lside + " = " + rside;
+        }
+        else {
+            equation = lside + " ≠ " + rside;
+        }
+
+        equationText.text = equation;
     }
 
 }

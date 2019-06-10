@@ -25,6 +25,7 @@ public class Tut1SeesawController : SeesawController
         {
             UpdateTilt();
             UpdatePositions();
+            UpdateCurrentEquation();
         }
     }
 

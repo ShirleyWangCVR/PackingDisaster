@@ -25,6 +25,7 @@ public class Tut3SeesawController : SeesawController
         {
             UpdateTilt();
             UpdatePositions();
+            UpdateCurrentEquation();
         }
     }
 
@@ -67,43 +68,6 @@ public class Tut3SeesawController : SeesawController
     public bool CheckDraggedToNegative()
     {
         return leftHandSidePositive.GetComponent<PositiveSide>().NumValues() == 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumValues() == 1;
-    }
-
-
-
-
-
-
-
-
-
-    //
-
-    public bool CheckOneDraggedUnbalanced()
-    {
-        // this assumes that they're dragging a toy fix this
-        return (tilt == 2 || tilt == -2) && currentlyDragging == false;
-    }
-
-    public bool CheckAnotherDraggedBalanced()
-    {
-        return (tilt == 0 && currentlyDragging == false);
-    }
-
-    public bool CheckDraggedToToyBoxUnBalanced()
-    {
-        return (tilt == 1 || tilt == -1) && currentlyDragging == false;
-    }
-
-    public bool CheckDraggedFromToyBoxBalanced()
-    {
-        // not very thorough checking
-        return (tilt == 0 && currentlyDragging == false);
-    }
-
-    public bool CheckDraggedStillBalanced()
-    {
-        return leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<PositiveSide>().NumValues() == 1 && rightHandSidePositive.GetComponent<PositiveSide>().NumValues() == 4 && tilt == 0 && ! currentlyDragging;
     }
 
 }

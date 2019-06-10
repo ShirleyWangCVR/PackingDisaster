@@ -18,6 +18,12 @@ public class T2GameController : GameController
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
         timeUsed = 0;
+
+        if (level < 11)
+        {
+            BothSideOperations bso = FindObjectOfType<BothSideOperations>();
+            bso.gameObject.SetActive(false);
+        }
         
         // set up seesaw according to equation
         SetUpSeesaw();
@@ -88,6 +94,11 @@ public class T2GameController : GameController
 
         // currently defaulting initial value is whole number
         newVar.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(number);
+
+        if (number < 0)
+        {
+            newVar.GetComponent<Draggable>().ShowOnNegativeSide();
+        }
     }
 
     // Update is called once per frame
