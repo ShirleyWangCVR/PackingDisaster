@@ -6,81 +6,86 @@ using UnityEngine.UI;
 
 /* A controller to process operations on both sides.
  */
-public class BothSideOperations : MonoBehaviour
+public class Tut5BothSideOperations : BothSideOperations
 {
-    public GameObject operationsPanel;
-    public GameObject numbersPanel;
-    public T2GameController gameController;
-    public T3GameController gameController3;
-    public Tut6GameController tutGameController;
+    // public GameObject operationsPanel;
+    // public GameObject numbersPanel;
+    public Tut5GameController tutGameController;
+    // public T3GameController gameController3;
 
-    private string operation;
-    private int number;
+    public string operation;
+    public int number;
     
     // Start is called before the first frame update
     void Start()
     {
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);
-        gameController = FindObjectOfType<T2GameController>();
-        gameController3 = FindObjectOfType<T3GameController>();
-        tutGameController = FindObjectOfType<Tut6GameController>();
+        tutGameController = FindObjectOfType<Tut5GameController>();
+        // gameController3 = FindObjectOfType<T3GameController>();
     }
 
     // Show choose operation panel
-    public virtual void InitiateBothSideOperations()
+    public override void InitiateBothSideOperations()
     {
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(false);
+
+        tutGameController.StartedBSO();
+        // Debug.Log("Initiated panel");
     }
 
     // Show choose number panel
-    public virtual void ChooseNumber()
+    public override void ChooseNumber()
     {
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(true);
+
+        tutGameController.PressedOperation();
     }
 
     // Back to main play screen
-    public void BackToMainScreen()
+    /* public override void BackToMainScreen()
     {
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);
     }
-
+ */
     // Process the operation chosen
-    public virtual void ProcessOperation()
+    public override void ProcessOperation()
     {
+        tutGameController.StartedNumber();
+        
         Debug.Log(operation);
         Debug.Log(number);
 
-        if (gameController != null)
+        tutGameController.ProcessBothSideOperation(operation, number);
+
+        /* if (gameController != null)
         {
             gameController.ProcessBothSideOperation(operation, number);
         } else if (gameController3 != null)
         {
             gameController3.ProcessBothSideOperation(operation, number);
-        } else if (tutGameController != null)
-        {
-            tutGameController.ProcessBothSideOperation(operation, number);
-        }
+        } */
         
         BackToMainScreen();        
     }
 
     // set the chosen operation
-    public virtual void SetOperation(string op)
+    public override void SetOperation(string op)
     {
         operation = op;
         ChooseNumber();
+        Debug.Log("Chose Operation");
         // maybe make the chosen button glow too
     }
 
     // set the chosen number
-    public virtual void SetNumber(int num)
+    public override void SetNumber(int num)
     {
         number = num;
         ProcessOperation();
+        Debug.Log("Chose Number");
     }
-
 }

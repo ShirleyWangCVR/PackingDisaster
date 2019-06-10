@@ -6,14 +6,17 @@ using UnityEngine.SceneManagement;
 
 /* Game Controller for the main scene where the question is solved.
  */
-public class Tut4GameController : TutGameController
+public class Tut5GameController : TutGameController
 {    
     // variables all inherited from TutGameController
     public DialogueTrigger dialogueTrigger1;
     public DialogueTrigger dialogueTrigger2;
     public DialogueTrigger dialogueTrigger3;
+    public DialogueTrigger dialogueTrigger4;
 
     private bool waitForFirstDrag;
+    private bool waitForSecondDrag;
+    private bool waitForThirdDrag;
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +30,90 @@ public class Tut4GameController : TutGameController
         
         // set up seesaw according to equation
         SetUpSeesaw();
-        timeUsedText.text = "Time Used: " + timeUsed.ToString();
+        // timeUsedText.text = "Time Used: " + timeUsed.ToString();
 
         isRoundActive = false;
         waitForFirstDrag = false;
+        waitForSecondDrag = false;
+        waitForThirdDrag = false;
 
         dialogueTrigger1.TriggerInitialDialogue();
+        Debug.Log("Triggering initial dialogue");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
     }
 
     public override void FinishedFirstDialogue()
     {
-        // Debug.Log("Finished first dialogue");
+        Debug.Log("Finished first dialogue");
+        interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(true);
+        waitForFirstDrag = true;
+    }
+
+    public void StartedBSO()
+    {
+        Debug.Log("Started Panel");
+        
+        if (waitForFirstDrag)
+        {
+            interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            dialogueTrigger2.TriggerDialogue();
+            interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(false);
+            waitForFirstDrag = false;
+            Debug.Log("Did the thing");
+        }
+    }
+
+    public override void FinishedSecondDialogue()
+    {
+        Debug.Log("Finished Second Dialogue");
+        
+        interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(true);
+        waitForSecondDrag = true;
+    }
+
+    public void PressedOperation()
+    {
+        Debug.Log("Pressed Operation");
+        
+        if (waitForSecondDrag)
+        {
+            Debug.Log("Pressed Operation");
+
+            interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(false);
+            dialogueTrigger3.TriggerDialogue();
+            waitForSecondDrag = false;
+        }
+    }
+
+    public override void FinishedThirdDialogue()
+    {
+        Debug.Log("Finished Third Dialogue");
+
+        interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(true);
+        waitForThirdDrag = true;
+    }
+
+    public void StartedNumber()
+    {
+        if (waitForThirdDrag)
+        {
+            interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(false);
+            dialogueTrigger4.TriggerDialogue();
+            waitForThirdDrag = false;
+        }
+    }
+
+    public override void FinishedFourthDialogue()
+    {
         interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
@@ -103,23 +179,6 @@ public class Tut4GameController : TutGameController
 
         // currently defaulting initial value is whole number
         newVar.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(number);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        /* // if round active count down time display
-        if (isRoundActive) 
-        {
-            timeUsed += Time.deltaTime;
-            UpdateTimeUsedDisplay();
-        }
-
-        // if seesaw fell over end game
-        if (seesaw.GetComponent<Tut4SeesawController>().FellOver())
-        {
-            EndRound("Scale Tipped");
-        } */
     }
 
     // end the current round

@@ -8,8 +8,7 @@ public class GetOperation : MonoBehaviour
 {
     public enum Slot {Operation, Number};
     public Slot type;
-
-    private BothSideOperations operationController;
+    public BothSideOperations operationController;
 
     public void Start()
     {
@@ -20,6 +19,7 @@ public class GetOperation : MonoBehaviour
     {
         if (type == Slot.Operation)
         {
+            Debug.Log("Setting Operation");
             operationController.SetOperation(this.gameObject.name);
         } else if (type == Slot.Number)
         {

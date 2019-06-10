@@ -119,6 +119,8 @@ public class T2SeesawController : SeesawController
 
     public void DivideBothSides(int num)
     {
+        Debug.Log("Reached seesaw controller");
+        
         foreach(Transform child in leftHandSidePositive.transform)
         {
             Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();

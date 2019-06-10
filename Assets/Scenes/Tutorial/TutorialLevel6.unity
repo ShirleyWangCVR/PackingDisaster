@@ -235,8 +235,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: 50}
-  m_SizeDelta: {x: 260, y: 100}
+  m_AnchoredPosition: {x: -180, y: 50}
+  m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &60944028
 MonoBehaviour:
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 60944026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4930318dd9850e418d8f8f1254787f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9afe50a86bd065542b065efd44bc9721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
@@ -425,8 +425,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -52}
-  m_SizeDelta: {x: 260, y: 100}
+  m_AnchoredPosition: {x: 180, y: -52}
+  m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &66404442
 MonoBehaviour:
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 66404440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81f018a0fe9ac1a4c9304c9a7540c5aa, type: 3}
+  m_Script: {fileID: 11500000, guid: e905eea29d087364aada68f477beb982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
@@ -548,7 +548,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &89948514
 GameObject:
@@ -632,7 +632,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 362771283}
         m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 362771283}
         m_MethodName: NextQuestion
         m_Mode: 1
         m_Arguments:
@@ -1838,9 +1838,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Now since we currently have four boxes on the left hand side, let's divide both
-    sides by four.
-  - Press the four button to do that.
+  - Great!  Now we've expanded the bracket and taken the terms inside out of the box.
+  - Bracket's will move around as one term until it's properly expanded.
+  - Remember to expand them to get the boxes and bears out.
+  - Now isolate the box like you've been doing up until now.
 --- !u!4 &329852058
 Transform:
   m_ObjectHideFlags: 0
@@ -1972,7 +1973,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &361019399
 GameObject:
@@ -2229,7 +2230,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &362771283
 MonoBehaviour:
@@ -2240,7 +2241,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 362771281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f01510644fb5484487345a7dc518a9b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b6067d00f1059b4a83508da0f3a96a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   timeUsedText: {fileID: 0}
@@ -2256,7 +2257,8 @@ MonoBehaviour:
   dialogueTrigger1: {fileID: 1753341929}
   dialogueTrigger2: {fileID: 1118944962}
   dialogueTrigger3: {fileID: 329852057}
-  dialogueTrigger4: {fileID: 1236253079}
+  bracketPrefab: {fileID: 8234705338115385404, guid: bb422baec1401d94ab0fc205984079bd,
+    type: 3}
 --- !u!1 &456365244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,7 +2308,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 456365244}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f90e9ad4f9100c3469d0a673bc31f369, type: 3}
+  m_Script: {fileID: 11500000, guid: 99fae8d4883cffb409ea27a776b67b07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   operationsPanel: {fileID: 1471430795}
@@ -2314,8 +2316,6 @@ MonoBehaviour:
   gameController: {fileID: 0}
   gameController3: {fileID: 0}
   tutGameController: {fileID: 0}
-  operation: 
-  number: 0
 --- !u!114 &456365247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2452,7 +2452,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466808575
 GameObject:
@@ -2490,8 +2490,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 50}
-  m_SizeDelta: {x: 260, y: 100}
+  m_AnchoredPosition: {x: 180, y: 50}
+  m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &466808577
 MonoBehaviour:
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 466808575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4930318dd9850e418d8f8f1254787f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 9afe50a86bd065542b065efd44bc9721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
@@ -2687,8 +2687,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -52}
-  m_SizeDelta: {x: 260, y: 100}
+  m_AnchoredPosition: {x: -180, y: -52}
+  m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &532067070
 MonoBehaviour:
@@ -2699,7 +2699,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 532067068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81f018a0fe9ac1a4c9304c9a7540c5aa, type: 3}
+  m_Script: {fileID: 11500000, guid: e905eea29d087364aada68f477beb982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
@@ -3865,7 +3865,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 700, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &732550608
 MonoBehaviour:
@@ -3913,7 +3913,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 732550606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b10906f8b13fb2e4ab30e3b2b838122f, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e67f14443cef654893684a315a22f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftHandSidePositive: {fileID: 60944026}
@@ -4179,17 +4179,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848598372}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.86602545, w: 0.49999994}
   m_LocalPosition: {x: 0, y: 0, z: -810.08606}
-  m_LocalScale: {x: 1.5296367, y: -1.529637, z: 1.5296367}
+  m_LocalScale: {x: 1.5296367, y: 1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 647810156}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 120}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 166, y: -86}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: -144.7, y: -35}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &848598374
 MonoBehaviour:
@@ -4334,7 +4334,7 @@ RectTransform:
   - {fileID: 193419126}
   - {fileID: 65307135}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4513,17 +4513,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 904040481}
-  m_LocalRotation: {x: -0, y: -0, z: -0.6907726, w: 0.7230722}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -810.08606}
   m_LocalScale: {x: 1.5296367, y: 1.5296367, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 647810156}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -87.383}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 51}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: -285, y: 18}
+  m_SizeDelta: {x: 20, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &904040483
 MonoBehaviour:
@@ -4952,7 +4952,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Level 11
+  m_Text: Level 16
 --- !u!222 &1082385380
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4991,8 +4991,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - From here you can do any arithmetic operation to both sides of the seesaw.
-  - Let's do division for now.
+  - Now you've mutiplied the first term in the bracket by the bracket's coefficient.
+  - But remember that you also need to multiply all the other terms in the bracket
+    also by the bracket coefficient.
+  - Drag the bracket coefficient onto the other term's coefficient now.
 --- !u!4 &1118944963
 Transform:
   m_ObjectHideFlags: 0
@@ -5249,7 +5251,7 @@ RectTransform:
   m_LocalScale: {x: 1.05375, y: 1.05375, z: 1.05375}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5422,53 +5424,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   operationController: {fileID: 0}
---- !u!1 &1236253078
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1236253080}
-  - component: {fileID: 1236253079}
-  m_Layer: 0
-  m_Name: DialogueTrigger4
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1236253079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1236253078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15837033acd8fbb46b0a683277049d58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSentences:
-  - Yeah! We can also mutiply and divide both sides of an equation and still keep
-    the equation equal.
-  - Keep that in mind when solving for orders in the future.
---- !u!4 &1236253080
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1236253078}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1240789219
 GameObject:
   m_ObjectHideFlags: 0
@@ -6792,7 +6747,7 @@ PrefabInstance:
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}
@@ -6848,17 +6803,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1552224436}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: -0, z: 0.8191521, w: -0.5735764}
   m_LocalPosition: {x: 0, y: 0, z: -810.08606}
   m_LocalScale: {x: 1.5296367, y: -1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 647810156}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 250}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 106, y: 38}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: -219, y: 53.8}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1552224438
 MonoBehaviour:
@@ -7217,15 +7172,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - How are we going to solve this order?
-  - I can't really think of anything we can add or subtract to solve this.
-  - Oh, but as you probably know, if we do the same arithmetic operation to both sides
-    of the seesaw,
-  - the seesaw will still be balanced afterwards.
-  - You've been doing that with addition and subtraction up until now.
-  - But you can also do the same with multiplication and division!
-  - Press the equals button in the middle of the seesaw to open up the both side operations
-    menu.
+  - Those glass boxes are bracket boxes.
+  - We won't be able to do anything to the terms inside them until the items inside
+    are taken out.
+  - Since the coefficient in front of the bracket box is a 3, that means there are
+    three of them bunched together.
+  - So that means in total there are 3 times the coefficient of the term inside the
+    bracket.
+  - To expand the bracket, we need to multiply all terms inside the bracket by the
+    bracket's coefficient.
+  - To do that, you have to drag the bracket coefficient onto the coefficient of all
+    terms in the bracket.
+  - Try dragging the coefficient onto the first term inside the bracket box.
 --- !u!4 &1753341930
 Transform:
   m_ObjectHideFlags: 0
@@ -7405,7 +7363,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 362771283}
         m_MethodName: TryAgain
         m_Mode: 1
         m_Arguments:
@@ -7604,7 +7562,7 @@ PrefabInstance:
     - target: {fileID: 7595298374544821102, guid: 76cb9961e25486e4b8cadb5cfb4fe3f8,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7595298374544821102, guid: 76cb9961e25486e4b8cadb5cfb4fe3f8,
         type: 3}
@@ -7717,7 +7675,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 456365246}
+      - m_Target: {fileID: 0}
         m_MethodName: BackToMainScreen
         m_Mode: 1
         m_Arguments:
