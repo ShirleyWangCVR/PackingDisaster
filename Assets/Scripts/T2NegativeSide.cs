@@ -36,7 +36,7 @@ public class T2NegativeSide : NegativeSide, IDropHandler
         double num = 0;
         foreach(Transform child in this.transform)
         {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable)
+            if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
             {
                 num = num + child.gameObject.GetComponent<HasValue>().GetValue() * child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
             }
@@ -49,7 +49,7 @@ public class T2NegativeSide : NegativeSide, IDropHandler
         double num = 0;
         foreach(Transform child in this.transform)
         {
-            if (child.gameObject.GetComponent<HasValue>().typeOfItem == Draggable.Slot.Value)
+            if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
             {
                 num = num + child.gameObject.GetComponent<HasValue>().GetValue() * child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
             }

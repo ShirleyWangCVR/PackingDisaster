@@ -18,6 +18,7 @@ public class T3GameController : GameController
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
+        levelText.text = "Level " + level.ToString();
         timeUsed = 0;
         currentlyDragging = false;
         isRoundActive = true;

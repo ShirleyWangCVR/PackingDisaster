@@ -17,6 +17,7 @@ public class T2GameController : GameController
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
+        levelText.text = "Level " + level.ToString();
         timeUsed = 0;
 
         if (level < 11)
