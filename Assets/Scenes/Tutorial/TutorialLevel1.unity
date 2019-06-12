@@ -3206,7 +3206,7 @@ GameObject:
   - component: {fileID: 1273995708}
   - component: {fileID: 1273995710}
   - component: {fileID: 1273995709}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Seesaw Arrow 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3221,7 +3221,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1273995707}
   m_LocalRotation: {x: -0, y: -0, z: -0.23208307, w: 0.97269607}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1.529637, y: 1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -3875,7 +3875,7 @@ GameObject:
   - component: {fileID: 1565226222}
   - component: {fileID: 1565226224}
   - component: {fileID: 1565226223}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Seesaw Arrow 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3890,7 +3890,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565226221}
   m_LocalRotation: {x: -0, y: -0, z: -0.13854943, w: 0.99035555}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1.529637, y: 1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -4360,7 +4360,7 @@ GameObject:
   - component: {fileID: 1952886648}
   - component: {fileID: 1952886650}
   - component: {fileID: 1952886649}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Seesaw Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4375,7 +4375,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952886647}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.529637, y: 1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}

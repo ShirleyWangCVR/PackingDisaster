@@ -18,6 +18,7 @@ public class SeesawController : MonoBehaviour
 
     protected bool currentlyDragging;
     protected double tilt;
+    protected string originalSide; // original side of a thing being dragged
 
     // Start is called before the first frame update
     void Start()
@@ -39,9 +40,58 @@ public class SeesawController : MonoBehaviour
         }
     }
 
-    public void SetDragging(bool dragging)
+    public void SetDragging(bool dragging, string side)
     {
         currentlyDragging = dragging;
+
+        if (dragging)
+        {
+            originalSide = side;
+        }
+
+        bool right;
+        bool left;
+        if (originalSide == "right")
+        {
+            left = true;
+            right = false;
+        }
+        else if (originalSide == "left")
+        {
+            left = false;
+            right = true;
+        }
+        else
+        {
+            left = true;
+            right = true;
+        }
+
+        if (left)
+        {
+            foreach(Transform child in leftHandSidePositive.transform)
+            {
+                child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
+            }
+
+            foreach(Transform child in leftHandSideNegative.transform)
+            {
+                child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
+            }
+        }
+
+        if (right)
+        {
+            foreach(Transform child in rightHandSidePositive.transform)
+            {
+                child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
+            }
+
+            foreach(Transform child in rightHandSideNegative.transform)
+            {
+                child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
+            }
+        }
     }
 
     // make the seesaw tilt if it needs to

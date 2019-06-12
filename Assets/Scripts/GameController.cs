@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
  * Mainly used for Type 1 questions.
  */
 public class GameController : MonoBehaviour
-{    
+{
     public Text timeUsedText;
     public Text levelText;
     public GameObject seesaw;
@@ -20,9 +20,9 @@ public class GameController : MonoBehaviour
     protected DataController dataController;
     protected EquationData equation; // current equation being displayed
     protected bool currentlyDragging;
-    protected bool isRoundActive; 
+    protected bool isRoundActive;
     protected float timeUsed;
-    protected int level; 
+    protected int level;
     // private int playerScore; // currently not being used
 
     // Start is called before the first frame update
@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
         levelText.text = "Level " + level.ToString();
         timeUsed = 0;
         isRoundActive = true;
-        
+
         // set up seesaw according to equation
         SetUpSeesaw();
         timeUsedText.text = "Time Used: " + timeUsed.ToString();
@@ -52,8 +52,8 @@ public class GameController : MonoBehaviour
     protected virtual void SetUpSeesaw()
     {
         Expression lhs = equation.lhs;
-        Expression rhs = equation.rhs; 
-        
+        Expression rhs = equation.rhs;
+
         if (lhs.numVars > 0)
         {
             for (int i = 0; i < lhs.numVars; i++)
@@ -148,7 +148,7 @@ public class GameController : MonoBehaviour
     void Update()
     {
         // if round active count down time display
-        if (isRoundActive) 
+        if (isRoundActive)
         {
             timeUsed += Time.deltaTime;
             UpdateTimeUsedDisplay();
@@ -173,16 +173,16 @@ public class GameController : MonoBehaviour
         if (howEnded == "Time Out")
         {
             finishedDisplayManager.DisplayTimeOut();
-        } 
-        else if (howEnded == "Finished Check") 
+        }
+        else if (howEnded == "Finished Check")
         {
             if (seesaw.GetComponent<SeesawController>().CheckIfComplete())
             {
                 if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced())
                 {
                     finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
-                } 
-                else 
+                }
+                else
                 {
                     // lost because wrong answer, get whatever they answered
                     int side = (int) seesaw.GetComponent<SeesawController>().GetLeftHandSideValue();
@@ -195,11 +195,11 @@ public class GameController : MonoBehaviour
                     }
                 }
             }
-            else 
+            else
             {
                 finishedDisplayManager.DisplayNotYetBalanced();
             }
-        } else if (howEnded == "Scale Tipped") 
+        } else if (howEnded == "Scale Tipped")
         {
             finishedDisplayManager.DisplaySeesawTipped();
         }
@@ -215,10 +215,10 @@ public class GameController : MonoBehaviour
         EndRound("Finished Check");
     }
 
-    public void SetDragging(bool dragging)
-    {        
+    public void SetDragging(bool dragging, string side)
+    {
         currentlyDragging = dragging;
-        seesaw.GetComponent<SeesawController>().SetDragging(dragging);
+        seesaw.GetComponent<SeesawController>().SetDragging(dragging, side);
     }
 
     // pressed try question again button

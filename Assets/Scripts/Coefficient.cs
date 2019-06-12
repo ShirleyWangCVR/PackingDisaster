@@ -14,7 +14,7 @@ public class Coefficient : MonoBehaviour
     public Text numberText;
 
     private Fraction value;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +27,9 @@ public class Coefficient : MonoBehaviour
         if (value.Denominator == 1)
         {
             return value.Numerator;
-        } else {
+        }
+        else
+        {
             return value.ToDouble();
         }
     }
@@ -37,7 +39,7 @@ public class Coefficient : MonoBehaviour
     {
         return value;
     }
-    
+
     // set the value to the negative of its current value
     public void NegativeCurrentValue()
     {

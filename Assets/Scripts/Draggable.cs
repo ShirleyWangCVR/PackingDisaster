@@ -27,7 +27,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         parentToReturnTo = this.transform.parent;
         gameController = FindObjectOfType<GameController>();
-        
+
+        // TODO: shorten this
         if (typeOfItem == Slot.Value)
         {
             toyPool = GameObject.Find("Toy Pool").GetComponent<SimpleObjectPool>();
@@ -40,11 +41,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         inBracket = false;
     }
-    
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         SetIsDragging(true);
-        
+
         // create gap when dragging object
         placeholder = new GameObject();
         placeholder.transform.SetParent(this.transform.parent);
@@ -67,7 +68,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         parentToReturnTo = this.transform.parent;
         this.transform.SetParent(this.transform.parent.parent);
 
-        // set blockRaycasts to false while dragging so pointer can be detected 
+        // set blockRaycasts to false while dragging so pointer can be detected
         // so object can be detected on drop zones
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
@@ -77,7 +78,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         } else {
             allowDrag = false;
         }
-        
+
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -96,14 +97,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         SetIsDragging(false);
-        
+
         // set it to wherever it should go
         this.transform.SetParent(parentToReturnTo);
         this.transform.position = parentToReturnTo.position;
 
         // set it to return to where the placeholder is
         this.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
-        
+
         // reallow block Raycasts so that it can be dragged again
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
@@ -112,7 +113,21 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void SetIsDragging(bool dragging)
     {
-        gameController.SetDragging(dragging);
+        string side;
+        if (parentToReturnTo.name.StartsWith("R"))
+        {
+            side = "right";
+        }
+        else if (parentToReturnTo.name.StartsWith("L"))
+        {
+            side = "left";
+        }
+        else
+        {
+            side = "none";
+        }
+
+        gameController.SetDragging(dragging, side);
     }
 
     public void SetBracketStatus(bool inside)
@@ -177,8 +192,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
                                 pool.ReturnObject(eventData.pointerDrag);
-                            } 
-                            else 
+                            }
+                            else
                             {
                                 eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 pool.ReturnObject(this.gameObject);
@@ -190,15 +205,15 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             {
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 pool.ReturnObject(eventData.pointerDrag);
-                            } 
-                            else 
+                            }
+                            else
                             {
                                 eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 pool.ReturnObject(this.gameObject);
                             }
                         }
                     }
-                }                
+                }
             }
         }
     }
@@ -214,7 +229,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             this.gameObject.transform.Find("Image").localScale = new Vector3(1, 1, 1);
             this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        } 
+        }
         else if (typeOfItem == Slot.Bracket)
         {
             this.gameObject.transform.Find("Image").localScale = new Vector3(1, 1, 1);
