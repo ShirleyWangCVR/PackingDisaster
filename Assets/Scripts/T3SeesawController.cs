@@ -36,8 +36,8 @@ public class T3SeesawController : T2SeesawController
         double lhs = 0;
         double rhs = 0;
 
-        lhs = leftHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
-        rhs = rightHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
+        lhs = leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
+        rhs = rightHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
 
         tilt = lhs - rhs;
     }
@@ -45,13 +45,13 @@ public class T3SeesawController : T2SeesawController
     // get total numerical value of right hand side
     public new double GetRightHandSideValue()
     {
-        return rightHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
+        return rightHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
     // get total numerical value of left hand side
     public new double GetLeftHandSideValue()
     {
-        return leftHandSidePositive.GetComponent<T3PositiveSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<T3NegativeSide>().TotalNumericalValue();
+        return leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
-    
+
 }

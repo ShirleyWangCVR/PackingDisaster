@@ -36,11 +36,11 @@ public class T2SeesawController : SeesawController
         double lhs = 0;
         double rhs = 0;
 
-        lhs = leftHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue();
-        lhs = lhs + leftHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        lhs = leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue();
+        lhs = lhs + leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
 
-        rhs = rightHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue();
-        rhs = rhs + rightHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        rhs = rightHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue();
+        rhs = rhs + rightHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
 
         tilt = lhs - rhs;
     }
@@ -48,13 +48,13 @@ public class T2SeesawController : SeesawController
     // get total numerical value of right hand side
     public override double GetRightHandSideValue()
     {
-        return rightHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        return rightHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
     // get total numerical value of left hand side
     public override double GetLeftHandSideValue()
     {
-        return leftHandSidePositive.GetComponent<T2PositiveSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<T2NegativeSide>().TotalNumericalValue();
+        return leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
     public void AddBothSides(int num)
@@ -121,7 +121,7 @@ public class T2SeesawController : SeesawController
     public void DivideBothSides(int num)
     {
         Debug.Log("Reached seesaw controller");
-        
+
         foreach(Transform child in leftHandSidePositive.transform)
         {
             Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
@@ -174,7 +174,7 @@ public class T2SeesawController : SeesawController
             if (lside.Length > 0)
             {
                 lside = lside + " - ";
-            } 
+            }
             else {
                 lside = lside + "-";
             }
@@ -200,7 +200,7 @@ public class T2SeesawController : SeesawController
             if (rside.Length > 0)
             {
                 rside = rside + " - ";
-            } 
+            }
             else {
                 rside = rside + "-";
             }
@@ -241,7 +241,7 @@ public class T2SeesawController : SeesawController
                 termString = termString + value.ToString();
             }
             termString = termString + "x";
-        } 
+        }
         else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
         {
             termString = termString + value.ToString();
@@ -271,7 +271,7 @@ public class T2SeesawController : SeesawController
                         bracket = bracket + val.ToString();
                     }
                     bracket = bracket + "x";
-                } 
+                }
                 else if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
                 {
                     bracket = bracket + val.ToString();

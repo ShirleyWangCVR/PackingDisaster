@@ -138,14 +138,14 @@ public class SeesawController : MonoBehaviour
     public bool CheckIfComplete()
     {
         // check if there is only 1 variable on the left hand side
-        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
+        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
         {
-            return rightHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
+            return rightHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<SeesawSide>().NumVariables() == 0;
         }
 
-        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<HasValue>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
+        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
         {
-            return leftHandSidePositive.GetComponent<PositiveSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<NegativeSide>().NumVariables() == 0;
+            return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<SeesawSide>().NumVariables() == 0;
         }
 
         return false;
@@ -160,13 +160,13 @@ public class SeesawController : MonoBehaviour
     // get total numerical value of right hand side
     public virtual double GetRightHandSideValue()
     {
-        return rightHandSidePositive.GetComponent<PositiveSide>().TotalNumericalValue() - rightHandSideNegative.GetComponent<NegativeSide>().TotalNumericalValue();
+        return rightHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() - rightHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
     // get total numerical value of left hand side
     public virtual double GetLeftHandSideValue()
     {
-        return leftHandSidePositive.GetComponent<PositiveSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<NegativeSide>().TotalNumericalValue();
+        return leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
     public virtual void UpdateCurrentEquation()
@@ -175,15 +175,15 @@ public class SeesawController : MonoBehaviour
         string lside = "";
         string rside = "";
 
-        int lhsPosVars = leftHandSidePositive.GetComponent<PositiveSide>().NumVariables();
-        int lhsPosValues = leftHandSidePositive.GetComponent<PositiveSide>().NumValues();
+        int lhsPosVars = leftHandSidePositive.GetComponent<SeesawSide>().NumVariables();
+        int lhsPosValues = leftHandSidePositive.GetComponent<SeesawSide>().NumValues();
         if (lhsPosVars > 0)
         {
             if (lhsPosVars == 1)
             {
                 lside = lside + "x";
-            } 
-            else 
+            }
+            else
             {
                 lside = lside + lhsPosVars.ToString() + "x";
             }
@@ -197,14 +197,14 @@ public class SeesawController : MonoBehaviour
             lside = lside + lhsPosValues.ToString();
         }
 
-        int lhsNegVars = leftHandSideNegative.GetComponent<NegativeSide>().NumVariables();
-        int lhsNegValues = leftHandSideNegative.GetComponent<NegativeSide>().NumValues();
+        int lhsNegVars = leftHandSideNegative.GetComponent<SeesawSide>().NumVariables();
+        int lhsNegValues = leftHandSideNegative.GetComponent<SeesawSide>().NumValues();
         if (lhsNegVars > 0)
         {
             if (lside.Length > 0)
             {
                 lside = lside + " - ";
-            } 
+            }
             else
             {
                 lside = lside + "-";
@@ -221,7 +221,7 @@ public class SeesawController : MonoBehaviour
             if (lside.Length > 0)
             {
                 lside = lside + " - ";
-            } 
+            }
             else
             {
                 lside = lside + "-";
@@ -235,14 +235,14 @@ public class SeesawController : MonoBehaviour
         }
 
         // right hand side calculation
-        int rhsPosVars = rightHandSidePositive.GetComponent<PositiveSide>().NumVariables();
-        int rhsPosValues = rightHandSidePositive.GetComponent<PositiveSide>().NumValues();
+        int rhsPosVars = rightHandSidePositive.GetComponent<SeesawSide>().NumVariables();
+        int rhsPosValues = rightHandSidePositive.GetComponent<SeesawSide>().NumValues();
         if (rhsPosVars > 0)
         {
             if (rhsPosVars > 1)
             {
                 rside = rside + rhsPosVars.ToString();
-            } 
+            }
             rside = rside + "x";
         }
         if (rhsPosValues > 0)
@@ -254,14 +254,14 @@ public class SeesawController : MonoBehaviour
             rside = rside + rhsPosValues.ToString();
         }
 
-        int rhsNegVars = rightHandSideNegative.GetComponent<NegativeSide>().NumVariables();
-        int rhsNegValues = rightHandSideNegative.GetComponent<NegativeSide>().NumValues();
+        int rhsNegVars = rightHandSideNegative.GetComponent<SeesawSide>().NumVariables();
+        int rhsNegValues = rightHandSideNegative.GetComponent<SeesawSide>().NumValues();
         if (rhsNegVars > 0)
         {
             if (rside.Length > 0)
             {
                 rside = rside + " - ";
-            } 
+            }
             else
             {
                 rside = rside + "-";
@@ -278,7 +278,7 @@ public class SeesawController : MonoBehaviour
             if (rside.Length > 0)
             {
                 rside = rside + " - ";
-            } 
+            }
             else
             {
                 rside = rside + "-";
@@ -290,7 +290,7 @@ public class SeesawController : MonoBehaviour
         {
             rside = rside + "0";
         }
-        
+
         if (tilt == 0)
         {
             equation = lside + " = " + rside;

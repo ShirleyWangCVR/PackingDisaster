@@ -210,8 +210,8 @@ GameObject:
   - component: {fileID: 60944027}
   - component: {fileID: 60944031}
   - component: {fileID: 60944030}
-  - component: {fileID: 60944028}
   - component: {fileID: 60944029}
+  - component: {fileID: 60944028}
   m_Layer: 5
   m_Name: LHSPositive
   m_TagString: Untagged
@@ -247,10 +247,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 60944026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8fc278b4983db84281d2f17877b1c6c, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ccedf07f1312447b5ba3db805078c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
+  typeOfSide: 0
 --- !u!114 &60944029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,8 +401,8 @@ GameObject:
   - component: {fileID: 66404441}
   - component: {fileID: 66404445}
   - component: {fileID: 66404444}
-  - component: {fileID: 66404442}
   - component: {fileID: 66404443}
+  - component: {fileID: 66404442}
   m_Layer: 5
   m_Name: RHSNegative
   m_TagString: Untagged
@@ -437,10 +438,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 66404440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6584fbee2c84e24599269cc1a691024, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ccedf07f1312447b5ba3db805078c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
+  typeOfSide: 1
 --- !u!114 &66404443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1500,8 +1502,8 @@ GameObject:
   - component: {fileID: 466808576}
   - component: {fileID: 466808580}
   - component: {fileID: 466808579}
-  - component: {fileID: 466808577}
   - component: {fileID: 466808578}
+  - component: {fileID: 466808577}
   m_Layer: 5
   m_Name: RHSPositive
   m_TagString: Untagged
@@ -1537,10 +1539,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 466808575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8fc278b4983db84281d2f17877b1c6c, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ccedf07f1312447b5ba3db805078c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
+  typeOfSide: 0
 --- !u!114 &466808578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1697,8 +1700,8 @@ GameObject:
   - component: {fileID: 532067069}
   - component: {fileID: 532067073}
   - component: {fileID: 532067072}
-  - component: {fileID: 532067070}
   - component: {fileID: 532067071}
+  - component: {fileID: 532067070}
   m_Layer: 5
   m_Name: LHSNegative
   m_TagString: Untagged
@@ -1734,10 +1737,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 532067068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6584fbee2c84e24599269cc1a691024, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ccedf07f1312447b5ba3db805078c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   typeOfItems: 2
+  typeOfSide: 1
 --- !u!114 &532067071
 MonoBehaviour:
   m_ObjectHideFlags: 0

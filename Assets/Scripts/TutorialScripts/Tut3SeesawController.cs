@@ -67,7 +67,7 @@ public class Tut3SeesawController : SeesawController
 
     public bool CheckDraggedToNegative()
     {
-        return leftHandSidePositive.GetComponent<PositiveSide>().NumValues() == 0 && rightHandSideNegative.GetComponent<NegativeSide>().NumValues() == 1;
+        return leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 0 && rightHandSideNegative.GetComponent<SeesawSide>().NumValues() == 1;
     }
 
 }
