@@ -37,23 +37,23 @@ public class DataController : MonoBehaviour
         currentLevel = 1;
         levelsCompleted = 0;
 
-        // numbers calculated off of what looked good on my tablet screen
+        // For some reason hardcoding the size at the start fixes resizing
+        // issue between computers. It may look useless but removing the
+        // sizeDelta setting will cause different resolution screens to render
+        // the toys differently.
+        // Setting localScale is so the toy scales with the canvas.
         Vector3 scale = FindObjectOfType<Canvas>().gameObject.transform.localScale;
-        float size = Screen.currentResolution.width * 40 / 2736;
-        float size2 = Screen.currentResolution.width * 65 / 2736;
-        float size3 = Screen.currentResolution.width * 160 / 2736;
-        float size4 = Screen.currentResolution.width * 60 / 2736;
-        bearPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+        bearPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
         bearPrefab.transform.localScale = scale;
-        boxPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+        boxPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(40, 40);
         boxPrefab.transform.localScale = scale;
 
-        bearCoefPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size2, size);
+        bearCoefPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(65, 40);
         bearCoefPrefab.transform.localScale = scale;
-        boxCoefPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size2, size);
+        boxCoefPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(65, 40);
         boxCoefPrefab.transform.localScale = scale;
 
-        bracketPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size3, size4);
+        bracketPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(160, 60);
         bracketPrefab.transform.localScale = scale;
     }
 
