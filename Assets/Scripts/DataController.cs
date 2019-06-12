@@ -9,19 +9,23 @@ using System.IO;
  */
 public class DataController : MonoBehaviour
 {
-    // list of all equations from the loaded json. 
+    // list of all equations from the loaded json.
     public EquationData[] allEquationsUsed;
     public DialogueData dialogue;
+    public GameObject bearPrefab;
+    public GameObject boxPrefab;
+    public GameObject bearCoefPrefab;
+    public GameObject boxCoefPrefab;
+    public GameObject bracketPrefab;
 
     private int currentLevel; // current level clicked on level select screen
-    
     private int levelsCompleted; // use this to set how many levels available on level select
-    
+
     // Player Progress used to store between sessions. Currently only in use for storing high scores.
     private PlayerProgress playerProgress;
     private string equationDataFileName = "equations.json";
     private string dialogueDataFileName = "dialogueData.json";
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,26 +36,45 @@ public class DataController : MonoBehaviour
         SceneManager.LoadScene("Menu");
         currentLevel = 1;
         levelsCompleted = 0;
+
+        // numbers calculated off of what looked good on my tablet screen
+        Vector3 scale = FindObjectOfType<Canvas>().gameObject.transform.localScale;
+        float size = Screen.currentResolution.width * 40 / 2736;
+        float size2 = Screen.currentResolution.width * 65 / 2736;
+        float size3 = Screen.currentResolution.width * 160 / 2736;
+        float size4 = Screen.currentResolution.width * 60 / 2736;
+        bearPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+        bearPrefab.transform.localScale = scale;
+        boxPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size, size);
+        boxPrefab.transform.localScale = scale;
+
+        bearCoefPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size2, size);
+        bearCoefPrefab.transform.localScale = scale;
+        boxCoefPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size2, size);
+        boxCoefPrefab.transform.localScale = scale;
+
+        bracketPrefab.GetComponent<RectTransform>().sizeDelta = new Vector2(size3, size4);
+        bracketPrefab.transform.localScale = scale;
     }
 
     // get current equation to show depending on provided level
     // eventually have just allEquationsUsed[level - 1] once we have 25 equations in the json
     public EquationData GetCurrentEquationData(int level)
-    {   
+    {
         return allEquationsUsed[level - 1];
     }
 
     public void StartLevel(int level)
-    {   
+    {
         SetDifficulty(level);
         if (level == 1)
         {
             SceneManager.LoadScene(6); // Tut Stage 1
-        } 
+        }
         else if (level == 2)
         {
             SceneManager.LoadScene(7); // Tut Stage 2
-        } 
+        }
         else if (level == 3)
         {
             SceneManager.LoadScene(8); // Tut Stage 3
@@ -71,8 +94,8 @@ public class DataController : MonoBehaviour
         else if (level == 11)
         {
             SceneManager.LoadScene(10); // Tut Stage 5, both side operations
-        } 
-        else if (level > 11 && level < 16) 
+        }
+        else if (level > 11 && level < 16)
         {
             SceneManager.LoadScene("T2Main"); // levels 12 to 15
         }
@@ -127,7 +150,7 @@ public class DataController : MonoBehaviour
         }
     }
 
-    
+
     // methods past this point work but currently not in use
 
     public int GetLevelsCompleted()
@@ -139,7 +162,7 @@ public class DataController : MonoBehaviour
     {
         levelsCompleted = newNum;
     }
-    
+
 
     // submit a new score and store it if it's the highest
     public void SubmitNewPlayerScore(int newScore)

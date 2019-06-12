@@ -13,7 +13,5 @@ public class EquationData
     public int variableValue;
     public Expression lhs;
     public Expression rhs;
-    public string equation;
-    
-    // possibly add in function to update string equation representation
+    public string equation; // not in use but i'm too scared to remove it
 }

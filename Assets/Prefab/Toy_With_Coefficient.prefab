@@ -32,10 +32,10 @@ RectTransform:
   m_Father: {fileID: 8902853765662839629}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12, y: 0}
-  m_SizeDelta: {x: 40, y: 40}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 12.5, y: 0}
+  m_SizeDelta: {x: -25, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8183993451871961849
 CanvasRenderer:
@@ -105,7 +105,7 @@ RectTransform:
   m_GameObject: {fileID: 7910553758011221360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9433963, y: 0.9433963, z: 0}
+  m_LocalScale: {x: 1.4875, y: 1.4875, z: 1.4875}
   m_Children:
   - {fileID: 3743919065018048448}
   - {fileID: 4803461754843598236}
@@ -169,9 +169,10 @@ MonoBehaviour:
   parentToReturnTo: {fileID: 0}
   typeOfItem: 1
   gameController: {fileID: 0}
-  gameController2: {fileID: 0}
   toyPool: {fileID: 0}
   variablePool: {fileID: 0}
+  inBracket: 0
+  allowDrag: 0
 --- !u!114 &59847576437065334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,11 +226,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8902853765662839629}
     m_Modifications:
-    - target: {fileID: 2349685804166479251, guid: 484b35354e3538845b1ab20dd0dc62fe,
-        type: 3}
-      propertyPath: m_Name
-      value: Coefficient
-      objectReference: {fileID: 0}
     - target: {fileID: 7780999695497409274, guid: 484b35354e3538845b1ab20dd0dc62fe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -334,6 +330,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2349685804166479251, guid: 484b35354e3538845b1ab20dd0dc62fe,
+        type: 3}
+      propertyPath: m_Name
+      value: Coefficient
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 484b35354e3538845b1ab20dd0dc62fe, type: 3}
