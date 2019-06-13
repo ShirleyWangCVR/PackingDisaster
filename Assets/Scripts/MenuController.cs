@@ -8,18 +8,25 @@ using UnityEngine.SceneManagement;
 public class MenuController : MonoBehaviour
 {
     private DataController dataController;
+    private int currentMax;
 
     public void Start()
     {
         dataController = FindObjectOfType<DataController>();
+        currentMax = dataController.GetLevelsCompleted();
     }
     
     // when start button is pressed
-    public void StartGame()
+    public void FromBeginning()
     {
-        SceneManager.LoadScene("Main");
+        dataController.StartLevel(1);
     }
 
+    public void ResumeGame()
+    {
+        dataController.StartLevel(currentMax + 1);
+    }
+    
     public void LevelSelect()
     {
         SceneManager.LoadScene("Level Select");

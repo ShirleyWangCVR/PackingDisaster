@@ -141,6 +141,11 @@ public class T2GameController : GameController
         {
             SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
         }
+
+        if (coefficient < 0)
+        {
+            newObject.GetComponent<Draggable>().ShowOnNegativeSide();
+        }
     }
 
     protected void SetUpCoefficient(SimpleObjectPool pool, Transform side, int number, bool isVar)
