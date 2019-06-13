@@ -5,13 +5,13 @@ using UnityEngine;
 public class Tut6Bracket : MonoBehaviour
 {
     public int numDroppedOn;
-    public Tut6GameController gameController;
+    public TutorialController tutController;
     
     // Start is called before the first frame update
     void Start()
     {
         numDroppedOn = 0;   
-        gameController = FindObjectOfType<Tut6GameController>();
+        tutController = FindObjectOfType<TutorialController>();
     }
 
     // Update is called once per frame
@@ -20,13 +20,13 @@ public class Tut6Bracket : MonoBehaviour
         if (numDroppedOn != this.gameObject.GetComponent<Bracket>().numDroppedOn && this.gameObject.GetComponent<Bracket>().numDroppedOn == 1)
         {
             numDroppedOn = this.gameObject.GetComponent<Bracket>().numDroppedOn;
-            gameController.FirstDrop();
+            tutController.FirstDrop();
         }
         else if (numDroppedOn != this.gameObject.GetComponent<Bracket>().numDroppedOn && this.gameObject.GetComponent<Bracket>().numDroppedOn == 2)
         {
             Debug.Log("Reached tut6bracket");
             numDroppedOn = this.gameObject.GetComponent<Bracket>().numDroppedOn;
-            gameController.SuccessfullyExpanded();
+            tutController.SuccessfullyExpanded();
         }
         
         

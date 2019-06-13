@@ -11,8 +11,7 @@ public class BothSideOperations : MonoBehaviour
     public GameObject operationsPanel;
     public GameObject numbersPanel;
     public T2GameController gameController;
-    public T3GameController gameController3;
-    public Tut6GameController tutGameController;
+    public TutorialController tutController;
 
     private string operation;
     private int number;
@@ -23,8 +22,7 @@ public class BothSideOperations : MonoBehaviour
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);
         gameController = FindObjectOfType<T2GameController>();
-        gameController3 = FindObjectOfType<T3GameController>();
-        tutGameController = FindObjectOfType<Tut6GameController>();
+        tutController = FindObjectOfType<TutorialController>();
     }
 
     // Show choose operation panel
@@ -32,6 +30,11 @@ public class BothSideOperations : MonoBehaviour
     {
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(false);
+
+        if (tutController != null)
+        {
+            tutController.StartedBSO();
+        }
     }
 
     // Show choose number panel
@@ -39,6 +42,11 @@ public class BothSideOperations : MonoBehaviour
     {
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(true);
+
+        if (tutController != null)
+        {
+            tutController.PressedOperation();
+        }
     }
 
     // Back to main play screen
@@ -57,12 +65,11 @@ public class BothSideOperations : MonoBehaviour
         if (gameController != null)
         {
             gameController.ProcessBothSideOperation(operation, number);
-        } else if (gameController3 != null)
+        } 
+        
+        if (tutController != null)
         {
-            gameController3.ProcessBothSideOperation(operation, number);
-        } else if (tutGameController != null)
-        {
-            tutGameController.ProcessBothSideOperation(operation, number);
+            tutController.StartedNumber();
         }
         
         BackToMainScreen();        

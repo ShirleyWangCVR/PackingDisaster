@@ -36,11 +36,9 @@ public class T2SeesawController : SeesawController
         double lhs = 0;
         double rhs = 0;
 
-        lhs = leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue();
-        lhs = lhs + leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
+        lhs = leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
 
-        rhs = rightHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue();
-        rhs = rhs + rightHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
+        rhs = rightHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + rightHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
 
         tilt = lhs - rhs;
     }

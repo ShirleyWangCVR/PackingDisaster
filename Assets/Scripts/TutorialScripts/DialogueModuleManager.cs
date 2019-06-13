@@ -7,7 +7,7 @@ public class DialogueModuleManager : MonoBehaviour
 {
     public Text speakerText;
     public Text dialogueText;
-    public TutGameController gameController;
+    public TutorialController tutController;
     public GameObject continueButton;
 
     private Queue<string> dialogueQueue;
@@ -21,7 +21,7 @@ public class DialogueModuleManager : MonoBehaviour
     {
         dialogueQueue = new Queue<string>();
         anim = GetComponent(typeof(Animator)) as Animator;
-        gameController = FindObjectOfType<TutGameController>();
+        tutController = FindObjectOfType<TutorialController>();
         continueButton.SetActive(true);
         batch = 1;
     }
@@ -118,37 +118,37 @@ public class DialogueModuleManager : MonoBehaviour
         if (batch == 1)
         {
             batch = 2;
-            gameController.FinishedFirstDialogue();
+            tutController.FinishedFirstDialogue();
         }
         else if (batch == 2)
         {
             batch = 3;
-            gameController.FinishedSecondDialogue();
+            tutController.FinishedSecondDialogue();
         }
         else if (batch == 3)
         {
             batch = 4;
-            gameController.FinishedThirdDialogue();
+            tutController.FinishedThirdDialogue();
         }
         else if (batch == 4)
         {
             batch = 5;
-            gameController.FinishedFourthDialogue();
+            tutController.FinishedFourthDialogue();
         }
         else if (batch == 5)
         {
             batch = 6;
-            gameController.FinishedFifthDialogue();
+            tutController.FinishedFifthDialogue();
         }
         else if (batch == 6)
         {
             batch = 7;
-            gameController.FinishedSixthDialogue();
+            tutController.FinishedSixthDialogue();
         }
         else if (batch == 7)
         {
             batch = 8;
-            // gameController.FinishedSixthDialogue();
+            // tutController.FinishedSixthDialogue();
         }
         
     }

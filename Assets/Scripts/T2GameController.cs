@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
  */
 public class T2GameController : GameController
 {    
-    // variables all inherited from GameController
+    public GameObject bracketPrefab;
+    // other variables all inherited from GameController
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,8 @@ public class T2GameController : GameController
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
         levelText.text = "Level " + level.ToString();
+        currentlyDragging = false;
+        isRoundActive = true;
         timeUsed = 0;
 
         if (level < 11)
@@ -29,36 +32,50 @@ public class T2GameController : GameController
         // set up seesaw according to equation
         SetUpSeesaw();
         timeUsedText.text = "Time Used: " + timeUsed.ToString();
-
-        isRoundActive = true;
     }
 
     // set up the seesaw according to the equation data
+    // probably create another method to make this less lengthy at some point
     protected override void SetUpSeesaw()
     {
         Expression lhs = equation.lhs;
         Expression rhs = equation.rhs;
-        
+
         if (lhs.numVars > 0)
         {
             SetUpCoefficient(variablePool, seesaw.transform.Find("LHSPositive"), lhs.numVars, true);
-            
+
         }
         else if (lhs.numVars < 0)
         {
             SetUpCoefficient(variablePool, seesaw.transform.Find("LHSNegative"), lhs.numVars, true);
-            
+
         }
 
         if (lhs.numValues > 0)
         {
             SetUpCoefficient(toyPool, seesaw.transform.Find("LHSPositive"), lhs.numValues, false);
-            
+
         }
         else if (lhs.numValues < 0)
         {
             SetUpCoefficient(toyPool, seesaw.transform.Find("LHSNegative"), lhs.numValues, false);
 
+        }
+
+        for (int i = 0; i < lhs.numBrackets; i++)
+        {
+            int coefficient = lhs.bracketCoefficients[i];
+            Expression expression = lhs.bracketExpressions[i];
+
+            if (coefficient > 0)
+            {
+                SetUpBracket("LHSPositive", expression, coefficient);
+            }
+            else if (coefficient < 0)
+            {
+                SetUpBracket("LHSNegative", expression, coefficient);
+            }
         }
 
         if (rhs.numVars > 0)
@@ -75,11 +92,54 @@ public class T2GameController : GameController
         if (rhs.numValues > 0)
         {
             SetUpCoefficient(toyPool, seesaw.transform.Find("RHSPositive"), rhs.numValues, false);
-            
+
         }
         else if (rhs.numValues < 0)
         {
             SetUpCoefficient(toyPool, seesaw.transform.Find("RHSNegative"), rhs.numValues, false);
+
+        }
+
+        for (int i = 0; i < rhs.numBrackets; i++)
+        {
+            int coefficient = rhs.bracketCoefficients[i];
+            Expression expression = rhs.bracketExpressions[i];
+
+            if (coefficient > 0)
+            {
+                SetUpBracket("RHSPositive", expression, coefficient);
+            }
+            else if (coefficient < 0)
+            {
+                SetUpBracket("RHSNegative", expression, coefficient);
+            }
+        }
+    }
+
+    protected void SetUpBracket(string side, Expression expression, int coefficient)
+    {
+        GameObject newObject = (GameObject) Instantiate(bracketPrefab);
+        newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(coefficient);
+        newObject.transform.SetParent(seesaw.transform.Find(side));
+
+        if (expression.numVars > 0)
+        {
+            SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+
+        }
+        else if (expression.numVars < 0)
+        {
+            SetUpCoefficient(variablePool, newObject.transform.Find("TermsInBracket"), expression.numVars, true);
+        }
+
+        if (expression.numValues > 0)
+        {
+            SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
+
+        }
+        else if (expression.numValues < 0)
+        {
+            SetUpCoefficient(toyPool, newObject.transform.Find("TermsInBracket"), expression.numValues, false);
         }
     }
 
@@ -95,7 +155,6 @@ public class T2GameController : GameController
 
         // currently defaulting initial value is whole number
         newVar.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(number);
-
         if (number < 0)
         {
             newVar.GetComponent<Draggable>().ShowOnNegativeSide();

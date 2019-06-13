@@ -67,45 +67,22 @@ public class DataController : MonoBehaviour
     public void StartLevel(int level)
     {
         SetDifficulty(level);
-        if (level == 1)
+
+        if (level <= 3)
         {
-            SceneManager.LoadScene(6); // Tut Stage 1
-        }
-        else if (level == 2)
-        {
-            SceneManager.LoadScene(7); // Tut Stage 2
-        }
-        else if (level == 3)
-        {
-            SceneManager.LoadScene(8); // Tut Stage 3
+            SceneManager.LoadScene("TutorialLevel1"); 
         }
         else if (level <= 5)
         {
             SceneManager.LoadScene("Main"); // levels 4 or 5
         }
-        else if (level == 6)
+        else if (level == 6 || level == 11 || level == 16)
         {
-            SceneManager.LoadScene(9); // Tut Stage 4, coefficients
+            SceneManager.LoadScene("TutorialLevel2"); // Tut Stage 4, coefficients
         }
-        else if (level > 6 && level < 11)
+        else 
         {
-            SceneManager.LoadScene("T2Main"); // levels 7 to 10
-        }
-        else if (level == 11)
-        {
-            SceneManager.LoadScene(10); // Tut Stage 5, both side operations
-        }
-        else if (level > 11 && level < 16)
-        {
-            SceneManager.LoadScene("T2Main"); // levels 12 to 15
-        }
-        else if (level == 16)
-        {
-            SceneManager.LoadScene(11); // Tut Stage 6, expanding brackets
-        }
-        else if (level > 16)
-        {
-            SceneManager.LoadScene("T3Main"); // levels 17 and above
+            SceneManager.LoadScene("T2Main");
         }
     }
 

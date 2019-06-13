@@ -4,7 +4,7 @@ using UnityEngine;
 
 /* Controller for the Game Seesaw
  */
-public class Tut3SeesawController : SeesawController
+public class TutSeesawController : SeesawController
 {
     // variables inherited from SeesawController
 
@@ -63,6 +63,43 @@ public class Tut3SeesawController : SeesawController
             }
         }
 
+    }
+
+    public bool CheckOneDraggedUnbalanced()
+    {
+        // this assumes that they're dragging a toy fix this
+        return (tilt == 2 || tilt == -2) && currentlyDragging == false;
+    }
+
+    public bool CheckAnotherDraggedBalanced()
+    {
+        return (tilt == 0 && currentlyDragging == false);
+    }
+
+    public bool CheckDraggedToToyBoxUnBalanced()
+    {
+        return (tilt == 1 || tilt == -1) && currentlyDragging == false;
+    }
+
+    public bool CheckDraggedFromToyBoxBalanced()
+    {
+        // not very thorough checking
+        return (tilt == 0 && currentlyDragging == false);
+    }
+
+    public bool CheckDraggedStillBalanced()
+    {
+        return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 1 && rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 4 && tilt == 0 && ! currentlyDragging;
+    }
+
+    public bool CheckOneMoreBoxOnBothSides()
+    {
+        return rightHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1;
+    }
+
+    public bool CheckCancelledOut()
+    {
+        return leftHandSideNegative.GetComponent<SeesawSide>().NumVariables() == 0 && leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 0;
     }
 
     public bool CheckDraggedToNegative()

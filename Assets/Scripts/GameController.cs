@@ -141,7 +141,10 @@ public class GameController : MonoBehaviour
 
     protected void UpdateTimeUsedDisplay()
     {
-        timeUsedText.text = "Time Used: " + Mathf.Round(timeUsed).ToString();
+        if (timeUsedText != null)
+        {
+            timeUsedText.text = "Time Used: " + Mathf.Round(timeUsed).ToString();
+        }
     }
 
     // Update is called once per frame
