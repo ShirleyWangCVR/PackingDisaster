@@ -19,6 +19,7 @@ public class SeesawController : MonoBehaviour
     protected bool currentlyDragging;
     protected double tilt;
     protected string originalSide; // original side of a thing being dragged
+    protected bool roundActive;
 
     // Start is called before the first frame update
     void Start()
@@ -26,18 +27,24 @@ public class SeesawController : MonoBehaviour
         // set initial tilt to 0
         tilt = 0;
         currentlyDragging = false;
+        roundActive = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         // update the seesaw's current tilt
-        if (! currentlyDragging)
+        if (! currentlyDragging && roundActive)
         {
             UpdateTilt();
             UpdatePositions();
             UpdateCurrentEquation();
         }
+    }
+
+    public void SetRoundActive(bool active)
+    {
+        roundActive = active;
     }
 
     public void SetDragging(bool dragging, string side)
@@ -185,7 +192,7 @@ public class SeesawController : MonoBehaviour
     }
 
     // check if a variable is correctly isolated
-    public bool CheckIfComplete()
+    public virtual bool CheckIfComplete()
     {
         // check if there is only 1 variable on the left hand side
         if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
@@ -345,8 +352,13 @@ public class SeesawController : MonoBehaviour
         {
             equation = lside + " = " + rside;
         }
-        else {
-            equation = lside + " ≠ " + rside;
+        else if (tilt > 0)
+        {
+            equation = lside + " > " + rside;
+        }
+        else if (tilt < 0)
+        {
+            equation = lside + " < " + rside;
         }
 
         equationText.text = equation;

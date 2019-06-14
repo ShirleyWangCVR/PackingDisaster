@@ -176,6 +176,7 @@ public class TutorialController : MonoBehaviour
         else if (tutorialLevel == 6)
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            interactivePanel.SetActive(false);
         }
         else if (tutorialLevel == 11)
         {
@@ -238,6 +239,7 @@ public class TutorialController : MonoBehaviour
         else if (tutorialLevel == 2)
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            interactivePanel.SetActive(false);
         }
         else if (tutorialLevel == 11)
         {
@@ -248,6 +250,7 @@ public class TutorialController : MonoBehaviour
         else if (tutorialLevel == 16)
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            interactivePanel.SetActive(false);
         }
     }
 
@@ -263,10 +266,7 @@ public class TutorialController : MonoBehaviour
         else if (tutorialLevel == 11)
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-        else if (tutorialLevel == 11)
-        {
-
+            interactivePanel.SetActive(false);
         }
     }
 
@@ -281,14 +281,6 @@ public class TutorialController : MonoBehaviour
             
             waitForFifthDrag = true;
         }
-        else if (tutorialLevel == 2)
-        {
-
-        }
-        else if (tutorialLevel == 3)
-        {
-
-        }
     }
 
     public virtual void FinishedSixthDialogue()
@@ -296,14 +288,7 @@ public class TutorialController : MonoBehaviour
         if (tutorialLevel == 1)
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        }
-        else if (tutorialLevel == 2)
-        {
-
-        }
-        else if (tutorialLevel == 3)
-        {
-
+            interactivePanel.SetActive(false);
         }
     }
     

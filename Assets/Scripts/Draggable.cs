@@ -238,9 +238,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void ShowOnNegativeSide()
-    {
-        Debug.Log(typeOfItem);
-        
+    {        
         if (typeOfItem == Slot.Value || typeOfItem == Slot.Variable)
         {
             this.gameObject.transform.Find("Image").localScale = new Vector3(-1, -1, 1);

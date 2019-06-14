@@ -16,9 +16,21 @@ public class SeesawSide : MonoBehaviour, IDropHandler
     // if Draggable object dropped onto this. Assuming all items dropped on it are Draggable.
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
+        GameObject drop;
+        if ( !(eventData.pointerDrag.name.EndsWith("(Clone)")))
+        {
+            // dragging from a restock zone then hopefully
+            drop = eventData.pointerDrag.GetComponent<RestockZone>().newObject;
+        } 
+        else
+        {
+            drop = eventData.pointerDrag;
+        }
+        
+        
+        Debug.Log(drop.name + " was dropped on " + gameObject.name);
 
-        Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
+        Draggable dragged = drop.GetComponent<Draggable>();
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
         {
             dragged.parentToReturnTo = this.transform;
@@ -26,7 +38,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler
             if (typeOfSide == Slot.Positive)
             {
                 dragged.ShowOnPositiveSide();
-                Transform coefficient = eventData.pointerDrag.transform.Find("Coefficient");
+                Transform coefficient = drop.transform.Find("Coefficient");
                 if (coefficient != null)
                 {
                     Coefficient coef = coefficient.gameObject.GetComponent<Coefficient>();
@@ -39,7 +51,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler
             else if (typeOfSide == Slot.Negative)
             {
                 dragged.ShowOnNegativeSide();
-                Transform coefficient = eventData.pointerDrag.transform.Find("Coefficient");
+                Transform coefficient = drop.transform.Find("Coefficient");
                 if (coefficient != null)
                 {
                     Coefficient coef = coefficient.gameObject.GetComponent<Coefficient>();

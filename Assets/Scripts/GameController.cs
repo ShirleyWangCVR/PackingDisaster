@@ -20,8 +20,9 @@ public class GameController : MonoBehaviour
     protected DataController dataController;
     protected EquationData equation; // current equation being displayed
     protected bool currentlyDragging;
-    protected bool isRoundActive;
-    protected float timeUsed;
+    protected bool notTutorial;
+    protected bool roundActive;
+    protected float timeLeft;
     protected int level;
     // private int playerScore; // currently not being used
 
@@ -33,14 +34,23 @@ public class GameController : MonoBehaviour
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
         levelText.text = "Level " + level.ToString();
-        timeUsed = 0;
-        isRoundActive = true;
+        currentlyDragging = false;
+        roundActive = true;
+        timeLeft = 60;
 
         // set up seesaw according to equation
         SetUpSeesaw();
-        timeUsedText.text = "Time Used: " + timeUsed.ToString();
 
-        // tutorials have their own game controllers
+        // if not tutorial then have a time limit
+        if (! (level <= 3 || level == 6 || level == 11 || level == 16))
+        {
+            notTutorial = true;
+            timeUsedText.text = "Time Left: " + timeLeft.ToString();
+        }
+        else
+        {
+            notTutorial = false;
+        }
     }
 
     public EquationData GetEquation()
@@ -143,32 +153,39 @@ public class GameController : MonoBehaviour
     {
         if (timeUsedText != null)
         {
-            timeUsedText.text = "Time Used: " + Mathf.Round(timeUsed).ToString();
+            timeUsedText.text = "Time Left: " + Mathf.Round(timeLeft).ToString();
         }
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        // if round active count down time display
-        if (isRoundActive)
+        // if not a tutorial then have time out and tip over
+        if (notTutorial && roundActive)
         {
-            timeUsed += Time.deltaTime;
+            timeLeft -= Time.deltaTime;
             UpdateTimeUsedDisplay();
-        }
 
-        // if seesaw fell over end game
-        if (seesaw.GetComponent<SeesawController>().FellOver())
-        {
-            EndRound("Scale Tipped");
+            if (timeLeft <= 0)
+            {
+                EndRound("Time Out");
+            }
+
+            // if seesaw fell over end game
+            if (seesaw.GetComponent<SeesawController>().FellOver())
+            {
+                EndRound("Scale Tipped");
+            }
         }
     }
 
     // end the current round
-    public virtual void EndRound(string howEnded)
+    public void EndRound(string howEnded)
     {
         // deactivate game logic
-        isRoundActive = false;
+        roundActive = false;
+        seesaw.GetComponent<SeesawController>().SetRoundActive(false);
+
         // playerScore = (int) Mathf.Round(timeRemaining);
         // dataController.SubmitNewPlayerScore(playerScore);
         // int highestScore = dataController.GetHighestPlayerScore();
@@ -183,6 +200,13 @@ public class GameController : MonoBehaviour
             {
                 if (seesaw.GetComponent<SeesawController>().CorrectlyBalanced())
                 {
+                    // update total levels completed
+                    int numCompleted = dataController.GetLevelsCompleted();
+                    if (level > numCompleted)
+                    {
+                        dataController.SetLevelsCompleted(level);
+                    }
+                    
                     finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
                 }
                 else

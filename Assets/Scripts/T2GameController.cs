@@ -20,18 +20,28 @@ public class T2GameController : GameController
         equation = dataController.GetCurrentEquationData(level);
         levelText.text = "Level " + level.ToString();
         currentlyDragging = false;
-        isRoundActive = true;
-        timeUsed = 0;
+        roundActive = true;
+        timeLeft = 60;
 
         if (level < 11)
         {
             BothSideOperations bso = FindObjectOfType<BothSideOperations>();
             bso.gameObject.SetActive(false);
         }
-        
+
         // set up seesaw according to equation
         SetUpSeesaw();
-        timeUsedText.text = "Time Used: " + timeUsed.ToString();
+
+        // if not tutorial then have a time limit
+        if (! (level <= 3 || level == 6 || level == 11 || level == 16))
+        {
+            notTutorial = true;
+            timeUsedText.text = "Time Used: " + timeLeft.ToString();
+        }
+        else
+        {
+            notTutorial = false;
+        }
     }
 
     // set up the seesaw according to the equation data
@@ -166,7 +176,7 @@ public class T2GameController : GameController
         }
     }
 
-    // Update is called once per frame
+    /* // Update is called once per frame
     void Update()
     {
         // if round active count down time display
@@ -181,9 +191,9 @@ public class T2GameController : GameController
         {
             EndRound("Scale Tipped");
         }
-    }
+    } */
 
-    // end the current round
+/*     // end the current round
     public override void EndRound(string howEnded)
     {
         // deactivate game logic
@@ -225,7 +235,7 @@ public class T2GameController : GameController
         {
             finishedDisplayManager.DisplaySeesawTipped();
         }
-    }
+    } */
 
     public void ProcessBothSideOperation(string operation, int number)
     {

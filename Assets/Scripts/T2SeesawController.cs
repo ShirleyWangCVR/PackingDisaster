@@ -55,6 +55,45 @@ public class T2SeesawController : SeesawController
         return leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() + leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
+    // check if a variable is correctly isolated
+    public override bool CheckIfComplete()
+    {
+        // check if there is only 1 variable on the left hand side with coefficient 1
+        // and only one value on the other
+        // TODO: account for negative case whoops
+        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
+        {
+            if (leftHandSidePositive.transform.GetChild(0).Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() == 1)
+            {
+                if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && rightHandSideNegative.transform.childCount == 0)
+                {
+                    return true;
+                }
+                else if (rightHandSideNegative.transform.childCount == 1 && rightHandSideNegative.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && rightHandSidePositive.transform.childCount == 0)
+                {
+                    return true;
+                }
+            }    
+        }
+
+        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
+        {
+            if (rightHandSidePositive.transform.GetChild(0).Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() == 1)
+            {
+                if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && leftHandSideNegative.transform.childCount == 0)
+                {
+                    return true;
+                }
+                else if (leftHandSideNegative.transform.childCount == 1 && leftHandSideNegative.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && leftHandSidePositive.transform.childCount == 0)
+                {
+                    return true;
+                }
+            }    
+        }
+
+        return false;
+    }
+
     public void AddBothSides(int num)
     {
         GameObject newObject = toyPool.GetObject();
@@ -210,13 +249,18 @@ public class T2SeesawController : SeesawController
             rside = rside + "0";
         }
 
-        string equation;
+        string equation = "";
         if (tilt == 0)
         {
             equation = lside + " = " + rside;
         }
-        else {
-            equation = lside + " ≠ " + rside;
+        else if (tilt > 0)
+        {
+            equation = lside + " > " + rside;
+        }
+        else if (tilt < 0)
+        {
+            equation = lside + " < " + rside;
         }
 
         equationText.text = equation;

@@ -13,8 +13,13 @@ public class FinishedPanelManager : MonoBehaviour
     public Button nextQuestion;
     public GameObject boxDisplay;
     public GameObject toyDisplay;
-    public SimpleObjectPool boxPool;
     public SimpleObjectPool toyPool;
+    public DataController dataController;
+
+    void Start()
+    {
+        dataController = FindObjectOfType<DataController>();
+    }
 
     // set finished display to if player lost by time out
     public void DisplayTimeOut()
@@ -31,39 +36,43 @@ public class FinishedPanelManager : MonoBehaviour
         nextQuestion.gameObject.SetActive(true);
         boxDisplay.SetActive(true);
 
-        // Should we also set playerScore and highScore at some point??? 
-        if (correctValue > 0)
-        {
-            for (int i = 0; i < correctValue; i++)
+        if (dataController.GetDifficulty() < 6)
+        {        
+            if (correctValue > 0)
             {
-                GameObject toy = toyPool.GetObject();
-                toy.transform.SetParent(toyDisplay.transform);
-
-                int check = (int) Mathf.Round(toy.transform.localScale.x);
-                if (check == -1)
+                for (int i = 0; i < correctValue; i++)
                 {
-                    toy.transform.localScale = new Vector3(1, 1, 1);
-                    toy.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+                    GameObject toy = toyPool.GetObject();
+                    toy.transform.SetParent(toyDisplay.transform);
+                    toy.GetComponent<Draggable>().ShowOnPositiveSide();
                 }
+            }  
+            else if (correctValue < 0)
+            {
+                for (int i = 0; i < 0 - correctValue; i++)
+                {
+                    GameObject toy = toyPool.GetObject();
+                    toy.transform.SetParent(toyDisplay.transform);
+
+                    toy.GetComponent<Draggable>().ShowOnNegativeSide();
+                }
+            }     
+        } 
+        else
+        {
+            GameObject toy = toyPool.GetObject();
+            toy.transform.localScale = 2 * toy.transform.localScale;
+            toy.transform.SetParent(toyDisplay.transform);
+            toy.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(correctValue);
+            if (correctValue > 0)
+            {
+                toy.GetComponent<Draggable>().ShowOnPositiveSide();
+            }
+            else 
+            {
+                toy.GetComponent<Draggable>().ShowOnNegativeSide();
             }
         }
-        // also set negative orientation one   
-        else if (correctValue < 0)
-        {
-            for (int i = 0; i < 0 - correctValue; i++)
-            {
-                GameObject toy = toyPool.GetObject();
-                toy.transform.SetParent(toyDisplay.transform);
-
-                int check = (int) Mathf.Round(toy.transform.localScale.x);
-                if (check == 1)
-                {
-                    toy.transform.localScale = new Vector3(-1, -1, 1);
-                    toy.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
-                }
-            }
-        }     
-
     }
 
     // set finished panel to if player lost by wrong answer

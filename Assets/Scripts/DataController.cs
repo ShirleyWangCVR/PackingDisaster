@@ -127,9 +127,6 @@ public class DataController : MonoBehaviour
         }
     }
 
-
-    // methods past this point work but currently not in use
-
     public int GetLevelsCompleted()
     {
         return levelsCompleted;
@@ -140,6 +137,7 @@ public class DataController : MonoBehaviour
         levelsCompleted = newNum;
     }
 
+    // methods past this point work but currently not in use
 
     // submit a new score and store it if it's the highest
     public void SubmitNewPlayerScore(int newScore)
