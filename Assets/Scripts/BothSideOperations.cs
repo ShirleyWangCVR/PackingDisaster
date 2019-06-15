@@ -12,6 +12,9 @@ public class BothSideOperations : MonoBehaviour
     public GameObject numbersPanel;
     public T2GameController gameController;
     public TutorialController tutController;
+    public Text LHS;
+    public Text RHS;
+    public Text operationText;
 
     private string operation;
     private int number;
@@ -23,6 +26,8 @@ public class BothSideOperations : MonoBehaviour
         numbersPanel.SetActive(false);
         gameController = FindObjectOfType<T2GameController>();
         tutController = FindObjectOfType<TutorialController>();
+        LHS.gameObject.SetActive(false);
+        RHS.gameObject.SetActive(false);
     }
 
     // Show choose operation panel
@@ -57,10 +62,11 @@ public class BothSideOperations : MonoBehaviour
     }
 
     // Process the operation chosen
-    public virtual void ProcessOperation()
+    public IEnumerator ProcessOperation()
     {
         Debug.Log(operation);
         Debug.Log(number);
+        yield return new WaitForSeconds(1f);
 
         if (gameController != null)
         {
@@ -71,23 +77,57 @@ public class BothSideOperations : MonoBehaviour
         {
             tutController.StartedNumber();
         }
-        
+        LHS.gameObject.SetActive(false);
+        RHS.gameObject.SetActive(false);
         BackToMainScreen();        
     }
 
     // set the chosen operation
-    public virtual void SetOperation(string op)
+    public void SetOperation(string op)
     {
         operation = op;
+        LHS.gameObject.SetActive(true);
+        RHS.gameObject.SetActive(true);
         ChooseNumber();
+
+        if (op == "Addition")
+        {
+            LHS.text = "+";
+            RHS.text = "+";
+            operationText.text = "+";
+        }
+        else if (op == "Subtraction")
+        {
+            LHS.text = "-";
+            RHS.text = "-";
+            operationText.text = "-";
+        }
+        else if (op == "Multiplication")
+        {
+            LHS.text = "x";
+            RHS.text = "x";
+            operationText.text = "x";
+        }
+        else if (op == "Division")
+        {
+            LHS.text = "÷";
+            RHS.text = "÷";
+            operationText.text = "÷";
+        }
+
         // maybe make the chosen button glow too
     }
 
     // set the chosen number
-    public virtual void SetNumber(int num)
+    public void SetNumber(int num)
     {
         number = num;
-        ProcessOperation();
+        LHS.text = LHS.text + num.ToString();
+        RHS.text = RHS.text + num.ToString();
+        operationText.text = operationText.text + num.ToString();
+
+        // wait one second then do it
+        StartCoroutine(ProcessOperation());
     }
 
 }

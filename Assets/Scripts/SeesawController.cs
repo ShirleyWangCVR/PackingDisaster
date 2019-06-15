@@ -123,7 +123,7 @@ public class SeesawController : MonoBehaviour
         {   // tilt == 0
             // Unity doesn't move it by exact values so give it a slight bit of wiggle room when
             // returning to horizontal
-            if (currangle > 0.05 || currangle < -0.05)
+            if (currangle > 0.1 || currangle < -0.1)
             {
                 if (this.transform.rotation.eulerAngles.z < 180)
                 {
@@ -132,6 +132,10 @@ public class SeesawController : MonoBehaviour
                 {
                     this.transform.Rotate(0, 0, 0.1f, Space.Self);
                 }
+            }
+            else
+            {
+                this.transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
 

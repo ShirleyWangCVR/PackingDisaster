@@ -51,7 +51,7 @@ public class TutSeesawController : SeesawController
         {   // tilt == 0
             // Unity doesn't move it by exact values so give it a slight bit of wiggle room when
             // returning to horizontal
-            if (currangle >= 0.03 || currangle <= -0.03)
+            if (currangle >= 0.1 || currangle <= -0.1)
             {
                 if (this.transform.rotation.eulerAngles.z < 180)
                 {
@@ -60,6 +60,10 @@ public class TutSeesawController : SeesawController
                 {
                     this.transform.Rotate(0, 0, 0.1f, Space.Self);
                 }
+            }
+            else
+            {
+                this.transform.eulerAngles = new Vector3(0, 0, 0);
             }
         }
 

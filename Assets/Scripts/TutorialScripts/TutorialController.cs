@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// The controller of the interactive elements of the tutorials
 public class TutorialController : MonoBehaviour
 {
     public TutorialManager tutorialManager;
@@ -177,6 +178,7 @@ public class TutorialController : MonoBehaviour
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             interactivePanel.SetActive(false);
+            StartCoroutine(tutorialManager.EndDialogue());
         }
         else if (tutorialLevel == 11)
         {
@@ -212,6 +214,7 @@ public class TutorialController : MonoBehaviour
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             interactivePanel.transform.Find("Seesaw Arrow 10").gameObject.SetActive(true);
+            StartCoroutine(tutorialManager.EndDialogue());
         }
         else if (tutorialLevel == 11)
         {
@@ -240,6 +243,7 @@ public class TutorialController : MonoBehaviour
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             interactivePanel.SetActive(false);
+            StartCoroutine(tutorialManager.EndDialogue());
         }
         else if (tutorialLevel == 11)
         {
@@ -251,6 +255,7 @@ public class TutorialController : MonoBehaviour
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             interactivePanel.SetActive(false);
+            StartCoroutine(tutorialManager.EndDialogue());
         }
     }
 
@@ -267,6 +272,7 @@ public class TutorialController : MonoBehaviour
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
             interactivePanel.SetActive(false);
+            StartCoroutine(tutorialManager.EndDialogue());
         }
     }
 
@@ -288,7 +294,10 @@ public class TutorialController : MonoBehaviour
         if (tutorialLevel == 1)
         {
             interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            interactivePanel.SetActive(false);
+            interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(false);
+            interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(false);
+            interactivePanel.transform.Find("Seesaw Arrow 11").gameObject.SetActive(true);
+            StartCoroutine(tutorialManager.EndDialogue());
         }
     }
     

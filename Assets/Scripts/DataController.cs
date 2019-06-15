@@ -80,9 +80,13 @@ public class DataController : MonoBehaviour
         {
             SceneManager.LoadScene("TutorialLevel2"); // Tut Stage 4, coefficients
         }
-        else 
+        else if (level < 26)
         {
             SceneManager.LoadScene("T2Main");
+        }
+        else 
+        {
+            SceneManager.LoadScene("Ending");
         }
     }
 

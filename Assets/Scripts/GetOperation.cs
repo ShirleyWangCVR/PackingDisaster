@@ -23,7 +23,7 @@ public class GetOperation : MonoBehaviour
             operationController.SetOperation(this.gameObject.name);
         } else if (type == Slot.Number)
         {
-            operationController.SetNumber(Int32.Parse(this.gameObject.name));
+            operationController.SetNumber(int.Parse(this.gameObject.name));
         }
     }
 }

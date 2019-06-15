@@ -60,6 +60,11 @@ public class DialogueModuleManager : MonoBehaviour
         Debug.Log("displayDialogueBox done.");
     }
 
+    public void ExitDialogueBox()
+    {
+        anim.SetTrigger("moveOffscreen");
+    }
+
     IEnumerator openDialogueBox(string speaker, bool moveBox) {
 
         if (moveBox)
@@ -71,13 +76,9 @@ public class DialogueModuleManager : MonoBehaviour
         Debug.Log("Immediately before speakerText is manipulated, speaker == " + speaker);
         StartCoroutine(startSpeaking(speaker));
         Debug.Log("speakerText has been fully typed.");
-        // speakerText.text = speaker;
-        // anim.SetTrigger("enableContinue");
-        // DisplayNextSentence();
     }
     public void DisplayNextSentence() {
 
-        Debug.Log("Display next sentence");
         if (dialogueQueue.Count == 0) {
             return;
         }
@@ -145,11 +146,5 @@ public class DialogueModuleManager : MonoBehaviour
             batch = 7;
             tutController.FinishedSixthDialogue();
         }
-        else if (batch == 7)
-        {
-            batch = 8;
-            // tutController.FinishedSixthDialogue();
-        }
-        
     }
 }

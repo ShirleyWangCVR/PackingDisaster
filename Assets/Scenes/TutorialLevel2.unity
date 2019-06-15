@@ -349,7 +349,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 6
+  m_ChildAlignment: 7
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -464,7 +464,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 2
+  m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -1049,7 +1049,7 @@ RectTransform:
   - {fileID: 1039685496}
   - {fileID: 299493757}
   m_Father: {fileID: 858786911}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1301,7 +1301,7 @@ PrefabInstance:
     - target: {fileID: 3827346317967116310, guid: 3a8c92815e7963a4284912882b17f623,
         type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3827346317967116310, guid: 3a8c92815e7963a4284912882b17f623,
         type: 3}
@@ -1813,7 +1813,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 316908573}
   m_LocalRotation: {x: -0, y: -0, z: 0.8191521, w: -0.5735764}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5296371, y: -1.5296371, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -2650,7 +2650,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441798749}
   m_LocalRotation: {x: -0, y: -0, z: 0.86602545, w: 0.49999994}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5296367, y: 1.5296367, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -2813,7 +2813,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 8
+  m_ChildAlignment: 7
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -3158,7 +3158,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -3847,7 +3847,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767267520}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5296367, y: 1.5296367, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -4357,8 +4357,8 @@ RectTransform:
   - {fileID: 2057993467}
   - {fileID: 23265055}
   - {fileID: 397961182}
-  - {fileID: 193419126}
   - {fileID: 246812143}
+  - {fileID: 193419126}
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4713,7 +4713,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091484720}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5296367, y: -1.5296367, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -5126,8 +5126,8 @@ MonoBehaviour:
   nextQuestion: {fileID: 156441276}
   boxDisplay: {fileID: 790901294}
   toyDisplay: {fileID: 1851877993}
-  boxPool: {fileID: 459925433}
   toyPool: {fileID: 355683331}
+  dataController: {fileID: 0}
 --- !u!1 &1202979340
 GameObject:
   m_ObjectHideFlags: 0
@@ -6539,7 +6539,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632168015}
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5296367, y: -1.5296367, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -7567,7 +7567,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928964726}
   m_LocalRotation: {x: -0, y: -0, z: -0.6907726, w: 0.7230722}
-  m_LocalPosition: {x: 0, y: 0, z: -810.08606}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5296375, y: 1.5296375, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 397961182}
@@ -8076,6 +8076,9 @@ MonoBehaviour:
   numbersPanel: {fileID: 589815022}
   gameController: {fileID: 362771283}
   tutController: {fileID: 2039824241}
+  LHS: {fileID: 0}
+  RHS: {fileID: 0}
+  operationText: {fileID: 0}
 --- !u!114 &2057993464
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -31,6 +31,12 @@ public class TutorialManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
     }
 
+    public IEnumerator EndDialogue()
+    {
+        yield return new WaitForSeconds(2f);
+        dialogueModMgr.ExitDialogueBox();
+    }
+
     public void KickBob() {
         bobCtrl.dialogueExitLeft();
     }
