@@ -15,9 +15,12 @@ public class BothSideOperations : MonoBehaviour
     public Text LHS;
     public Text RHS;
     public Text operationText;
+    public AudioClip clickedSfx;
+    public AudioClip completedSfx;
 
     private string operation;
     private int number;
+    private AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
@@ -28,11 +31,13 @@ public class BothSideOperations : MonoBehaviour
         tutController = FindObjectOfType<TutorialController>();
         LHS.gameObject.SetActive(false);
         RHS.gameObject.SetActive(false);
+        audioSource = this.gameObject.GetComponent<AudioSource>();
     }
 
     // Show choose operation panel
-    public virtual void InitiateBothSideOperations()
+    public void InitiateBothSideOperations()
     {
+        audioSource.PlayOneShot(clickedSfx, 5.0f);
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(false);
 
@@ -43,7 +48,7 @@ public class BothSideOperations : MonoBehaviour
     }
 
     // Show choose number panel
-    public virtual void ChooseNumber()
+    public void ChooseNumber()
     {
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(true);
@@ -57,6 +62,7 @@ public class BothSideOperations : MonoBehaviour
     // Back to main play screen
     public void BackToMainScreen()
     {
+        audioSource.PlayOneShot(clickedSfx, 5.0f);
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);
     }
@@ -79,12 +85,16 @@ public class BothSideOperations : MonoBehaviour
         }
         LHS.gameObject.SetActive(false);
         RHS.gameObject.SetActive(false);
-        BackToMainScreen();        
+        audioSource.PlayOneShot(completedSfx, 5.0f);
+        operationsPanel.SetActive(false);
+        numbersPanel.SetActive(false);        
     }
 
     // set the chosen operation
     public void SetOperation(string op)
     {
+        audioSource.PlayOneShot(clickedSfx, 5.0f);
+        
         operation = op;
         LHS.gameObject.SetActive(true);
         RHS.gameObject.SetActive(true);
@@ -121,6 +131,8 @@ public class BothSideOperations : MonoBehaviour
     // set the chosen number
     public void SetNumber(int num)
     {
+        audioSource.PlayOneShot(clickedSfx, 5.0f);
+        
         number = num;
         LHS.text = LHS.text + num.ToString();
         RHS.text = RHS.text + num.ToString();

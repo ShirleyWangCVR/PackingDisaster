@@ -105,7 +105,7 @@ RectTransform:
   m_GameObject: {fileID: 7017859109228230586}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1975, y: 1.1975, z: 1.1975}
+  m_LocalScale: {x: 0.6375, y: 0.6375, z: 0.6375}
   m_Children:
   - {fileID: 5488746371978077044}
   m_Father: {fileID: 0}
@@ -143,6 +143,7 @@ MonoBehaviour:
   variablePool: {fileID: 0}
   pickUpSfx: {fileID: 8300000, guid: 029ea88fda298734d95c3df8e8741f0e, type: 3}
   putDownSfx: {fileID: 8300000, guid: 0deb1aacc4510b24bbd623dd1db24069, type: 3}
+  wrongSfx: {fileID: 8300000, guid: 06bd48e127e477a4e931c05af9f842fc, type: 3}
 --- !u!114 &-8325185266354924356
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,17 +18,20 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public SimpleObjectPool variablePool;
     public AudioClip pickUpSfx;
     public AudioClip putDownSfx;
+    public AudioClip wrongSfx;
 
     // to make dragging from side of equation look slightly nicer
     private GameObject placeholder = null;
-    private AudioSource audio;
+    private AudioSource audioSource;
     private SimpleObjectPool pool;
+    private DataController dataController;
 
     public void Start()
     {
         parentToReturnTo = this.transform.parent;
         gameController = FindObjectOfType<GameController>();
-        audio = this.gameObject.GetComponent<AudioSource>();
+        audioSource = this.gameObject.GetComponent<AudioSource>();
+        dataController = FindObjectOfType<DataController>();
 
         // TODO: shorten this
         if (typeOfItem == Slot.Value)
@@ -45,12 +48,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
         SetIsDragging(true);
-        audio.PlayOneShot(pickUpSfx, 7.0f);
+        audioSource.PlayOneShot(pickUpSfx, 7.0f);
 
         // create gap when dragging object
         placeholder = new GameObject();
         placeholder.transform.SetParent(this.transform.parent);
         LayoutElement le = placeholder.AddComponent<LayoutElement>();
+        placeholder.AddComponent<CanvasGroup>();
         HasValue hasValue = placeholder.AddComponent<HasValue>();
         hasValue.typeOfItem = Slot.Dummy;
 
@@ -84,7 +88,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         SetIsDragging(false);
-        audio.PlayOneShot(putDownSfx, 2.0f);
+        audioSource.PlayOneShot(putDownSfx, 2.0f);
 
         // set it to wherever it should go
         this.transform.SetParent(parentToReturnTo);
@@ -136,6 +140,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 int thisorient = (int) Mathf.Round(this.transform.Find("Image").localScale.x);
                 if (droppedorient == 0 - thisorient)
                 {
+                    dataController.PlayDing();
+                    
                     eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
                     Debug.Log("Destroying");
 
@@ -148,7 +154,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 Debug.Log("Dragged On");
 
                 // make sure same type of item
-                if (eventData.pointerDrag.GetComponent<HasValue>().typeOfItem == this.gameObject.GetComponent<HasValue>().typeOfItem)
+                if (eventData.pointerDrag.GetComponent<Draggable>().typeOfItem == this.gameObject.GetComponent<Draggable>().typeOfItem && this.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Bracket)
                 {
                     // make sure can only combine if on same side
                     string draggedParent = eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo.name;
@@ -156,6 +162,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                     if ((draggedParent.StartsWith("RHS") && thisParent.StartsWith("RHS")) || (draggedParent.StartsWith("LHS") && thisParent.StartsWith("LHS")))
                     {
+                        dataController.PlayDing();
+                        
                         Fraction droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
                         Fraction thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
                         Fraction newvalue = thisvalue + droppedvalue;
@@ -196,6 +204,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             }
                         }
                     }
+                }
+                else 
+                {
+                    // play bzz
+                    audioSource.PlayOneShot(wrongSfx, 2.0f);
                 }
             }
         }

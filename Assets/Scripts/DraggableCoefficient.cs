@@ -10,15 +10,21 @@ public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandl
 {
     public Transform parentToReturnTo;
     public Vector3 coefPosition;
+    public AudioClip pickUpSfx;
+
+    private AudioSource audioSource;
     
     // Start is called before the first frame update
     void Start()
     {
         parentToReturnTo = this.transform.parent;
+        audioSource = this.gameObject.GetComponent<AudioSource>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        audioSource.PlayOneShot(pickUpSfx, 7.0f);
+        
         coefPosition = this.transform.position;
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;

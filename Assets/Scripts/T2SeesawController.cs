@@ -108,61 +108,61 @@ public class T2SeesawController : SeesawController
     public void AddBothSides(int num)
     {
         GameObject newObject = toyPool.GetObject();
-        newObject.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(num);
+        newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
         newObject.transform.SetParent(leftHandSidePositive.transform);
+        newObject.GetComponent<Draggable>().ShowOnPositiveSide();
 
         GameObject new2Object = toyPool.GetObject();
-        new2Object.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(num);
+        new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
         new2Object.transform.SetParent(rightHandSidePositive.transform);
+        new2Object.GetComponent<Draggable>().ShowOnPositiveSide();
     }
 
     public void SubtractBothSides(int num)
     {
         GameObject newObject = toyPool.GetObject();
-        newObject.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(0 - num);
+        newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
         newObject.transform.SetParent(leftHandSideNegative.transform);
-        newObject.transform.Find("Image").localScale = new Vector3(-1, -1, 1);
-        newObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
+        newObject.GetComponent<Draggable>().ShowOnNegativeSide();
 
         GameObject new2Object = toyPool.GetObject();
-        new2Object.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(0 - num);
+        new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
         new2Object.transform.SetParent(rightHandSideNegative.transform);
-        new2Object.transform.Find("Image").localScale = new Vector3(-1, -1, 1);
-        new2Object.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
+        new2Object.GetComponent<Draggable>().ShowOnNegativeSide();
     }
 
     public void MultiplyBothSides(int num)
     {
         foreach(Transform child in leftHandSidePositive.transform)
         {
-            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
             Fraction.ReduceFraction(newValue);
-            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+            child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newValue);
         }
 
         foreach(Transform child in leftHandSideNegative.transform)
         {
-            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
             Fraction.ReduceFraction(newValue);
-            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+            child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newValue);
         }
 
         foreach(Transform child in rightHandSidePositive.transform)
         {
-            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
             Fraction.ReduceFraction(newValue);
-            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+            child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newValue);
         }
 
         foreach(Transform child in rightHandSideNegative.transform)
         {
-            Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
+            Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
             Fraction.ReduceFraction(newValue);
-            child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
+            child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newValue);
         }
     }
 

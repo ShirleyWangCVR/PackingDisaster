@@ -12,15 +12,17 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
     // the object pool of the game object that this zone will restock
     public SimpleObjectPool objectPool;
     public Draggable.Slot typeOfItems;
-    // private DataController dataController;
     public GameController gameController;
     public GameObject newObject;
+    public AudioClip droppedSfx;
 
     private Draggable childScript;
+    private AudioSource audioSource;
 
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
+        audioSource = this.gameObject.GetComponent<AudioSource>();
     }
 
     public void OnBeginDrag(PointerEventData pointerDrag)
@@ -83,41 +85,11 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
         childScript = null;
     }
 
-    /* // When clicked on create another object
-    public void OnClick()
-    {
-        GameObject newObject = objectPool.GetObject(); 
-        newObject.transform.position = this.transform.position + new Vector3(30, -30, 0);
-        newObject.transform.SetParent(this.transform, true);
-
-        // make sure orientation is correct
-        int check = (int) Mathf.Round(newObject.transform.localScale.x);
-        if (check == -1)
-        {
-            newObject.transform.Find("Image").localScale = new Vector3(1, 1, 1);
-            newObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-        }
-
-        if (typeOfItems == Draggable.Slot.Value)
-        {
-            newObject.GetComponent<HasValue>().SetValue(1);
-        } 
-        else if (typeOfItems == Draggable.Slot.Variable)
-        {
-            newObject.GetComponent<HasValue>().SetValue(gameController.GetEquation().variableValue);
-        }
-
-        if (newObject.transform.Find("Coefficient") != null)
-        {
-            Coefficient coef = newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
-            coef.SetValue(1);
-        }
-    } */
-
     // when an item is dropped on it get rid of it
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
+        audioSource.PlayOneShot(droppedSfx, 5.0f);
 
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)

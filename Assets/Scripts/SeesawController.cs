@@ -15,13 +15,13 @@ public class SeesawController : MonoBehaviour
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
     public Text equationText;
-    public AudioClip dangerSfx;
 
     protected bool currentlyDragging;
     protected double tilt;
     protected string originalSide; // original side of a thing being dragged
     protected bool roundActive;
     protected double prevTilt;
+    protected Coroutine soundDanger;
 
     protected AudioSource audioSource;
 
@@ -33,7 +33,6 @@ public class SeesawController : MonoBehaviour
         currentlyDragging = false;
         roundActive = true;
         audioSource = this.gameObject.GetComponent<AudioSource>();
-        audioSource.clip = dangerSfx;
         audioSource.volume = 2;
     }
 
@@ -192,13 +191,13 @@ public class SeesawController : MonoBehaviour
             CheckTilt();
         }
 
-        if (tilt < 0.05)
+        /* if (tilt < 0.05)
         {
             if (audioSource != null)
             {
                 audioSource.Stop();
             }
-        }
+        } */
     }
 
     // if it's tipped over more than 40 then the seesaw it too tipped over and they lose
@@ -391,19 +390,21 @@ public class SeesawController : MonoBehaviour
         if (tilt < 0.05 && tilt > -0.05)
         {
             Debug.Log("Safe");
-            StopCoroutine(PlayDanger());
+            StopCoroutine(soundDanger);
             audioSource.Stop();
+            // audioSource.mute = true;
         }
         else 
         {
             Debug.Log("Starting Danger");
-            StartCoroutine(PlayDanger());
+            soundDanger = StartCoroutine(PlayDanger());
         }
     }
 
     protected IEnumerator PlayDanger()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
+        // audioSource.mute = false;
         audioSource.Play();
     }
 

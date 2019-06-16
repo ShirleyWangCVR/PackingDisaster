@@ -17,9 +17,11 @@ public class DataController : MonoBehaviour
     public GameObject bearCoefPrefab;
     public GameObject boxCoefPrefab;
     public GameObject bracketPrefab;
+    public AudioClip dingSfx;
 
     private int currentLevel; // current level clicked on level select screen
     private int levelsCompleted; // use this to set how many levels available on level select
+    private AudioSource audioSource;
 
     // Player Progress used to store between sessions. Currently only in use for storing high scores.
     private PlayerProgress playerProgress;
@@ -36,6 +38,7 @@ public class DataController : MonoBehaviour
         SceneManager.LoadScene("Menu");
         currentLevel = 1;
         levelsCompleted = 0;
+        audioSource = this.gameObject.GetComponent<AudioSource>();
 
         // For some reason hardcoding the size at the start fixes resizing
         // issue between computers. It may look useless but removing the
@@ -62,6 +65,11 @@ public class DataController : MonoBehaviour
     public EquationData GetCurrentEquationData(int level)
     {
         return allEquationsUsed[level - 1];
+    }
+
+    public void PlayDing()
+    {
+        audioSource.PlayOneShot(dingSfx, 2.0f);
     }
 
     public void StartLevel(int level)

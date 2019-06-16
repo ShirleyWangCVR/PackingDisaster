@@ -18,7 +18,7 @@ public class Bracket : MonoBehaviour
     public AudioClip oneUpSfx;
 
     private bool expanded;
-    private AudioSource audio;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +26,7 @@ public class Bracket : MonoBehaviour
         expanded = false;
         numDroppedOn = 0;
         numTerms = this.gameObject.transform.Find("TermsInBracket").childCount;
+        audioSource = this.gameObject.GetComponent<AudioSource>();
 
         // give them the BracketInsideCoefficient component so that they can sense it being dropped on
         foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
@@ -81,7 +82,7 @@ public class Bracket : MonoBehaviour
         {
             // we have successfully expanded the bracket
             Debug.Log("Expanded");
-            audio.PlayOneShot(expandedSfx, 1.0f);
+            audioSource.PlayOneShot(expandedSfx, 3.0f);
 
             int i = 0;
             int numChildren = this.gameObject.transform.Find("TermsInBracket").childCount;
@@ -119,7 +120,7 @@ public class Bracket : MonoBehaviour
         }
         else // first drop
         {
-            audio.PlayOneShot(oneUpSfx, 1.0f);
+            audioSource.PlayOneShot(oneUpSfx, 3.0f);
             
             // show the arrows
             double coef = this.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
