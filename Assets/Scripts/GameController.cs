@@ -24,6 +24,7 @@ public class GameController : MonoBehaviour
     protected bool roundActive;
     protected float timeLeft;
     protected int level;
+    protected AudioSource audio;
     // private int playerScore; // currently not being used
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class GameController : MonoBehaviour
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
+        audio = this.gameObject.GetComponent<AudioSource>();
         levelText.text = "Level " + level.ToString();
         currentlyDragging = false;
         roundActive = true;
@@ -182,6 +184,7 @@ public class GameController : MonoBehaviour
     // end the current round
     public void EndRound(string howEnded)
     {
+        audio.volume = 0.3f;
         // deactivate game logic
         roundActive = false;
         seesaw.GetComponent<SeesawController>().SetRoundActive(false);

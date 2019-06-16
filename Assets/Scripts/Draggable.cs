@@ -16,17 +16,19 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public GameController gameController;
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
-    public bool inBracket;
+    public AudioClip pickUpSfx;
+    public AudioClip putDownSfx;
 
     // to make dragging from side of equation look slightly nicer
     private GameObject placeholder = null;
+    private AudioSource audio;
     private SimpleObjectPool pool;
-    public bool allowDrag;
 
     public void Start()
     {
         parentToReturnTo = this.transform.parent;
         gameController = FindObjectOfType<GameController>();
+        audio = this.gameObject.GetComponent<AudioSource>();
 
         // TODO: shorten this
         if (typeOfItem == Slot.Value)
@@ -38,13 +40,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             variablePool = GameObject.Find("Box Pool").GetComponent<SimpleObjectPool>();
             pool = variablePool;
         }
-
-        inBracket = false;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         SetIsDragging(true);
+        audio.PlayOneShot(pickUpSfx, 7.0f);
 
         // create gap when dragging object
         placeholder = new GameObject();
@@ -72,31 +73,18 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // so object can be detected on drop zones
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-        if (! inBracket)
-        {
-            allowDrag = true;
-        } else {
-            allowDrag = false;
-        }
-
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (allowDrag)
-        {
-            this.transform.position = eventData.position;
+        this.transform.position = eventData.position;
 
-            // might work for screen space camera
-            /* Vector3 screenPoint = Input.mousePosition;
-            screenPoint.z = 100.0f; //distance of the plane from the camera
-            this.transform.position = Camera.main.ScreenToWorldPoint(screenPoint); */
-        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         SetIsDragging(false);
+        audio.PlayOneShot(putDownSfx, 2.0f);
 
         // set it to wherever it should go
         this.transform.SetParent(parentToReturnTo);
@@ -128,11 +116,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         gameController.SetDragging(dragging, side);
-    }
-
-    public void SetBracketStatus(bool inside)
-    {
-        inBracket = inside;
     }
 
     // when an item is dropped on it check if it's the same type

@@ -15,15 +15,22 @@ public class FinishedPanelManager : MonoBehaviour
     public GameObject toyDisplay;
     public SimpleObjectPool toyPool;
     public DataController dataController;
+    public AudioClip youWinSfx;
+    public AudioClip youLoseSfx;
+
+    private AudioSource audio;
 
     void Start()
     {
         dataController = FindObjectOfType<DataController>();
+        audio = this.gameObject.GetComponent<AudioSource>();
     }
 
     // set finished display to if player lost by time out
     public void DisplayTimeOut()
     {
+        audio.PlayOneShot(youLoseSfx, 1.0f);
+        
         finishedDisplay.SetActive(true);
         userMessage.text = "You Ran Out of Time\nYou Lose!";
     }
@@ -31,6 +38,8 @@ public class FinishedPanelManager : MonoBehaviour
     // set finished display to if player wins
     public void DisplayCorrectlyBalanced(int correctValue)
     {
+        audio.PlayOneShot(youWinSfx, 1.0f);
+        
         finishedDisplay.SetActive(true);
         userMessage.text = "You Determined Correctly " + correctValue.ToString() + " in the Box!" + "\nYou Win!";
         nextQuestion.gameObject.SetActive(true);
@@ -78,6 +87,8 @@ public class FinishedPanelManager : MonoBehaviour
     // set finished panel to if player lost by wrong answer
     public void DisplayWrongBalanced(int determined)
     {
+        audio.PlayOneShot(youLoseSfx, 1.0f);
+        
         finishedDisplay.SetActive(true);
         userMessage.text = "You Determined Wrongly " + determined.ToString() + " in the Box!" + "\nYou Lose!";
     }
@@ -85,6 +96,8 @@ public class FinishedPanelManager : MonoBehaviour
     // set finished panel to if player didn't fully isolate answer
     public void DisplayNotYetBalanced()
     {
+        audio.PlayOneShot(youLoseSfx, 1.0f);
+        
         finishedDisplay.SetActive(true);
         userMessage.text = "You Didn't Properly Isolate the Box!\nYou Lose!";
     }
@@ -92,6 +105,8 @@ public class FinishedPanelManager : MonoBehaviour
     // set finished panel to if player lost by too unbalanced
     public void DisplaySeesawTipped()
     {
+        audio.PlayOneShot(youLoseSfx, 1.0f);
+        
         finishedDisplay.SetActive(true);
         userMessage.text = "The Seesaw Tipped Over!\nYou Lose!";
     }

@@ -14,6 +14,8 @@ public class TutSeesawController : SeesawController
         // set initial tilt to 0
         currentlyDragging = false;
         tilt = 0;
+        roundActive = true;
+        audioSource = this.gameObject.GetComponent<AudioSource>();
         // InvokeRepeating("DebugTilt", 0, 3.0f);
     }
 
@@ -21,7 +23,7 @@ public class TutSeesawController : SeesawController
     void Update()
     {
         // update the seesaw's current tilt
-        if (! currentlyDragging)
+        if (! currentlyDragging && roundActive)
         {
             UpdateTilt();
             UpdatePositions();

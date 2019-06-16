@@ -9,12 +9,15 @@ public class DialogueModuleManager : MonoBehaviour
     public Text dialogueText;
     public TutorialController tutController;
     public GameObject continueButton;
+    public AudioClip clicked;
 
     private Queue<string> dialogueQueue;
     private string speaker;
 
+    private AudioSource audioSource;
     private Animator anim;
     private int batch;
+    private bool firstDialogue;
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +25,9 @@ public class DialogueModuleManager : MonoBehaviour
         dialogueQueue = new Queue<string>();
         anim = GetComponent(typeof(Animator)) as Animator;
         tutController = FindObjectOfType<TutorialController>();
+        audioSource = this.gameObject.GetComponent<AudioSource>();
         continueButton.SetActive(true);
+        firstDialogue = false;
         batch = 1;
     }
 
@@ -83,6 +88,12 @@ public class DialogueModuleManager : MonoBehaviour
             return;
         }
 
+        if (! firstDialogue)
+        {
+            audioSource.PlayOneShot(clicked, 3.0f);
+        }
+        
+        firstDialogue = false;
         string nextSentence = dialogueQueue.Dequeue();
         StopAllCoroutines();
         StartCoroutine(TypeDialogue(nextSentence));
@@ -108,6 +119,7 @@ public class DialogueModuleManager : MonoBehaviour
             speakerText.text += letter;
             yield return new WaitForSeconds(0.4f);
         }
+        firstDialogue = true;
         anim.SetTrigger("enableContinue");
         DisplayNextSentence();
     }

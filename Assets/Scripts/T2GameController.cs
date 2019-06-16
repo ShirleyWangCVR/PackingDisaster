@@ -18,6 +18,7 @@ public class T2GameController : GameController
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
+        audio = this.gameObject.GetComponent<AudioSource>();
         levelText.text = "Level " + level.ToString();
         currentlyDragging = false;
         roundActive = true;
@@ -175,67 +176,6 @@ public class T2GameController : GameController
             newVar.GetComponent<Draggable>().ShowOnNegativeSide();
         }
     }
-
-    /* // Update is called once per frame
-    void Update()
-    {
-        // if round active count down time display
-        if (isRoundActive) 
-        {
-            timeUsed += Time.deltaTime;
-            UpdateTimeUsedDisplay();
-        }
-
-        // if seesaw fell over end game
-        if (seesaw.GetComponent<T2SeesawController>().FellOver())
-        {
-            EndRound("Scale Tipped");
-        }
-    } */
-
-/*     // end the current round
-    public override void EndRound(string howEnded)
-    {
-        // deactivate game logic
-        isRoundActive = false;
-        // playerScore = (int) Mathf.Round(timeRemaining);
-        // dataController.SubmitNewPlayerScore(playerScore);
-        // int highestScore = dataController.GetHighestPlayerScore();
-
-        if (howEnded == "Time Out")
-        {
-            finishedDisplayManager.DisplayTimeOut();
-        } 
-        else if (howEnded == "Finished Check") 
-        {
-            if (seesaw.GetComponent<T2SeesawController>().CheckIfComplete())
-            {
-                if (seesaw.GetComponent<T2SeesawController>().CorrectlyBalanced())
-                {
-                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
-                } 
-                else 
-                {
-                    // lost because wrong answer, get whatever they answered
-                    int side = (int) seesaw.GetComponent<T2SeesawController>().GetLeftHandSideValue();
-                    if (equation.variableValue != side)
-                    {
-                        finishedDisplayManager.DisplayWrongBalanced(side);
-                    } else {
-                        side = (int) seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
-                        finishedDisplayManager.DisplayWrongBalanced(side);
-                    }
-                }
-            }
-            else 
-            {
-                finishedDisplayManager.DisplayNotYetBalanced();
-            }
-        } else if (howEnded == "Scale Tipped") 
-        {
-            finishedDisplayManager.DisplaySeesawTipped();
-        }
-    } */
 
     public void ProcessBothSideOperation(string operation, int number)
     {

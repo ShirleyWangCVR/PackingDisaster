@@ -106,7 +106,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler
     }
 
     // get the total value of all variables on this side
-    public virtual double NumericalVariables()
+    public double NumericalVariables()
     {
         double num = 0;
         foreach(Transform child in this.transform)
@@ -128,7 +128,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler
     }
 
     // get the total value of all values on this side
-    public virtual double NumericalValues()
+    public double NumericalValues()
     {
         double num = 0;
         foreach(Transform child in this.transform)

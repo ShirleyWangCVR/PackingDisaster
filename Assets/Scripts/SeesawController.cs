@@ -15,11 +15,15 @@ public class SeesawController : MonoBehaviour
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
     public Text equationText;
+    public AudioClip dangerSfx;
 
     protected bool currentlyDragging;
     protected double tilt;
     protected string originalSide; // original side of a thing being dragged
     protected bool roundActive;
+    protected double prevTilt;
+
+    protected AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +32,9 @@ public class SeesawController : MonoBehaviour
         tilt = 0;
         currentlyDragging = false;
         roundActive = true;
+        audioSource = this.gameObject.GetComponent<AudioSource>();
+        audioSource.clip = dangerSfx;
+        audioSource.volume = 2;
     }
 
     // Update is called once per frame
@@ -56,6 +63,7 @@ public class SeesawController : MonoBehaviour
             originalSide = side;
         }
 
+        // Allow things on other side to be allowed to be dropped onto
         bool right;
         bool left;
         if (originalSide == "right")
@@ -99,6 +107,13 @@ public class SeesawController : MonoBehaviour
                 child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
             }
         }
+
+        /* // Play the danger music
+        if (! dragging)
+        {
+            Debug.Log("Check audioSource");
+            CheckTilt();
+        } */
     }
 
     // make the seesaw tilt if it needs to
@@ -168,19 +183,22 @@ public class SeesawController : MonoBehaviour
             rhs = rhs - child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
+        prevTilt = tilt;
         tilt = lhs - rhs;
-    }
 
-    // in case tilt isn't working debug this by invokerepeating in start
-    public void DebugTilt()
-    {
-        float currangle = this.transform.rotation.eulerAngles.z;
-        if (currangle > 180)
+        if (tilt != prevTilt)
         {
-            currangle = this.transform.rotation.eulerAngles.z - 360;
+            Debug.Log("Tilt changed");
+            CheckTilt();
         }
-        Debug.Log(currangle);
-        Debug.Log(tilt);
+
+        if (tilt < 0.05)
+        {
+            if (audioSource != null)
+            {
+                audioSource.Stop();
+            }
+        }
     }
 
     // if it's tipped over more than 40 then the seesaw it too tipped over and they lose
@@ -366,6 +384,27 @@ public class SeesawController : MonoBehaviour
         }
 
         equationText.text = equation;
+    }
+
+    protected void CheckTilt()
+    {
+        if (tilt < 0.05 && tilt > -0.05)
+        {
+            Debug.Log("Safe");
+            StopCoroutine(PlayDanger());
+            audioSource.Stop();
+        }
+        else 
+        {
+            Debug.Log("Starting Danger");
+            StartCoroutine(PlayDanger());
+        }
+    }
+
+    protected IEnumerator PlayDanger()
+    {
+        yield return new WaitForSeconds(1.5f);
+        audioSource.Play();
     }
 
 }

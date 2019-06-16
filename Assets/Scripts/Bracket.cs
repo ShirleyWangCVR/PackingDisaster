@@ -14,7 +14,11 @@ public class Bracket : MonoBehaviour
     public Image arrow2;
     public GameObject arrow1Text;
     public GameObject arrow2Text;
+    public AudioClip expandedSfx;
+    public AudioClip oneUpSfx;
+
     private bool expanded;
+    private AudioSource audio;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +30,7 @@ public class Bracket : MonoBehaviour
         // give them the BracketInsideCoefficient component so that they can sense it being dropped on
         foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
         {
-            child.gameObject.GetComponent<Draggable>().SetBracketStatus(true);
+            // child.gameObject.GetComponent<Draggable>().SetBracketStatus(true);
             child.gameObject.transform.Find("Coefficient").gameObject.AddComponent<BracketInsideCoefficient>();
         }
 
@@ -77,6 +81,7 @@ public class Bracket : MonoBehaviour
         {
             // we have successfully expanded the bracket
             Debug.Log("Expanded");
+            audio.PlayOneShot(expandedSfx, 1.0f);
 
             int i = 0;
             int numChildren = this.gameObject.transform.Find("TermsInBracket").childCount;
@@ -90,7 +95,7 @@ public class Bracket : MonoBehaviour
                 coef.SetValue(newCoef);
 
                 // reset as draggable
-                child.gameObject.GetComponent<Draggable>().SetBracketStatus(false);
+                // child.gameObject.GetComponent<Draggable>().SetBracketStatus(false);
                 Destroy(child.gameObject.transform.Find("Coefficient").GetComponent<BracketInsideCoefficient>());
 
                 i++;
@@ -114,6 +119,8 @@ public class Bracket : MonoBehaviour
         }
         else // first drop
         {
+            audio.PlayOneShot(oneUpSfx, 1.0f);
+            
             // show the arrows
             double coef = this.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue();
             if (this.transform.Find("TermsInBracket").GetChild(0).Find("Coefficient").gameObject.GetComponent<BracketInsideCoefficient>().droppedOn)
