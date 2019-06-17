@@ -44,7 +44,7 @@ public class GameController : MonoBehaviour
         SetUpSeesaw();
 
         // if not tutorial then have a time limit
-        if (! (level <= 3 || level == 6 || level == 11 || level == 16))
+        if (! (level <= 2 || level == 6 || level == 11 || level == 16))
         {
             notTutorial = true;
             timeUsedText.text = "Time Left: " + timeLeft.ToString();

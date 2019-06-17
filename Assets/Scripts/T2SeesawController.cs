@@ -41,7 +41,7 @@ public class T2SeesawController : SeesawController
 
         prevTilt = tilt;
         tilt = lhs - rhs;
-        if (tilt < 0.05)
+        if (tilt < 0.05 && tilt > -0.05)
         {
             // due to floating point arithmetic errors
             tilt = 0;
@@ -49,7 +49,6 @@ public class T2SeesawController : SeesawController
 
         if (tilt != prevTilt)
         {
-            Debug.Log("Tilt changed");
             CheckTilt();
         }
     }
@@ -281,58 +280,68 @@ public class T2SeesawController : SeesawController
     {
         string termString = "";
 
-        Fraction value = term.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
-        if (value < 0)
+        if (term.Find("Coefficient") != null)
         {
-            value = -value;
-        }
-
-        if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
-        {
-            if (value != 1)
+            Fraction value = term.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();   
+            
+            if (value < 0)
             {
-                termString = termString + value.ToString();
+                value = -value;
             }
-            termString = termString + "x";
-        }
-        else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
-        {
-            termString = termString + value.ToString();
-        }
-        else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Bracket)
-        {
-            if (value != 1)
-            {
-                termString = termString + value.ToString();
-            }
-            termString = termString + "(";
 
-            string bracket = "";
-            foreach(Transform kid in term.Find("TermsInBracket"))
+            if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
             {
-                Fraction val = kid.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
-
-                if (bracket.Length > 0)
+                if (value != 1)
                 {
-                    bracket = bracket + " + ";
+                    termString = termString + value.ToString();
                 }
-
-                if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
+                termString = termString + "x";
+            }
+            else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
+            {
+                termString = termString + value.ToString();
+            }
+            else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Bracket)
+            {
+                if (value != 1)
                 {
-                    if (val != 1)
+                    termString = termString + value.ToString();
+                }
+                termString = termString + "(";
+
+                string bracket = "";
+                foreach(Transform kid in term.Find("TermsInBracket"))
+                {
+                    Fraction val = kid.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
+
+                    if (bracket.Length > 0)
+                    {
+                        bracket = bracket + " + ";
+                    }
+
+                    if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
+                    {
+                        if (val != 1)
+                        {
+                            bracket = bracket + val.ToString();
+                        }
+                        bracket = bracket + "x";
+                    }
+                    else if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
                     {
                         bracket = bracket + val.ToString();
                     }
-                    bracket = bracket + "x";
                 }
-                else if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
-                {
-                    bracket = bracket + val.ToString();
-                }
+                termString = termString + bracket + ")";
             }
-            termString = termString + bracket + ")";
+
+            return termString;
+        }
+        else
+        {
+            return "";
         }
 
-        return termString;
+        
     }
 }

@@ -92,6 +92,9 @@ public class DialogueModuleManager : MonoBehaviour
         {
             audioSource.PlayOneShot(clicked, 3.0f);
         }
+
+        // Debug.Log(dialogueQueue.Count);
+        tutController.CurrentDialogue(dialogueQueue.Count);
         
         firstDialogue = false;
         string nextSentence = dialogueQueue.Dequeue();
@@ -148,7 +151,7 @@ public class DialogueModuleManager : MonoBehaviour
             batch = 5;
             tutController.FinishedFourthDialogue();
         }
-        else if (batch == 5)
+        /* else if (batch == 5)
         {
             batch = 6;
             tutController.FinishedFifthDialogue();
@@ -157,6 +160,6 @@ public class DialogueModuleManager : MonoBehaviour
         {
             batch = 7;
             tutController.FinishedSixthDialogue();
-        }
+        } */
     }
 }

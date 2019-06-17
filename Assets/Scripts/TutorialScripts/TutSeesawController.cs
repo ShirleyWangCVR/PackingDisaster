@@ -71,7 +71,7 @@ public class TutSeesawController : SeesawController
 
     }
 
-    public bool CheckOneDraggedUnbalanced()
+    /* public bool CheckOneDraggedUnbalanced()
     {
         // this assumes that they're dragging a toy fix this
         return (tilt == 2 || tilt == -2) && currentlyDragging == false;
@@ -91,14 +91,20 @@ public class TutSeesawController : SeesawController
     {
         // not very thorough checking
         return (tilt == 0 && currentlyDragging == false);
-    }
+    } */
+
+
+
 
     public bool CheckDraggedStillBalanced()
     {
         return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 1 && rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 4 && tilt == 0 && ! currentlyDragging;
     }
 
-    public bool CheckOneMoreBoxOnBothSides()
+
+
+
+   /*  public bool CheckOneMoreBoxOnBothSides()
     {
         return rightHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1;
     }
@@ -106,11 +112,15 @@ public class TutSeesawController : SeesawController
     public bool CheckCancelledOut()
     {
         return leftHandSideNegative.GetComponent<SeesawSide>().NumVariables() == 0 && leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 0;
-    }
+    } */
+
+
+
+
 
     public bool CheckDraggedToNegative()
     {
-        return leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 0 && rightHandSideNegative.GetComponent<SeesawSide>().NumValues() == 1;
+        return rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 0 && leftHandSideNegative.GetComponent<SeesawSide>().NumValues() == 1;
     }
 
 }

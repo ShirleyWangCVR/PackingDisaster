@@ -27,7 +27,6 @@ public class SeesawSide : MonoBehaviour, IDropHandler
             drop = eventData.pointerDrag;
         }
         
-        
         Debug.Log(drop.name + " was dropped on " + gameObject.name);
 
         Draggable dragged = drop.GetComponent<Draggable>();

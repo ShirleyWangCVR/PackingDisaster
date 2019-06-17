@@ -76,13 +76,13 @@ public class DataController : MonoBehaviour
     {
         SetDifficulty(level);
 
-        if (level <= 3)
+        if (level <= 2)
         {
             SceneManager.LoadScene("TutorialLevel1"); 
         }
         else if (level <= 5)
         {
-            SceneManager.LoadScene("Main"); // levels 4 or 5
+            SceneManager.LoadScene("Main"); // levels 3 to 5
         }
         else if (level == 6 || level == 11 || level == 16)
         {
