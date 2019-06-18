@@ -40,6 +40,11 @@ public class DataController : MonoBehaviour
         levelsCompleted = 0;
         audioSource = this.gameObject.GetComponent<AudioSource>();
 
+        for (int i = 0; i < allEquationsUsed.Length; i++)
+        {
+            allEquationsUsed[i].SetExpressionsByString();
+        }
+
         // For some reason hardcoding the size at the start fixes resizing
         // issue between computers. It may look useless but removing the
         // sizeDelta setting will cause different resolution screens to render
