@@ -10,11 +10,7 @@ public class TutorialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("TutorialManager has Start()ed.");
-    }
 
-    public void Garbage() {
-        Debug.Log("Garbage.");
     }
 
     public IEnumerator InitBobDialogue(string[] dialogueContents) {
@@ -33,6 +29,7 @@ public class TutorialManager : MonoBehaviour
 
     public IEnumerator EndDialogue()
     {
+        Debug.Log("Here");
         yield return new WaitForSeconds(2f);
         dialogueModMgr.ExitDialogueBox();
     }

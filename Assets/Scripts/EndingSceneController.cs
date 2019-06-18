@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class EndingSceneController : MonoBehaviour
 {
+    public TutorialManager tutManager;
+    public DialogueTrigger dialogue;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        dialogue.TriggerInitialDialogue();
     }
 
     // Update is called once per frame
@@ -20,5 +23,10 @@ public class EndingSceneController : MonoBehaviour
     public void BackToMenu()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public void FinishedDialogue()
+    {
+        StartCoroutine(tutManager.EndDialogue());
     }
 }

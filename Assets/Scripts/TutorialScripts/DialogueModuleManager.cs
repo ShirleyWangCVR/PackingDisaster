@@ -8,6 +8,7 @@ public class DialogueModuleManager : MonoBehaviour
     public Text speakerText;
     public Text dialogueText;
     public TutorialController tutController;
+    public EndingSceneController endController;
     public GameObject continueButton;
     public AudioClip clicked;
 
@@ -25,6 +26,7 @@ public class DialogueModuleManager : MonoBehaviour
         dialogueQueue = new Queue<string>();
         anim = GetComponent(typeof(Animator)) as Animator;
         tutController = FindObjectOfType<TutorialController>();
+        endController = FindObjectOfType<EndingSceneController>();
         audioSource = this.gameObject.GetComponent<AudioSource>();
         continueButton.SetActive(true);
         firstDialogue = false;
@@ -94,7 +96,10 @@ public class DialogueModuleManager : MonoBehaviour
         }
 
         // Debug.Log(dialogueQueue.Count);
-        tutController.CurrentDialogue(dialogueQueue.Count);
+        if (tutController != null)
+        {
+            tutController.CurrentDialogue(dialogueQueue.Count);
+        }
         
         firstDialogue = false;
         string nextSentence = dialogueQueue.Dequeue();
@@ -128,38 +133,36 @@ public class DialogueModuleManager : MonoBehaviour
     }
 
     void EndDialogue() {
-        Debug.Log("A conversation has ended.");
+        // Debug.Log("A conversation has ended.");
         continueButton.SetActive(false);
 
-        if (batch == 1)
+        if (tutController != null)
         {
-            batch = 2;
-            tutController.FinishedFirstDialogue();
+            if (batch == 1)
+            {
+                batch = 2;
+                tutController.FinishedFirstDialogue();
+            }
+            else if (batch == 2)
+            {
+                batch = 3;
+                tutController.FinishedSecondDialogue();
+            }
+            else if (batch == 3)
+            {
+                batch = 4;
+                tutController.FinishedThirdDialogue();
+            }
+            else if (batch == 4)
+            {
+                batch = 5;
+                tutController.FinishedFourthDialogue();
+            }
         }
-        else if (batch == 2)
-        {
-            batch = 3;
-            tutController.FinishedSecondDialogue();
+        if (endController != null)
+        {            
+            Debug.Log("Here");
+            endController.FinishedDialogue();
         }
-        else if (batch == 3)
-        {
-            batch = 4;
-            tutController.FinishedThirdDialogue();
-        }
-        else if (batch == 4)
-        {
-            batch = 5;
-            tutController.FinishedFourthDialogue();
-        }
-        /* else if (batch == 5)
-        {
-            batch = 6;
-            tutController.FinishedFifthDialogue();
-        }
-        else if (batch == 6)
-        {
-            batch = 7;
-            tutController.FinishedSixthDialogue();
-        } */
     }
 }
