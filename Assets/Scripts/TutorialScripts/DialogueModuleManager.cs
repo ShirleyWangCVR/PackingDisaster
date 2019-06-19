@@ -44,7 +44,7 @@ public class DialogueModuleManager : MonoBehaviour
     }
 
     public void InitDialogue(string speaker, string[] dialogueSentences) {
-        Debug.Log("Starting a dialogue.");
+        // Debug.Log("Starting a dialogue.");
         continueButton.SetActive(true);
         
         dialogueQueue.Clear();
@@ -52,19 +52,20 @@ public class DialogueModuleManager : MonoBehaviour
             dialogueQueue.Enqueue(sentence);
         }
         StartCoroutine(openDialogueBox(speaker, true));
-        Debug.Log("displayDialogueBox done.");
+        // Debug.Log("displayDialogueBox done.");
     }
 
     public void ContinueDialogue(string speaker, string[] dialogueSentences) {
-        Debug.Log("Starting a dialogue.");
+        // Debug.Log("Starting a dialogue.");
         continueButton.SetActive(true);
         
         dialogueQueue.Clear();
         foreach (string sentence in dialogueSentences) {
             dialogueQueue.Enqueue(sentence);
         }
-        StartCoroutine(openDialogueBox(speaker, false));
-        Debug.Log("displayDialogueBox done.");
+        DisplayNextSentence();
+        // StartCoroutine(openDialogueBox(speaker, false));
+        // Debug.Log("displayDialogueBox done.");
     }
 
     public void ExitDialogueBox()
@@ -80,10 +81,11 @@ public class DialogueModuleManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
 
-        Debug.Log("Immediately before speakerText is manipulated, speaker == " + speaker);
+        // Debug.Log("Immediately before speakerText is manipulated, speaker == " + speaker);
         StartCoroutine(startSpeaking(speaker));
-        Debug.Log("speakerText has been fully typed.");
+        // Debug.Log("speakerText has been fully typed.");
     }
+
     public void DisplayNextSentence() {
 
         if (dialogueQueue.Count == 0) {

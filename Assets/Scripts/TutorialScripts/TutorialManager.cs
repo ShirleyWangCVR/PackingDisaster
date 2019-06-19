@@ -14,11 +14,11 @@ public class TutorialManager : MonoBehaviour
     }
 
     public IEnumerator InitBobDialogue(string[] dialogueContents) {
-        Debug.Log("InitBobDialogue() has been entered.");
+        // Debug.Log("InitBobDialogue() has been entered.");
         bobCtrl.dialogueEnterLeft();
-        Debug.Log("About to wait for 2.2 seconds.");
+        // Debug.Log("About to wait for 2.2 seconds.");
         yield return new WaitForSeconds(2.2f);
-        Debug.Log("Done waiting.");
+        // Debug.Log("Done waiting.");
         dialogueModMgr.InitDialogue("BOB", dialogueContents);
     }
 
@@ -29,14 +29,16 @@ public class TutorialManager : MonoBehaviour
 
     public IEnumerator EndDialogue()
     {
-        Debug.Log("Here");
+        // Debug.Log("Here");
         yield return new WaitForSeconds(2f);
         dialogueModMgr.ExitDialogueBox();
+        bobCtrl.dialogueExitLeft();
     }
     public void EndDialogueNow()
     {
         // yield return new WaitForSeconds(2f);
         dialogueModMgr.ExitDialogueBox();
+        bobCtrl.dialogueExitLeft();
     }
 
     public void KickBob() {

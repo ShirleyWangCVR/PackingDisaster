@@ -22,10 +22,6 @@ public class EquationData
 		string left = sides[0];
 		string right = sides[1];
 
-        Debug.Log(difficulty);
-        Debug.Log(lhs);
-		Debug.Log(rhs);
-
 		lhs = StringToExpression(left);
         rhs = StringToExpression(right);
 	}
