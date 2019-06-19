@@ -1224,7 +1224,7 @@ MonoBehaviour:
     to stay balanced?
   - Well, if you drag the box from the negative part to the positive part of the other
     side of the seesaw,
-  - Then that's the same thing as adding a box to both sides.
+  - Then that's the same thing as adding a box to both sides. Try dragging it over.
   - Also, dragging something from the positive part of one side to the negative part
     of the other side,
   - Is the same as subtracting it from both sides.

@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
  */
 public class MenuController : MonoBehaviour
 {
+    public GameObject resumeButton;
+    public GameObject levelselButton;
+
     private DataController dataController;
     private int currentMax;
 
@@ -14,8 +17,13 @@ public class MenuController : MonoBehaviour
     {
         dataController = FindObjectOfType<DataController>();
         currentMax = dataController.GetLevelsCompleted();
+        if (currentMax > 0)
+        {
+            resumeButton.SetActive(true);
+            levelselButton.SetActive(true);
+        }
     }
-    
+
     // when start button is pressed
     public void FromBeginning()
     {
@@ -26,7 +34,7 @@ public class MenuController : MonoBehaviour
     {
         dataController.StartLevel(currentMax + 1);
     }
-    
+
     public void LevelSelect()
     {
         SceneManager.LoadScene("Level Select");
