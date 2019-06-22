@@ -128,6 +128,16 @@ public class DataController : MonoBehaviour
         currentLevel = difficulty;
     }
 
+    public int GetTotalStarsUpTo(int level)
+    {
+        int sum = 0;
+        for (int i = 0; i < level; i++)
+        {
+            sum = sum + starsObtained[i];
+        }
+        return sum;
+    }
+
     // load game data from json
     private void LoadGameData()
     {

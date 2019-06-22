@@ -12,26 +12,44 @@ public class SeesawSide : MonoBehaviour, IDropHandler
     public Draggable.Slot typeOfItems = Draggable.Slot.All;
     public enum Slot {Positive, Negative};
     public Slot typeOfSide;
+    public HintSystem hintSystem;
+
+    private int capacity;
+
+    void Start()
+    {
+        int level = FindObjectOfType<DataController>().GetDifficulty();
+        if (level <= 5)
+        {
+            capacity = 8;
+        }
+        else
+        {
+            capacity = 5;
+        }
+    }
 
     // if Draggable object dropped onto this. Assuming all items dropped on it are Draggable.
     public void OnDrop(PointerEventData eventData)
     {
-        GameObject drop;
-        if ( !(eventData.pointerDrag.name.EndsWith("(Clone)")))
-        {
-            // dragging from a restock zone then hopefully
-            drop = eventData.pointerDrag.GetComponent<RestockZone>().newObject;
-        } 
-        else
-        {
-            drop = eventData.pointerDrag;
-        }
+        int size = GetCurrentSize();
         
-        Debug.Log(drop.name + " was dropped on " + gameObject.name);
-
-        Draggable dragged = drop.GetComponent<Draggable>();
-        if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)
+        if (size < capacity)
         {
+            GameObject drop;
+            if ( !(eventData.pointerDrag.name.EndsWith("(Clone)")))
+            {
+                // dragging from a restock zone then hopefully
+                drop = eventData.pointerDrag.GetComponent<RestockZone>().newObject;
+            } 
+            else
+            {
+                drop = eventData.pointerDrag;
+            }
+            
+            Debug.Log(drop.name + " was dropped on " + gameObject.name);
+
+            Draggable dragged = drop.GetComponent<Draggable>();
             dragged.parentToReturnTo = this.transform;
 
             if (typeOfSide == Slot.Positive)
@@ -60,6 +78,36 @@ public class SeesawSide : MonoBehaviour, IDropHandler
                     }
                 }
             }
+        }
+        else
+        {
+            OverCapacity();
+        }
+    }
+
+    // returns how much is currently on this side
+    public int GetCurrentSize()
+    {
+        return NumValues() + NumVariables() + (int) (NumBrackets() * 2.5);
+    }
+
+    public bool CheckOverCapacity()
+    {
+        return GetCurrentSize() >= capacity;
+    }
+
+    public bool CheckOverCapacity(double add)
+    {
+        return GetCurrentSize() + add > capacity;
+    }
+
+    public void OverCapacity()
+    {
+        Debug.Log("Over Capacity");
+        if (hintSystem != null)
+        {
+            hintSystem.SeesawSideOverflow();
+            // play some sound effect
         }
     }
 

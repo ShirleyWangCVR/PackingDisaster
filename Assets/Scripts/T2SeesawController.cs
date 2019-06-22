@@ -70,7 +70,6 @@ public class T2SeesawController : SeesawController
     {
         // check if there is only 1 variable on the left hand side with coefficient 1
         // and only one value on the other
-        // TODO: account for negative case whoops
         if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
         {
             if (leftHandSidePositive.transform.GetChild(0).Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() == 1)
@@ -106,28 +105,50 @@ public class T2SeesawController : SeesawController
 
     public void AddBothSides(int num)
     {
-        GameObject newObject = toyPool.GetObject();
-        newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
-        newObject.transform.SetParent(leftHandSidePositive.transform);
-        newObject.GetComponent<Draggable>().ShowOnPositiveSide();
+        if (leftHandSidePositive.GetComponent<SeesawSide>().CheckOverCapacity() || rightHandSidePositive.GetComponent<SeesawSide>().CheckOverCapacity())
+        {
+            leftHandSidePositive.GetComponent<SeesawSide>().OverCapacity();
+        }
+        else
+        {        
+            // TODO: set parent to return to
 
-        GameObject new2Object = toyPool.GetObject();
-        new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
-        new2Object.transform.SetParent(rightHandSidePositive.transform);
-        new2Object.GetComponent<Draggable>().ShowOnPositiveSide();
+            GameObject newObject = toyPool.GetObject();
+            newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
+            newObject.transform.SetParent(leftHandSidePositive.transform);
+            newObject.GetComponent<Draggable>().ShowOnPositiveSide();
+            newObject.GetComponent<Draggable>().parentToReturnTo = leftHandSidePositive.transform;
+
+            GameObject new2Object = toyPool.GetObject();
+            new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
+            new2Object.transform.SetParent(rightHandSidePositive.transform);
+            new2Object.GetComponent<Draggable>().ShowOnPositiveSide();
+            new2Object.GetComponent<Draggable>().parentToReturnTo = rightHandSidePositive.transform;
+        }
     }
 
     public void SubtractBothSides(int num)
     {
-        GameObject newObject = toyPool.GetObject();
-        newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
-        newObject.transform.SetParent(leftHandSideNegative.transform);
-        newObject.GetComponent<Draggable>().ShowOnNegativeSide();
+        if (leftHandSideNegative.GetComponent<SeesawSide>().CheckOverCapacity() || rightHandSideNegative.GetComponent<SeesawSide>().CheckOverCapacity())
+        {
+            leftHandSideNegative.GetComponent<SeesawSide>().OverCapacity();
+        }
+        else
+        {        
+            //TODO: set parent to return to
 
-        GameObject new2Object = toyPool.GetObject();
-        new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
-        new2Object.transform.SetParent(rightHandSideNegative.transform);
-        new2Object.GetComponent<Draggable>().ShowOnNegativeSide();
+            GameObject newObject = toyPool.GetObject();
+            newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
+            newObject.transform.SetParent(leftHandSideNegative.transform);
+            newObject.GetComponent<Draggable>().ShowOnNegativeSide();
+            newObject.GetComponent<Draggable>().parentToReturnTo = leftHandSideNegative.transform;
+
+            GameObject new2Object = toyPool.GetObject();
+            new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
+            new2Object.transform.SetParent(rightHandSideNegative.transform);
+            new2Object.GetComponent<Draggable>().ShowOnNegativeSide();
+            new2Object.GetComponent<Draggable>().parentToReturnTo = rightHandSideNegative.transform;
+        }
     }
 
     public void MultiplyBothSides(int num)

@@ -8,14 +8,12 @@ using UnityEngine.UI;
 /* GameObjects with this class are Draggable, and can be dragged by
  * the mouse.  They can be Variables, Values, Brackets, or Dummys.
  */
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     public Transform parentToReturnTo;
     public enum Slot {Variable, Value, All, Dummy, Bracket};
     public Slot typeOfItem = Slot.Value;
     public GameController gameController;
-    public SimpleObjectPool toyPool;
-    public SimpleObjectPool variablePool;
     public AudioClip pickUpSfx;
     public AudioClip putDownSfx;
     public AudioClip wrongSfx;
@@ -25,6 +23,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private AudioSource audioSource;
     private SimpleObjectPool pool;
     private DataController dataController;
+    private int variableValue;
 
     public void Start()
     {
@@ -32,16 +31,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         gameController = FindObjectOfType<GameController>();
         audioSource = this.gameObject.GetComponent<AudioSource>();
         dataController = FindObjectOfType<DataController>();
+        variableValue = gameController.GetEquation().variableValue;
 
-        // TODO: shorten this
         if (typeOfItem == Slot.Value)
         {
-            toyPool = GameObject.Find("Toy Pool").GetComponent<SimpleObjectPool>();
-            pool = toyPool;
+            pool = GameObject.Find("Toy Pool").GetComponent<SimpleObjectPool>();
         } else if (typeOfItem == Slot.Variable)
         {
-            variablePool = GameObject.Find("Box Pool").GetComponent<SimpleObjectPool>();
-            pool = variablePool;
+            pool = GameObject.Find("Box Pool").GetComponent<SimpleObjectPool>();
         }
     }
 
@@ -212,6 +209,57 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 }
             }
         }
+    }
+
+    // on double click in type 2 questions split
+    // currently if you double click in the middle it glitches so fix that
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Coefficient coef = this.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>();
+        if (eventData.clickCount == 2 && coef != null && (typeOfItem == Draggable.Slot.Value || typeOfItem == Draggable.Slot.Variable))
+        {
+            if (coef.GetValue() > 1)
+            {
+                Debug.Log("Hooray");
+                // split apart
+                StartCoroutine(ShowSplit(coef.GetFractionValue() - 1));
+            }
+        }
+    }
+
+    public IEnumerator ShowSplit(Fraction newCoef)
+    {
+        Transform panel = this.transform.Find("SplitApart");
+        panel.gameObject.SetActive(true);
+        panel.Find("Leftover").gameObject.GetComponent<Text>().text = newCoef.ToString();
+        panel.Find("One").gameObject.GetComponent<Text>().text = 1.ToString();
+
+        yield return new WaitForSeconds(1f);
+
+        // check that seesaw side isn't at max capacity
+        SeesawSide parent = this.transform.parent.gameObject.GetComponent<SeesawSide>();
+        panel.gameObject.SetActive(false);
+        if (! parent.CheckOverCapacity())
+        {
+            this.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newCoef);
+
+            GameObject newObject = pool.GetObject();
+            newObject.transform.SetParent(this.transform.parent);
+            newObject.GetComponent<Draggable>().parentToReturnTo = this.transform.parent;
+            newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(1);
+
+            if (typeOfItem == Draggable.Slot.Variable)
+            {
+                newObject.GetComponent<HasValue>().SetValue(variableValue);
+            }
+
+            // sound effect
+        }
+        else
+        {
+            parent.OverCapacity();
+        }
+
     }
 
     public void DestroyPlaceholder()

@@ -53,7 +53,7 @@ public class TimeController : MonoBehaviour
                 star1.sprite = emptyStar;
             }
 
-            if (currentLength >= -2)
+            if (currentLength <= 200)
             {
                 coverTime.GetComponent<RectTransform>().sizeDelta = new Vector2(currentLength, 30);
             }

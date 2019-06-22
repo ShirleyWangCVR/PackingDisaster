@@ -331,6 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 0
+  hintSystem: {fileID: 238568987}
 --- !u!114 &60944029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 1
+  hintSystem: {fileID: 238568987}
 --- !u!114 &66404443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1130,7 +1132,7 @@ GameObject:
   - component: {fileID: 238568984}
   - component: {fileID: 238568987}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Hint Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1852,6 +1854,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 0
+  hintSystem: {fileID: 238568987}
 --- !u!114 &466808578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2124,6 +2127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 1
+  hintSystem: {fileID: 238568987}
 --- !u!114 &532067071
 MonoBehaviour:
   m_ObjectHideFlags: 0

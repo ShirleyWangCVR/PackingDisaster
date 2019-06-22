@@ -18,7 +18,7 @@ public class Coefficient : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        value.Denominator = 1;
+        // value.Denominator = 1;
     }
 
     // get the value of the coefficient as a double

@@ -277,6 +277,14 @@ public class GameController : MonoBehaviour
         {
             dataController.SetLevelsCompleted(level);
         }
-        dataController.StartLevel(level + 1);
+
+        if (level % 5 == 0 && level < 25)
+        {
+            SceneManager.LoadScene("Level Select");
+        }
+        else
+        {
+            dataController.StartLevel(level + 1);
+        }
     }
 }

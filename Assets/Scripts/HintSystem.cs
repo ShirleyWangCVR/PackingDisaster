@@ -74,7 +74,7 @@ public class HintSystem : MonoBehaviour
     public void SeesawSideOverflow()
     {
         StopCoroutine(currentHint);
-        currentHint = StartCoroutine(overflow);
+        currentHint = StartCoroutine(ShowHint(overflow));
     }
 
     // get a random hint different from the previous

@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class LevelSelectController : MonoBehaviour
 {
     public GameObject[] levelButtons;
+    public GameObject[] topicLabels;
     public Sprite[] stars;
+    public Sprite redback;
     
     private DataController dataController;
     private int level;
@@ -35,6 +37,27 @@ public class LevelSelectController : MonoBehaviour
                 levelButtons[i].transform.Find("Number").gameObject.SetActive(false);
                 levelButtons[i].transform.Find("Stars").gameObject.SetActive(false);
             } */
+        }
+
+        // to disable the locks on the next topic or make sure the next topic is locked
+        for (int i = 1; i < 5; i++)
+        {
+            if (dataController.GetTotalStarsUpTo(5 * i) >= 10 * i)
+            {
+                // show next topic as not locked
+                topicLabels[i].transform.Find("Text").gameObject.SetActive(true);
+                topicLabels[i].transform.Find("Lock").gameObject.SetActive(false);
+                topicLabels[i].GetComponent<Image>().sprite = redback;
+            }
+
+            /* else
+            {
+                // make sure next level one is locked
+                levelButtons[5 * i].GetComponent<Button>().interactable = false;
+                levelButtons[5 * i].transform.Find("Number").gameObject.SetActive(false);
+                levelButtons[5 * i].transform.Find("Stars").gameObject.SetActive(false);
+            } */
+
         }
     }
 
