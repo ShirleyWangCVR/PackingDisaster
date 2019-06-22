@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelectButton : MonoBehaviour
 {
@@ -15,7 +16,10 @@ public class LevelSelectButton : MonoBehaviour
 
     public void StartLevel()
     {
-        int level = Int32.Parse(this.gameObject.name.Substring(5));
+        string num = this.transform.Find("Number").gameObject.GetComponent<Text>().text;
+        Debug.Log(num);
+
+        int level = Int32.Parse(num);
         levelSelectController.StartLevel(level);
     }
 }

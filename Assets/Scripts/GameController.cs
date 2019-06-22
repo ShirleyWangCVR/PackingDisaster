@@ -9,22 +9,23 @@ using UnityEngine.SceneManagement;
  */
 public class GameController : MonoBehaviour
 {
-    public Text timeUsedText;
+    // public Text timeUsedText;
     public Text levelText;
     public GameObject seesaw;
     public SimpleObjectPool variablePool;
     public SimpleObjectPool toyPool;
     public FinishedPanelManager finishedDisplayManager;
-    public DialogueController dialogueController;
+    // public DialogueController dialogueController;
+    public TimeController timeController;
 
     protected DataController dataController;
     protected EquationData equation; // current equation being displayed
     protected bool currentlyDragging;
     protected bool notTutorial;
     protected bool roundActive;
-    protected float timeLeft;
+    // protected float timeLeft;
     protected int level;
-    protected AudioSource audio;
+    protected AudioSource audioSource;
     // private int playerScore; // currently not being used
 
     // Start is called before the first frame update
@@ -34,11 +35,11 @@ public class GameController : MonoBehaviour
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
-        audio = this.gameObject.GetComponent<AudioSource>();
+        audioSource = this.gameObject.GetComponent<AudioSource>();
         levelText.text = "Level " + level.ToString();
         currentlyDragging = false;
         roundActive = true;
-        timeLeft = 60;
+        // timeLeft = 60;
 
         // set up seesaw according to equation
         SetUpSeesaw();
@@ -47,7 +48,7 @@ public class GameController : MonoBehaviour
         if (! (level <= 2 || level == 6 || level == 11 || level == 16))
         {
             notTutorial = true;
-            timeUsedText.text = "Time Left: " + timeLeft.ToString();
+            // timeUsedText.text = "Time Left: " + timeLeft.ToString();
         }
         else
         {
@@ -151,13 +152,13 @@ public class GameController : MonoBehaviour
         }
     }
 
-    protected void UpdateTimeUsedDisplay()
+    /* protected void UpdateTimeUsedDisplay()
     {
         if (timeUsedText != null)
         {
             timeUsedText.text = "Time Left: " + Mathf.Round(timeLeft).ToString();
         }
-    }
+    } */
 
     // Update is called once per frame
     public void Update()
@@ -165,13 +166,13 @@ public class GameController : MonoBehaviour
         // if not a tutorial then have time out and tip over
         if (notTutorial && roundActive)
         {
-            timeLeft -= Time.deltaTime;
-            UpdateTimeUsedDisplay();
+            // timeLeft -= Time.deltaTime;
+            // UpdateTimeUsedDisplay();
 
-            if (timeLeft <= 0)
+            /* if (timeLeft <= 0)
             {
                 EndRound("Time Out");
-            }
+            } */
 
             // if seesaw fell over end game
             if (seesaw.GetComponent<SeesawController>().FellOver())
@@ -184,20 +185,27 @@ public class GameController : MonoBehaviour
     // end the current round
     public void EndRound(string howEnded)
     {
-        audio.volume = 0.3f;
+        audioSource.volume = 0.3f;
         // deactivate game logic
         roundActive = false;
         seesaw.GetComponent<SeesawController>().SetRoundActive(false);
 
-        // playerScore = (int) Mathf.Round(timeRemaining);
-        // dataController.SubmitNewPlayerScore(playerScore);
-        // int highestScore = dataController.GetHighestPlayerScore();
+        int stars;
+        if (timeController != null)
+        {
+            stars = timeController.FinishedGameGetStars();
+            Debug.Log(stars);
+        }
+        else
+        {
+            stars = 3;
+        }
 
-        if (howEnded == "Time Out")
+        /* if (howEnded == "Time Out")
         {
             finishedDisplayManager.DisplayTimeOut();
-        }
-        else if (howEnded == "Finished Check")
+        } */
+        if (howEnded == "Finished Check")
         {
             if (seesaw.GetComponent<SeesawController>().CheckIfComplete())
             {
@@ -209,8 +217,9 @@ public class GameController : MonoBehaviour
                     {
                         dataController.SetLevelsCompleted(level);
                     }
+                    dataController.SetNewStars(level, stars);
                     
-                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue);
+                    finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue, stars);
                 }
                 else
                 {

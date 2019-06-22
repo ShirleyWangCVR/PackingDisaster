@@ -18,11 +18,11 @@ public class T2GameController : GameController
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
-        audio = this.gameObject.GetComponent<AudioSource>();
+        audioSource = this.gameObject.GetComponent<AudioSource>();
         levelText.text = "Level " + level.ToString();
         currentlyDragging = false;
         roundActive = true;
-        timeLeft = 60;
+        // timeLeft = 60;
 
         if (level < 11)
         {
@@ -37,7 +37,7 @@ public class T2GameController : GameController
         if (! (level <= 3 || level == 6 || level == 11 || level == 16))
         {
             notTutorial = true;
-            timeUsedText.text = "Time Used: " + timeLeft.ToString();
+            // timeUsedText.text = "Time Used: " + timeLeft.ToString();
         }
         else
         {

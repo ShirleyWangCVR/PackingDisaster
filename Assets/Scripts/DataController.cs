@@ -9,9 +9,7 @@ using System.IO;
  */
 public class DataController : MonoBehaviour
 {
-    // list of all equations from the loaded json.
-    public EquationData[] allEquationsUsed;
-    public DialogueData dialogue;
+    public DialogueData dialogue; // not in use
     public GameObject bearPrefab;
     public GameObject boxPrefab;
     public GameObject bearCoefPrefab;
@@ -19,13 +17,16 @@ public class DataController : MonoBehaviour
     public GameObject bracketPrefab;
     public AudioClip dingSfx;
 
+    // list of all equations from the loaded json.
+    private EquationData[] allEquationsUsed;
+    private int[] starsObtained;
     private int currentLevel; // current level clicked on level select screen
     private int levelsCompleted; // use this to set how many levels available on level select
     private AudioSource audioSource;
+    private string equationDataFileName = "equations.json";
 
     // Player Progress used to store between sessions. Currently only in use for storing high scores.
     private PlayerProgress playerProgress;
-    private string equationDataFileName = "equations.json";
     private string dialogueDataFileName = "dialogueData.json";
 
     // Start is called before the first frame update
@@ -39,10 +40,12 @@ public class DataController : MonoBehaviour
         currentLevel = 1;
         levelsCompleted = 0;
         audioSource = this.gameObject.GetComponent<AudioSource>();
+        starsObtained = new int[25];
 
         for (int i = 0; i < allEquationsUsed.Length; i++)
         {
             allEquationsUsed[i].SetExpressionsByString();
+            starsObtained[i] = 0;
         }
 
         // For some reason hardcoding the size at the start fixes resizing
@@ -66,7 +69,6 @@ public class DataController : MonoBehaviour
     }
 
     // get current equation to show depending on provided level
-    // eventually have just allEquationsUsed[level - 1] once we have 25 equations in the json
     public EquationData GetCurrentEquationData(int level)
     {
         return allEquationsUsed[level - 1];
@@ -101,6 +103,19 @@ public class DataController : MonoBehaviour
         {
             SceneManager.LoadScene("Ending");
         }
+    }
+
+    public void SetNewStars(int level, int stars)
+    {
+        if (starsObtained[level - 1] < stars)
+        {
+            starsObtained[level - 1] = stars;
+        }
+    }
+
+    public int GetStars(int level)
+    {
+        return starsObtained[level - 1];
     }
 
     public int GetDifficulty()

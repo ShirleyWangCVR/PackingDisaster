@@ -41,10 +41,8 @@ public class EquationData
 		for (int i = 0; i < terms.Length; i++)
 		{
 			Console.WriteLine(terms[i]);
-			string type;
 			if (terms[i].Contains("("))
 			{
-				type = "bracket";
 				string coef = terms[i].Substring(0, terms[i].IndexOf("("));
                 if (coef.Length == 0)
 				{
@@ -63,7 +61,6 @@ public class EquationData
 			}
 			else if (terms[i].Contains("x"))
 			{
-				type = "variable";
 				string coef = terms[i].Substring(0, terms[i].Length - 1);
 				if (coef.Length == 0)
 				{
@@ -77,7 +74,6 @@ public class EquationData
 			}
 			else
 			{
-				type = "value";
 				NumValues = NumValues + Int32.Parse(terms[i]);
 			}
 		}

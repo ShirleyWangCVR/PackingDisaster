@@ -18,8 +18,6 @@ public class TutorialController : MonoBehaviour
     private bool waitForFirstDrag;
     private bool waitForSecondDrag;
     private bool waitForThirdDrag;
-    private bool waitForFourthDrag;
-    private bool waitForFifthDrag;
     private bool finishedSecondDrag;
 
     // Start is called before the first frame update
@@ -36,8 +34,6 @@ public class TutorialController : MonoBehaviour
         waitForFirstDrag = false;
         waitForSecondDrag = false;
         waitForThirdDrag = false;
-        waitForFourthDrag = false;
-        waitForFifthDrag = false;
         finishedSecondDrag = false;
 
         if (tutorialLevel == 1)
