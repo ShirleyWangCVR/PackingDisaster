@@ -405,6 +405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 0
+  hintSystem: {fileID: 0}
 --- !u!114 &60944029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,6 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 1
+  hintSystem: {fileID: 0}
 --- !u!114 &66404443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1202,12 +1204,8 @@ MonoBehaviour:
     to stay balanced?
   - Well, if you drag the box from the negative part to the positive part of the other
     side of the seesaw,
-  - Then that's the same thing as adding a box to both sides. Try dragging it over.
-  - Also, dragging something from the positive part of one side to the negative part
-    of the other side,
-  - Is the same as subtracting it from both sides.
-  - Drag the toy to the negative part of the other side to subtract one toy from both
-    sides.
+  - 'Then that''s the same thing as adding a box to both sides. '
+  - Try dragging the box over.
 --- !u!4 &239560772
 Transform:
   m_ObjectHideFlags: 0
@@ -1794,7 +1792,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &362771281
 GameObject:
@@ -1826,7 +1824,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &362771283
 MonoBehaviour:
@@ -2083,7 +2081,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466808575
 GameObject:
@@ -2138,6 +2136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 0
+  hintSystem: {fileID: 0}
 --- !u!114 &466808578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,6 +2476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeOfItems: 2
   typeOfSide: 1
+  hintSystem: {fileID: 0}
 --- !u!114 &532067071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3539,7 +3539,7 @@ PrefabInstance:
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}
@@ -3675,7 +3675,7 @@ RectTransform:
   - {fileID: 246812143}
   - {fileID: 1625805066}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3756,6 +3756,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 860156157}
   m_CullTransparentMesh: 0
+--- !u!1 &862199956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862199958}
+  - component: {fileID: 862199957}
+  m_Layer: 0
+  m_Name: DialogueTrigger7 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &862199957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862199956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15837033acd8fbb46b0a683277049d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSentences:
+  - Also, dragging something from the positive part of one side to the negative part
+    of the other side,
+  - Is the same as subtracting it from both sides.
+  - Drag the toy to the negative part of the other side to subtract one toy from both
+    sides.
+--- !u!4 &862199958
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862199956}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1136947046
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,7 +4022,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1191794853
 GameObject:
@@ -4005,7 +4054,7 @@ RectTransform:
   m_LocalScale: {x: 1.05375, y: 1.05375, z: 1.05375}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5270,7 +5319,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1892507327
 GameObject:
@@ -5762,6 +5811,7 @@ MonoBehaviour:
   - {fileID: 512351024}
   - {fileID: 773458288}
   - {fileID: 239560771}
+  - {fileID: 862199957}
   - {fileID: 1821527181}
   seesaw: {fileID: 732550606}
   skipButton: {fileID: 572294219}
