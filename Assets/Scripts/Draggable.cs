@@ -135,7 +135,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     soundEffects.PlayDing();
                     
                     eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
-                    Debug.Log("Destroying");
 
                     pool.ReturnObject(eventData.pointerDrag);
                     pool.ReturnObject(this.gameObject);
@@ -143,8 +142,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             } else {
                 // has coefficient, T2 and above
-                Debug.Log("Dragged On");
-
                 // make sure same type of item
                 if (eventData.pointerDrag.GetComponent<Draggable>().typeOfItem == this.gameObject.GetComponent<Draggable>().typeOfItem && this.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Bracket)
                 {
@@ -178,8 +175,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             }
                             else
                             {
-                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                pool.ReturnObject(this.gameObject);
+                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
+                                this.parentToReturnTo = eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo;
+                                this.transform.SetParent(eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo, false);
+                                ShowOnPositiveSide();
+
+                                eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
+                                pool.ReturnObject(eventData.pointerDrag);
                             }
 
                         } else {
@@ -191,8 +193,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             }
                             else
                             {
-                                eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
-                                pool.ReturnObject(this.gameObject);
+                                this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
+                                this.parentToReturnTo = eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo;
+                                this.transform.SetParent(eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo, false);
+                                ShowOnNegativeSide();
+
+                                eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
+                                pool.ReturnObject(eventData.pointerDrag);
                             }
                         }
                     }
@@ -215,8 +222,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             if (coef.GetValue() > 1)
             {
-                Debug.Log("Hooray");
-                // split apart
                 StartCoroutine(ShowSplit(coef.GetFractionValue() - 1));
             }
         }
@@ -248,7 +253,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 newObject.GetComponent<HasValue>().SetValue(variableValue);
             }
 
-            // sound effect
+            soundEffects.PlayCompletedBSO();
         }
         else
         {

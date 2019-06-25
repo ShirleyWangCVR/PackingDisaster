@@ -409,7 +409,6 @@ public class SeesawController : MonoBehaviour
     protected IEnumerator PlayDanger()
     {
         yield return new WaitForSeconds(2f);
-        // audioSource.mute = false;
         audioSource.Play();
     }
 
