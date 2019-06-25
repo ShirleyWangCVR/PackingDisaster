@@ -14,23 +14,18 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public enum Slot {Variable, Value, All, Dummy, Bracket};
     public Slot typeOfItem = Slot.Value;
     public GameController gameController;
-    public AudioClip pickUpSfx;
-    public AudioClip putDownSfx;
-    public AudioClip wrongSfx;
 
     // to make dragging from side of equation look slightly nicer
     private GameObject placeholder = null;
-    private AudioSource audioSource;
     private SimpleObjectPool pool;
-    private DataController dataController;
+    private SoundEffectManager soundEffects;
     private int variableValue;
 
     public void Start()
     {
         parentToReturnTo = this.transform.parent;
         gameController = FindObjectOfType<GameController>();
-        audioSource = this.gameObject.GetComponent<AudioSource>();
-        dataController = FindObjectOfType<DataController>();
+        soundEffects = FindObjectOfType<SoundEffectManager>();
         variableValue = gameController.GetEquation().variableValue;
 
         if (typeOfItem == Slot.Value)
@@ -45,7 +40,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
         SetIsDragging(true);
-        audioSource.PlayOneShot(pickUpSfx, 7.0f);
+        soundEffects.PlayPickUpSfx();
 
         // create gap when dragging object
         placeholder = new GameObject();
@@ -85,7 +80,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         SetIsDragging(false);
-        audioSource.PlayOneShot(putDownSfx, 2.0f);
+        soundEffects.PlayPutDownSfx(this.typeOfItem);
 
         // set it to wherever it should go
         this.transform.SetParent(parentToReturnTo);
@@ -137,7 +132,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 int thisorient = (int) Mathf.Round(this.transform.Find("Image").localScale.x);
                 if (droppedorient == 0 - thisorient)
                 {
-                    dataController.PlayDing();
+                    soundEffects.PlayDing();
                     
                     eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
                     Debug.Log("Destroying");
@@ -159,7 +154,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                     if ((draggedParent.StartsWith("RHS") && thisParent.StartsWith("RHS")) || (draggedParent.StartsWith("LHS") && thisParent.StartsWith("LHS")))
                     {
-                        dataController.PlayDing();
+                        soundEffects.PlayDing();
                         
                         Fraction droppedvalue = eventData.pointerDrag.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
                         Fraction thisvalue = this.transform.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
@@ -205,7 +200,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 else 
                 {
                     // play bzz
-                    audioSource.PlayOneShot(wrongSfx, 2.0f);
+                    soundEffects.PlayBuzzer();
                 }
             }
         }

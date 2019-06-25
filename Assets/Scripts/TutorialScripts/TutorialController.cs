@@ -434,6 +434,7 @@ public class TutorialController : MonoBehaviour
     {
         interactivePanel.SetActive(false);
         tutorialManager.EndDialogueNow();
+        skipButton.SetActive(false);
     }
 
 }

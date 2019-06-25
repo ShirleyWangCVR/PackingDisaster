@@ -24,12 +24,8 @@ public class Tut6Bracket : MonoBehaviour
         }
         else if (numDroppedOn != this.gameObject.GetComponent<Bracket>().numDroppedOn && this.gameObject.GetComponent<Bracket>().numDroppedOn == 2)
         {
-            Debug.Log("Reached tut6bracket");
             numDroppedOn = this.gameObject.GetComponent<Bracket>().numDroppedOn;
             tutController.SuccessfullyExpanded();
         }
-        
-        
-
     }
 }

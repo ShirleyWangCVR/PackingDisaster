@@ -10,12 +10,10 @@ public class DialogueModuleManager : MonoBehaviour
     public TutorialController tutController;
     public EndingSceneController endController;
     public GameObject continueButton;
-    public AudioClip clicked;
 
     private Queue<string> dialogueQueue;
     private string speaker;
-
-    private AudioSource audioSource;
+    private SoundEffectManager soundEffects;
     private Animator anim;
     private int batch;
     private bool firstDialogue;
@@ -27,7 +25,7 @@ public class DialogueModuleManager : MonoBehaviour
         anim = GetComponent(typeof(Animator)) as Animator;
         tutController = FindObjectOfType<TutorialController>();
         endController = FindObjectOfType<EndingSceneController>();
-        audioSource = this.gameObject.GetComponent<AudioSource>();
+        soundEffects = FindObjectOfType<SoundEffectManager>();
         continueButton.SetActive(true);
         firstDialogue = false;
         batch = 1;
@@ -44,7 +42,6 @@ public class DialogueModuleManager : MonoBehaviour
     }
 
     public void InitDialogue(string speaker, string[] dialogueSentences) {
-        // Debug.Log("Starting a dialogue.");
         continueButton.SetActive(true);
         
         dialogueQueue.Clear();
@@ -52,11 +49,9 @@ public class DialogueModuleManager : MonoBehaviour
             dialogueQueue.Enqueue(sentence);
         }
         StartCoroutine(openDialogueBox(speaker, true));
-        // Debug.Log("displayDialogueBox done.");
     }
 
     public void ContinueDialogue(string speaker, string[] dialogueSentences) {
-        // Debug.Log("Starting a dialogue.");
         continueButton.SetActive(true);
         
         dialogueQueue.Clear();
@@ -64,8 +59,6 @@ public class DialogueModuleManager : MonoBehaviour
             dialogueQueue.Enqueue(sentence);
         }
         DisplayNextSentence();
-        // StartCoroutine(openDialogueBox(speaker, false));
-        // Debug.Log("displayDialogueBox done.");
     }
 
     public void ExitDialogueBox()
@@ -81,9 +74,7 @@ public class DialogueModuleManager : MonoBehaviour
             yield return new WaitForSeconds(2f);
         }
 
-        // Debug.Log("Immediately before speakerText is manipulated, speaker == " + speaker);
         StartCoroutine(startSpeaking(speaker));
-        // Debug.Log("speakerText has been fully typed.");
     }
 
     public void DisplayNextSentence() {
@@ -94,7 +85,7 @@ public class DialogueModuleManager : MonoBehaviour
 
         if (! firstDialogue)
         {
-            audioSource.PlayOneShot(clicked, 3.0f);
+            soundEffects.PlayClicked();
         }
 
         // Debug.Log(dialogueQueue.Count);
@@ -127,7 +118,7 @@ public class DialogueModuleManager : MonoBehaviour
         speakerText.text = "";
         foreach (char letter in inputString) {
             speakerText.text += letter;
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.2f);
         }
         firstDialogue = true;
         anim.SetTrigger("enableContinue");
@@ -135,7 +126,6 @@ public class DialogueModuleManager : MonoBehaviour
     }
 
     void EndDialogue() {
-        // Debug.Log("A conversation has ended.");
         continueButton.SetActive(false);
 
         if (tutController != null)

@@ -14,15 +14,17 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
     public Draggable.Slot typeOfItems;
     public GameController gameController;
     public GameObject newObject;
-    public AudioClip droppedSfx;
+    // public AudioClip droppedSfx;
 
     private Draggable childScript;
-    private AudioSource audioSource;
+    // private AudioSource audioSource;
+    private SoundEffectManager soundEffects;
 
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
-        audioSource = this.gameObject.GetComponent<AudioSource>();
+        soundEffects = FindObjectOfType<SoundEffectManager>();
+        //         audioSource = this.gameObject.GetComponent<AudioSource>();
     }
 
     public void OnBeginDrag(PointerEventData pointerDrag)
@@ -89,7 +91,8 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
     public void OnDrop(PointerEventData eventData)
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
-        audioSource.PlayOneShot(droppedSfx, 5.0f);
+        // audioSource.PlayOneShot(droppedSfx, 5.0f);
+        soundEffects.PlayRestocked();
 
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (typeOfItems == dragged.typeOfItem || typeOfItems == Draggable.Slot.All)

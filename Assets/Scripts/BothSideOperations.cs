@@ -15,12 +15,10 @@ public class BothSideOperations : MonoBehaviour
     public Text LHS;
     public Text RHS;
     public Text operationText;
-    public AudioClip clickedSfx;
-    public AudioClip completedSfx;
 
     private string operation;
     private int number;
-    private AudioSource audioSource;
+    private SoundEffectManager soundEffects;
     
     // Start is called before the first frame update
     void Start()
@@ -29,15 +27,15 @@ public class BothSideOperations : MonoBehaviour
         numbersPanel.SetActive(false);
         gameController = FindObjectOfType<T2GameController>();
         tutController = FindObjectOfType<TutorialController>();
+        soundEffects = FindObjectOfType<SoundEffectManager>();
         LHS.gameObject.SetActive(false);
         RHS.gameObject.SetActive(false);
-        audioSource = this.gameObject.GetComponent<AudioSource>();
     }
 
     // Show choose operation panel
     public void InitiateBothSideOperations()
     {
-        audioSource.PlayOneShot(clickedSfx, 5.0f);
+        soundEffects.PlayClickedBSO();
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(false);
 
@@ -62,7 +60,8 @@ public class BothSideOperations : MonoBehaviour
     // Back to main play screen
     public void BackToMainScreen()
     {
-        audioSource.PlayOneShot(clickedSfx, 5.0f);
+        // audioSource.PlayOneShot(clickedSfx, 5.0f);
+        soundEffects.PlayClickedBSO();
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);
     }
@@ -85,7 +84,8 @@ public class BothSideOperations : MonoBehaviour
         }
         LHS.gameObject.SetActive(false);
         RHS.gameObject.SetActive(false);
-        audioSource.PlayOneShot(completedSfx, 5.0f);
+        soundEffects.PlayCompletedBSO();
+        // audioSource.PlayOneShot(completedSfx, 5.0f);
         operationsPanel.SetActive(false);
         numbersPanel.SetActive(false);        
     }
@@ -93,7 +93,8 @@ public class BothSideOperations : MonoBehaviour
     // set the chosen operation
     public void SetOperation(string op)
     {
-        audioSource.PlayOneShot(clickedSfx, 5.0f);
+        // audioSource.PlayOneShot(clickedSfx, 5.0f);
+        soundEffects.PlayClickedBSO();
         
         operation = op;
         LHS.gameObject.SetActive(true);
@@ -124,14 +125,13 @@ public class BothSideOperations : MonoBehaviour
             RHS.text = "÷";
             operationText.text = "÷";
         }
-
-        // maybe make the chosen button glow too
     }
 
     // set the chosen number
     public void SetNumber(int num)
     {
-        audioSource.PlayOneShot(clickedSfx, 5.0f);
+        // audioSource.PlayOneShot(clickedSfx, 5.0f);
+        soundEffects.PlayClickedBSO();
         
         number = num;
         LHS.text = LHS.text + num.ToString();

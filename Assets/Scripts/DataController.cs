@@ -15,7 +15,6 @@ public class DataController : MonoBehaviour
     public GameObject bearCoefPrefab;
     public GameObject boxCoefPrefab;
     public GameObject bracketPrefab;
-    public AudioClip dingSfx;
 
     // list of all equations from the loaded json.
     private EquationData[] allEquationsUsed;
@@ -23,7 +22,6 @@ public class DataController : MonoBehaviour
     private int[] triedTutorial;
     private int currentLevel; // current level clicked on level select screen
     private int levelsCompleted; // use this to set how many levels available on level select
-    private AudioSource audioSource;
     private string equationDataFileName = "equations.json";
 
     // Player Progress used to store between sessions. Currently not in use.
@@ -40,7 +38,7 @@ public class DataController : MonoBehaviour
         SceneManager.LoadScene("Menu");
         currentLevel = 1;
         levelsCompleted = 0;
-        audioSource = this.gameObject.GetComponent<AudioSource>();
+        
         starsObtained = new int[25];
 
         for (int i = 0; i < allEquationsUsed.Length; i++)
@@ -83,17 +81,43 @@ public class DataController : MonoBehaviour
 
     public int GetTriedTutorial(int level)
     {
-        return triedTutorial[level];
+        if (level <= 2)
+        {
+            return triedTutorial[level];
+        }
+        else if (level == 6)
+        {
+            return triedTutorial[2];
+        }
+        else if (level == 11)
+        {
+            return triedTutorial[3];
+        }
+        else if (level == 16)
+        {
+            return triedTutorial[4];
+        }
+        return 0;
     }
 
     public void SetTriedTutorial(int level, int num)
     {
-        triedTutorial[level] = num;
-    }
-
-    public void PlayDing()
-    {
-        audioSource.PlayOneShot(dingSfx, 2.0f);
+        if (level <= 2)
+        {
+            triedTutorial[level] = num;
+        }
+        else if (level == 6)
+        {
+            triedTutorial[2] = num;
+        }
+        else if (level == 11)
+        {
+            triedTutorial[3] = num;
+        }
+        else if (level == 16)
+        {
+            triedTutorial[4] = num;
+        }
     }
 
     public void StartLevel(int level)

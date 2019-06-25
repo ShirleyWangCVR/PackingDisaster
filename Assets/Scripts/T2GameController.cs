@@ -18,7 +18,7 @@ public class T2GameController : GameController
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
-        audioSource = this.gameObject.GetComponent<AudioSource>();
+        // audioSource = this.gameObject.GetComponent<AudioSource>();
         levelText.text = "Level " + level.ToString();
         currentlyDragging = false;
         roundActive = true;

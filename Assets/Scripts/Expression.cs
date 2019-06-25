@@ -10,5 +10,5 @@ public class Expression
     public int numBrackets;
     public int[] bracketCoefficients;
     public Expression[] bracketExpressions;
-    public string representation; // not in use but i'm honestly too scared to remove it
+    public string representation; 
 }

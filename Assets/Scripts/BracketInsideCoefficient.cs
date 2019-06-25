@@ -22,8 +22,6 @@ public class BracketInsideCoefficient : MonoBehaviour, IDropHandler
     {
         if (eventData.pointerDrag.name == "Coefficient")
         {
-            Debug.Log("Dropped On");
-
             if (! droppedOn)
             {
                 droppedOn = true;

@@ -7,15 +7,20 @@ public class DialogueTrigger : MonoBehaviour
     [TextArea(3, 6)]
     public string[] dialogueSentences;
 
+    private TutorialManager tutManager;
+
+    void Start()
+    {
+        tutManager = FindObjectOfType<TutorialManager>();
+    }
+
     public void TriggerInitialDialogue() {
         Debug.Log("TriggerDialogue() in DialogueTrigger entered.");
-        // FindObjectOfType<TutorialManager>().InitBobDialogue(dialogueSentences);
-        StartCoroutine(FindObjectOfType<TutorialManager>().InitBobDialogue(dialogueSentences));
+        StartCoroutine(tutManager.InitBobDialogue(dialogueSentences));
     }
 
     public void TriggerDialogue() {
         Debug.Log("TriggerDialogue() in DialogueTrigger entered.");
-        // FindObjectOfType<TutorialManager>().InitBobDialogue(dialogueSentences);
-        StartCoroutine(FindObjectOfType<TutorialManager>().BobDialogue(dialogueSentences));
+        StartCoroutine(tutManager.BobDialogue(dialogueSentences));
     }
 }

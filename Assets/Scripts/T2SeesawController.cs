@@ -15,6 +15,9 @@ public class T2SeesawController : SeesawController
         // set initial tilt to 0
         tilt = 0;
         currentlyDragging = false;
+        roundActive = true;
+        audioSource = this.gameObject.GetComponent<AudioSource>();
+        audioSource.volume = 2;
     }
 
     // Update is called once per frame

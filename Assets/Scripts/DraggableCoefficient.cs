@@ -8,24 +8,17 @@ using UnityEngine.UI;
  */
 public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public Transform parentToReturnTo;
-    public Vector3 coefPosition;
-    public AudioClip pickUpSfx;
-
-    private AudioSource audioSource;
+    private SoundEffectManager soundEffects;
     
     // Start is called before the first frame update
     void Start()
     {
-        parentToReturnTo = this.transform.parent;
-        audioSource = this.gameObject.GetComponent<AudioSource>();
+        soundEffects = FindObjectOfType<SoundEffectManager>();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        audioSource.PlayOneShot(pickUpSfx, 7.0f);
-        
-        coefPosition = this.transform.position;
+        soundEffects.PlayPickUpCoefSfx();
 
         GetComponent<CanvasGroup>().blocksRaycasts = false;
         this.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -44,7 +37,7 @@ public class DraggableCoefficient : MonoBehaviour, IBeginDragHandler, IDragHandl
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        this.transform.position = coefPosition;
+        this.transform.position = this.transform.parent.position + new Vector3(-55, 0, 0);
 
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         this.transform.parent.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
