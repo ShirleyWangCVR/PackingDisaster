@@ -115,6 +115,11 @@ public class SeesawController : MonoBehaviour
         } */
     }
 
+    public bool GetDragging()
+    {
+        return currentlyDragging;
+    }
+
     // make the seesaw tilt if it needs to
     protected virtual void UpdatePositions()
     {

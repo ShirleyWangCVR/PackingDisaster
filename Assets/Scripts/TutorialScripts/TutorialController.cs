@@ -25,10 +25,13 @@ public class TutorialController : MonoBehaviour
     {
         dataController = FindObjectOfType<DataController>();
         tutorialLevel = dataController.GetDifficulty();
-        if (tutorialLevel <= dataController.GetLevelsCompleted())
+
+        if (dataController.GetTriedTutorial(tutorialLevel) > 0)
         {
             skipButton.SetActive(true);
         }
+
+        dataController.SetTriedTutorial(tutorialLevel, 1);
 
         dialogueNum = 1;
         waitForFirstDrag = false;

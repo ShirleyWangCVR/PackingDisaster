@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 /* The Negative part of an equation side.
  */
-public class SeesawSide : MonoBehaviour, IDropHandler
+public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // Equation sides can hold all types of draggable items.
     public Draggable.Slot typeOfItems = Draggable.Slot.All;
@@ -15,6 +15,8 @@ public class SeesawSide : MonoBehaviour, IDropHandler
     public HintSystem hintSystem;
 
     private int capacity;
+    private bool showColor;
+    private bool firstTuts;
 
     void Start()
     {
@@ -27,6 +29,8 @@ public class SeesawSide : MonoBehaviour, IDropHandler
         {
             capacity = 5;
         }
+        showColor = false;
+        firstTuts = level <= 2;
     }
 
     // if Draggable object dropped onto this. Assuming all items dropped on it are Draggable.
@@ -107,7 +111,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler
         if (hintSystem != null)
         {
             hintSystem.SeesawSideOverflow();
-            // play some sound effect
+            // TODO: play some bad sound effect
         }
     }
 
@@ -214,4 +218,32 @@ public class SeesawSide : MonoBehaviour, IDropHandler
         return NumericalValues() + NumericalVariables() + NumericalBrackets();
     }
 
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        // if not tutorial and if dragging then glow panel
+        bool currDragging = this.transform.parent.gameObject.GetComponent<SeesawController>().GetDragging();
+        if (currDragging && ! firstTuts)
+        {
+            if (this.typeOfSide == SeesawSide.Slot.Positive)
+            {
+                this.gameObject.GetComponent<Image>().color = new Color32(0, 255, 243, 128);
+            }
+            else
+            {
+                this.gameObject.GetComponent<Image>().color = new Color32(255, 16, 0, 100);
+            }
+            
+            showColor = true;
+        }
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        // if not tutorial and if panel glowing then stop glow
+        if (! firstTuts && showColor)
+        {
+            this.gameObject.GetComponent<Image>().color = new Color32(255, 16, 0, 0);
+            showColor = false;
+        }
+    }
 }

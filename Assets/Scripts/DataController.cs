@@ -20,12 +20,13 @@ public class DataController : MonoBehaviour
     // list of all equations from the loaded json.
     private EquationData[] allEquationsUsed;
     private int[] starsObtained;
+    private int[] triedTutorial;
     private int currentLevel; // current level clicked on level select screen
     private int levelsCompleted; // use this to set how many levels available on level select
     private AudioSource audioSource;
     private string equationDataFileName = "equations.json";
 
-    // Player Progress used to store between sessions. Currently only in use for storing high scores.
+    // Player Progress used to store between sessions. Currently not in use.
     private PlayerProgress playerProgress;
     private string dialogueDataFileName = "dialogueData.json";
 
@@ -46,6 +47,12 @@ public class DataController : MonoBehaviour
         {
             allEquationsUsed[i].SetExpressionsByString();
             starsObtained[i] = 0;
+        }
+
+        triedTutorial = new int[5];
+        for (int j = 0; j < 5; j++)
+        {
+            triedTutorial[j] = 0;
         }
 
         // For some reason hardcoding the size at the start fixes resizing
@@ -72,6 +79,16 @@ public class DataController : MonoBehaviour
     public EquationData GetCurrentEquationData(int level)
     {
         return allEquationsUsed[level - 1];
+    }
+
+    public int GetTriedTutorial(int level)
+    {
+        return triedTutorial[level];
+    }
+
+    public void SetTriedTutorial(int level, int num)
+    {
+        triedTutorial[level] = num;
     }
 
     public void PlayDing()
