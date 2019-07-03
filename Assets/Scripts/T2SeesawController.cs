@@ -7,7 +7,10 @@ using UnityEngine.UI;
  */
 public class T2SeesawController : SeesawController
 {
-    // variables inherited from SeesawController
+    public Text leftEquationText;
+    public Text rightEquationText;
+    public Text signText;
+    // other variables inherited from SeesawController
 
     // Start is called before the first frame update
     void Start()
@@ -73,30 +76,30 @@ public class T2SeesawController : SeesawController
     {
         // check if there is only 1 variable on the left hand side with coefficient 1
         // and only one value on the other
-        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
+        if (leftHandSidePositive.transform.GetChild(0).childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.GetChild(0).childCount == 0)
         {
-            if (leftHandSidePositive.transform.GetChild(0).Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() == 1)
+            if (leftHandSidePositive.transform.GetChild(0).GetChild(0).Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() == 1)
             {
-                if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && rightHandSideNegative.transform.childCount == 0)
+                if (rightHandSidePositive.transform.GetChild(0).childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && rightHandSideNegative.transform.GetChild(0).childCount == 0)
                 {
                     return true;
                 }
-                else if (rightHandSideNegative.transform.childCount == 1 && rightHandSideNegative.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && rightHandSidePositive.transform.childCount == 0)
+                else if (rightHandSideNegative.transform.GetChild(0).childCount == 1 && rightHandSideNegative.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && rightHandSidePositive.transform.GetChild(0).childCount == 0)
                 {
                     return true;
                 }
             }    
         }
 
-        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
+        if (rightHandSidePositive.transform.GetChild(0).childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.GetChild(0).childCount == 0)
         {
-            if (rightHandSidePositive.transform.GetChild(0).Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() == 1)
+            if (rightHandSidePositive.transform.GetChild(0).GetChild(0).Find("Coefficient").gameObject.GetComponent<Coefficient>().GetValue() == 1)
             {
-                if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && leftHandSideNegative.transform.childCount == 0)
+                if (leftHandSidePositive.transform.GetChild(0).childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && leftHandSideNegative.transform.GetChild(0).childCount == 0)
                 {
                     return true;
                 }
-                else if (leftHandSideNegative.transform.childCount == 1 && leftHandSideNegative.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && leftHandSidePositive.transform.childCount == 0)
+                else if (leftHandSideNegative.transform.GetChild(0).childCount == 1 && leftHandSideNegative.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value && leftHandSidePositive.transform.GetChild(0).childCount == 0)
                 {
                     return true;
                 }
@@ -114,19 +117,18 @@ public class T2SeesawController : SeesawController
         }
         else
         {        
-            // TODO: set parent to return to
 
             GameObject newObject = toyPool.GetObject();
             newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
-            newObject.transform.SetParent(leftHandSidePositive.transform);
+            newObject.transform.SetParent(leftHandSidePositive.transform.GetChild(0));
             newObject.GetComponent<Draggable>().ShowOnPositiveSide();
-            newObject.GetComponent<Draggable>().parentToReturnTo = leftHandSidePositive.transform;
+            newObject.GetComponent<Draggable>().parentToReturnTo = leftHandSidePositive.transform.GetChild(0);
 
             GameObject new2Object = toyPool.GetObject();
             new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(num);
-            new2Object.transform.SetParent(rightHandSidePositive.transform);
+            new2Object.transform.SetParent(rightHandSidePositive.transform.GetChild(0));
             new2Object.GetComponent<Draggable>().ShowOnPositiveSide();
-            new2Object.GetComponent<Draggable>().parentToReturnTo = rightHandSidePositive.transform;
+            new2Object.GetComponent<Draggable>().parentToReturnTo = rightHandSidePositive.transform.GetChild(0);
         }
     }
 
@@ -138,25 +140,23 @@ public class T2SeesawController : SeesawController
         }
         else
         {        
-            //TODO: set parent to return to
-
             GameObject newObject = toyPool.GetObject();
             newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
-            newObject.transform.SetParent(leftHandSideNegative.transform);
+            newObject.transform.SetParent(leftHandSideNegative.transform.GetChild(0));
             newObject.GetComponent<Draggable>().ShowOnNegativeSide();
-            newObject.GetComponent<Draggable>().parentToReturnTo = leftHandSideNegative.transform;
+            newObject.GetComponent<Draggable>().parentToReturnTo = leftHandSideNegative.transform.GetChild(0);
 
             GameObject new2Object = toyPool.GetObject();
             new2Object.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(0 - num);
-            new2Object.transform.SetParent(rightHandSideNegative.transform);
+            new2Object.transform.SetParent(rightHandSideNegative.transform.GetChild(0));
             new2Object.GetComponent<Draggable>().ShowOnNegativeSide();
-            new2Object.GetComponent<Draggable>().parentToReturnTo = rightHandSideNegative.transform;
+            new2Object.GetComponent<Draggable>().parentToReturnTo = rightHandSideNegative.transform.GetChild(0);
         }
     }
 
     public void MultiplyBothSides(int num)
     {
-        foreach(Transform child in leftHandSidePositive.transform)
+        foreach(Transform child in leftHandSidePositive.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
@@ -164,7 +164,7 @@ public class T2SeesawController : SeesawController
             child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newValue);
         }
 
-        foreach(Transform child in leftHandSideNegative.transform)
+        foreach(Transform child in leftHandSideNegative.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
@@ -172,7 +172,7 @@ public class T2SeesawController : SeesawController
             child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newValue);
         }
 
-        foreach(Transform child in rightHandSidePositive.transform)
+        foreach(Transform child in rightHandSidePositive.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
@@ -180,7 +180,7 @@ public class T2SeesawController : SeesawController
             child.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(newValue);
         }
 
-        foreach(Transform child in rightHandSideNegative.transform)
+        foreach(Transform child in rightHandSideNegative.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").gameObject.GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = num * value;
@@ -191,9 +191,7 @@ public class T2SeesawController : SeesawController
 
     public void DivideBothSides(int num)
     {
-        Debug.Log("Reached seesaw controller");
-
-        foreach(Transform child in leftHandSidePositive.transform)
+        foreach(Transform child in leftHandSidePositive.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = value / num;
@@ -201,7 +199,7 @@ public class T2SeesawController : SeesawController
             child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
         }
 
-        foreach(Transform child in leftHandSideNegative.transform)
+        foreach(Transform child in leftHandSideNegative.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = value / num;
@@ -209,7 +207,7 @@ public class T2SeesawController : SeesawController
             child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
         }
 
-        foreach(Transform child in rightHandSidePositive.transform)
+        foreach(Transform child in rightHandSidePositive.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = value / num;
@@ -217,7 +215,7 @@ public class T2SeesawController : SeesawController
             child.Find("Coefficient").GetComponent<Coefficient>().SetValue(newValue);
         }
 
-        foreach(Transform child in rightHandSideNegative.transform)
+        foreach(Transform child in rightHandSideNegative.transform.GetChild(0))
         {
             Fraction value = child.Find("Coefficient").GetComponent<Coefficient>().GetFractionValue();
             Fraction newValue = value / num;
@@ -226,12 +224,12 @@ public class T2SeesawController : SeesawController
         }
     }
 
-    public override void UpdateCurrentEquation()
+    public void UpdateCurrentEquation()
     {
         string lside = "";
         string rside = "";
 
-        foreach(Transform child in leftHandSidePositive.transform)
+        foreach(Transform child in leftHandSidePositive.transform.GetChild(0))
         {
             if (lside.Length > 0)
             {
@@ -240,7 +238,7 @@ public class T2SeesawController : SeesawController
             lside = lside + StringTerm(child);
         }
 
-        foreach(Transform child in leftHandSideNegative.transform)
+        foreach(Transform child in leftHandSideNegative.transform.GetChild(0))
         {
             if (lside.Length > 0)
             {
@@ -257,7 +255,7 @@ public class T2SeesawController : SeesawController
             lside = lside + "0";
         }
 
-        foreach(Transform child in rightHandSidePositive.transform)
+        foreach(Transform child in rightHandSidePositive.transform.GetChild(0))
         {
             if (rside.Length > 0)
             {
@@ -266,7 +264,7 @@ public class T2SeesawController : SeesawController
             rside = rside + StringTerm(child);
         }
 
-        foreach(Transform child in rightHandSideNegative.transform)
+        foreach(Transform child in rightHandSideNegative.transform.GetChild(0))
         {
             if (rside.Length > 0)
             {
@@ -283,21 +281,26 @@ public class T2SeesawController : SeesawController
             rside = rside + "0";
         }
 
-        string equation = "";
+        leftEquationText.text = lside;
+        rightEquationText.text = rside;
+        
         if (tilt == 0)
         {
-            equation = lside + " = " + rside;
+            signText.text = "=";
         }
-        else if (tilt > 0)
+        else
         {
-            equation = lside + " > " + rside;
+            signText.text = "≠"; // looks better with new display
+        }
+        /* else if (tilt > 0)
+        {
+            signText.text = ">";
         }
         else if (tilt < 0)
         {
-            equation = lside + " < " + rside;
-        }
+            signText.text = "<";
+        } */
 
-        equationText.text = equation;
     }
 
     public string StringTerm(Transform term)
@@ -319,7 +322,7 @@ public class T2SeesawController : SeesawController
                 {
                     termString = termString + value.ToString();
                 }
-                termString = termString + "x";
+                termString = termString + "X";
             }
             else if (term.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
             {
@@ -349,7 +352,7 @@ public class T2SeesawController : SeesawController
                         {
                             bracket = bracket + val.ToString();
                         }
-                        bracket = bracket + "x";
+                        bracket = bracket + "X";
                     }
                     else if (kid.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
                     {

@@ -7,24 +7,22 @@ using UnityEngine.EventSystems;
 /* A zone where you click on to spawn another type of item, and drop items on
  * to get rid of them.
  */
-public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     // the object pool of the game object that this zone will restock
     public SimpleObjectPool objectPool;
     public Draggable.Slot typeOfItems;
     public GameController gameController;
     public GameObject newObject;
-    // public AudioClip droppedSfx;
 
     private Draggable childScript;
-    // private AudioSource audioSource;
     private SoundEffectManager soundEffects;
 
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
         soundEffects = FindObjectOfType<SoundEffectManager>();
-        //         audioSource = this.gameObject.GetComponent<AudioSource>();
+        this.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void OnBeginDrag(PointerEventData pointerDrag)
@@ -57,6 +55,7 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
         }
 
         childScript = newObject.GetComponent<Draggable>();
+        childScript.ShowOnPositiveSide();
         childScript.Start();
         childScript.typeOfItem = typeOfItems;
         childScript.gameController = gameController;
@@ -101,5 +100,15 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
             objectPool.ReturnObject(eventData.pointerDrag);
         }
     
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        this.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        this.transform.GetChild(0).gameObject.SetActive(false);
     }
 }

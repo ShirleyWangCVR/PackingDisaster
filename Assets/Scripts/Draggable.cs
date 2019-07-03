@@ -98,11 +98,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void SetIsDragging(bool dragging)
     {
         string side;
-        if (parentToReturnTo.name.StartsWith("R"))
+        if (parentToReturnTo.parent.name.StartsWith("R"))
         {
             side = "right";
         }
-        else if (parentToReturnTo.name.StartsWith("L"))
+        else if (parentToReturnTo.parent.name.StartsWith("L"))
         {
             side = "left";
         }
@@ -128,16 +128,22 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             {
                 // still T1
                 // check if opposite (u negative it positive or vice versa) then return both else do nothing
-                int droppedorient = (int) Mathf.Round(eventData.pointerDrag.transform.Find("Image").localScale.x);
-                int thisorient = (int) Mathf.Round(this.transform.Find("Image").localScale.x);
-                if (droppedorient == 0 - thisorient)
-                {
-                    soundEffects.PlayDing();
-                    
-                    eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
 
-                    pool.ReturnObject(eventData.pointerDrag);
-                    pool.ReturnObject(this.gameObject);
+                if (eventData.pointerDrag.GetComponent<Draggable>().typeOfItem == this.gameObject.GetComponent<Draggable>().typeOfItem && this.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Bracket)
+                {
+                
+
+                    int droppedorient = (int) Mathf.Round(eventData.pointerDrag.transform.Find("Image").localScale.x);
+                    int thisorient = (int) Mathf.Round(this.transform.Find("Image").localScale.x);
+                    if (droppedorient == 0 - thisorient)
+                    {
+                        soundEffects.PlayDing();
+                        
+                        eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
+
+                        pool.ReturnObject(eventData.pointerDrag);
+                        pool.ReturnObject(this.gameObject);
+                    }
                 }
 
             } else {
@@ -146,8 +152,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 if (eventData.pointerDrag.GetComponent<Draggable>().typeOfItem == this.gameObject.GetComponent<Draggable>().typeOfItem && this.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Bracket)
                 {
                     // make sure can only combine if on same side
-                    string draggedParent = eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo.name;
-                    string thisParent = this.gameObject.GetComponent<Draggable>().parentToReturnTo.name;
+                    string draggedParent = eventData.pointerDrag.GetComponent<Draggable>().parentToReturnTo.parent.name;
+                    string thisParent = this.gameObject.GetComponent<Draggable>().parentToReturnTo.parent.name;
 
                     if ((draggedParent.StartsWith("RHS") && thisParent.StartsWith("RHS")) || (draggedParent.StartsWith("LHS") && thisParent.StartsWith("LHS")))
                     {
@@ -167,7 +173,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                         } else if (newvalue.ToDouble() > 0) {
                             // new one on positive side
-                            if (this.transform.parent.name.EndsWith("Positive"))
+                            if (this.transform.parent.parent.name.EndsWith("Positive"))
                             {
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 eventData.pointerDrag.gameObject.GetComponent<Draggable>().DestroyPlaceholder();
@@ -186,7 +192,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                         } else {
                             // new one on negative side
-                            if (this.transform.parent.name.EndsWith("Negative"))
+                            if (this.transform.parent.parent.name.EndsWith("Negative"))
                             {
                                 this.transform.Find("Coefficient").GetComponent<Coefficient>().SetValue(newvalue);
                                 pool.ReturnObject(eventData.pointerDrag);
@@ -237,7 +243,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         yield return new WaitForSeconds(1f);
 
         // check that seesaw side isn't at max capacity
-        SeesawSide parent = this.transform.parent.gameObject.GetComponent<SeesawSide>();
+        SeesawSide parent = this.transform.parent.parent.gameObject.GetComponent<SeesawSide>();
         panel.gameObject.SetActive(false);
         if (! parent.CheckOverCapacity())
         {
@@ -271,11 +277,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (typeOfItem == Slot.Value || typeOfItem == Slot.Variable)
         {
+            this.gameObject.transform.Find("Balloons").gameObject.SetActive(false);
             this.gameObject.transform.Find("Image").localScale = new Vector3(1, 1, 1);
             this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
         else if (typeOfItem == Slot.Bracket)
         {
+            this.gameObject.transform.Find("Balloons").gameObject.SetActive(false);
             this.gameObject.transform.Find("Image").localScale = new Vector3(1, 1, 1);
             this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 255, 255, 139);
         }
@@ -285,11 +293,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {        
         if (typeOfItem == Slot.Value || typeOfItem == Slot.Variable)
         {
+            this.gameObject.transform.Find("Balloons").gameObject.SetActive(true);
             this.gameObject.transform.Find("Image").localScale = new Vector3(-1, -1, 1);
             this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 0, 0, 255);
         }
         else if (typeOfItem == Slot.Bracket)
         {
+            this.gameObject.transform.Find("Balloons").gameObject.SetActive(true);
             this.gameObject.transform.Find("Image").localScale = new Vector3(1, -1, 1);
             this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 43, 43, 139);
         }

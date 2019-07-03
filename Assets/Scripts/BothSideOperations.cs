@@ -12,13 +12,14 @@ public class BothSideOperations : MonoBehaviour
     public GameObject numbersPanel;
     public T2GameController gameController;
     public TutorialController tutController;
-    public Text LHS;
-    public Text RHS;
+    // public Text LHS;
+    // public Text RHS;
     public Text operationText;
 
     private string operation;
     private int number;
     private SoundEffectManager soundEffects;
+    private bool processOperation;
     
     // Start is called before the first frame update
     void Start()
@@ -28,8 +29,8 @@ public class BothSideOperations : MonoBehaviour
         gameController = FindObjectOfType<T2GameController>();
         tutController = FindObjectOfType<TutorialController>();
         soundEffects = FindObjectOfType<SoundEffectManager>();
-        LHS.gameObject.SetActive(false);
-        RHS.gameObject.SetActive(false);
+        // LHS.gameObject.SetActive(false);
+        // RHS.gameObject.SetActive(false);
     }
 
     // Show choose operation panel
@@ -38,6 +39,7 @@ public class BothSideOperations : MonoBehaviour
         soundEffects.PlayClickedBSO();
         operationsPanel.SetActive(true);
         numbersPanel.SetActive(false);
+        processOperation = true;
 
         if (tutController != null)
         {
@@ -69,8 +71,7 @@ public class BothSideOperations : MonoBehaviour
     // Process the operation chosen
     public IEnumerator ProcessOperation()
     {
-        Debug.Log(operation);
-        Debug.Log(number);
+        processOperation = false;
         yield return new WaitForSeconds(1f);
 
         if (gameController != null)
@@ -82,12 +83,12 @@ public class BothSideOperations : MonoBehaviour
         {
             tutController.StartedNumber();
         }
-        LHS.gameObject.SetActive(false);
-        RHS.gameObject.SetActive(false);
+        // LHS.gameObject.SetActive(false);
+        // RHS.gameObject.SetActive(false);
         soundEffects.PlayCompletedBSO();
         // audioSource.PlayOneShot(completedSfx, 5.0f);
         operationsPanel.SetActive(false);
-        numbersPanel.SetActive(false);        
+        numbersPanel.SetActive(false);    
     }
 
     // set the chosen operation
@@ -97,32 +98,32 @@ public class BothSideOperations : MonoBehaviour
         soundEffects.PlayClickedBSO();
         
         operation = op;
-        LHS.gameObject.SetActive(true);
-        RHS.gameObject.SetActive(true);
+        // LHS.gameObject.SetActive(true);
+        // RHS.gameObject.SetActive(true);
         ChooseNumber();
 
         if (op == "Addition")
         {
-            LHS.text = "+";
-            RHS.text = "+";
+            // LHS.text = "+";
+            // RHS.text = "+";
             operationText.text = "+";
         }
         else if (op == "Subtraction")
         {
-            LHS.text = "-";
-            RHS.text = "-";
+            // LHS.text = "-";
+            // RHS.text = "-";
             operationText.text = "-";
         }
         else if (op == "Multiplication")
         {
-            LHS.text = "x";
-            RHS.text = "x";
+            // LHS.text = "x";
+            // RHS.text = "x";
             operationText.text = "x";
         }
         else if (op == "Division")
         {
-            LHS.text = "÷";
-            RHS.text = "÷";
+            // LHS.text = "÷";
+            // RHS.text = "÷";
             operationText.text = "÷";
         }
     }
@@ -131,15 +132,20 @@ public class BothSideOperations : MonoBehaviour
     public void SetNumber(int num)
     {
         // audioSource.PlayOneShot(clickedSfx, 5.0f);
-        soundEffects.PlayClickedBSO();
+        if (processOperation)
+        {
+            processOperation = false;
+            soundEffects.PlayClickedBSO();
         
-        number = num;
-        LHS.text = LHS.text + num.ToString();
-        RHS.text = RHS.text + num.ToString();
-        operationText.text = operationText.text + num.ToString();
+            number = num;
+            // LHS.text = LHS.text + num.ToString();
+            // RHS.text = RHS.text + num.ToString();
+            operationText.text = operationText.text + num.ToString();
 
-        // wait one second then do it
-        StartCoroutine(ProcessOperation());
+            // wait one second then do it
+            StartCoroutine(ProcessOperation());
+        }
+        
     }
 
 }

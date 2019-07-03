@@ -17,6 +17,8 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     private int capacity;
     private bool showColor;
     private bool firstTuts;
+    private GameObject terms;
+    private GameObject glow;
 
     void Start()
     {
@@ -31,6 +33,10 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
         showColor = false;
         firstTuts = level <= 2;
+        terms = this.transform.GetChild(0).gameObject;
+        glow = this.transform.GetChild(1).gameObject;
+        
+        glow.SetActive(false);
     }
 
     // if Draggable object dropped onto this. Assuming all items dropped on it are Draggable.
@@ -54,7 +60,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             Debug.Log(drop.name + " was dropped on " + gameObject.name);
 
             Draggable dragged = drop.GetComponent<Draggable>();
-            dragged.parentToReturnTo = this.transform;
+            dragged.parentToReturnTo = terms.transform;
 
             if (typeOfSide == Slot.Positive)
             {
@@ -111,7 +117,6 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         if (hintSystem != null)
         {
             hintSystem.SeesawSideOverflow();
-            // TODO: play some bad sound effect
         }
     }
 
@@ -119,7 +124,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public int NumVariables()
     {
         int num = 0;
-        foreach(Transform child in this.transform)
+        foreach(Transform child in terms.transform)
         {
             if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
             {
@@ -133,7 +138,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public int NumValues()
     {
         int num = 0;
-        foreach(Transform child in this.transform)
+        foreach(Transform child in terms.transform)
         {
             if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
             {
@@ -146,7 +151,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public int NumBrackets()
     {
         int num = 0;
-        foreach(Transform child in this.transform)
+        foreach(Transform child in terms.transform)
         {
             if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Bracket)
             {
@@ -160,7 +165,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public double NumericalVariables()
     {
         double num = 0;
-        foreach(Transform child in this.transform)
+        foreach(Transform child in terms.transform)
         {
             if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable)
             {
@@ -182,7 +187,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public double NumericalValues()
     {
         double num = 0;
-        foreach(Transform child in this.transform)
+        foreach(Transform child in terms.transform)
         {
             if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Value)
             {
@@ -203,7 +208,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public double NumericalBrackets()
     {
         double num = 0;
-        foreach (Transform child in this.transform)
+        foreach (Transform child in terms.transform)
         {
             if (child.gameObject.GetComponent<Draggable>().typeOfItem == Draggable.Slot.Bracket)
             {
@@ -222,17 +227,9 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     {
         // if not tutorial and if dragging then glow panel
         bool currDragging = this.transform.parent.gameObject.GetComponent<SeesawController>().GetDragging();
-        if (currDragging && ! firstTuts)
+        if (currDragging)
         {
-            if (this.typeOfSide == SeesawSide.Slot.Positive)
-            {
-                this.gameObject.GetComponent<Image>().color = new Color32(0, 255, 243, 128);
-            }
-            else
-            {
-                this.gameObject.GetComponent<Image>().color = new Color32(255, 16, 0, 100);
-            }
-            
+            glow.SetActive(true);
             showColor = true;
         }
     }
@@ -240,9 +237,9 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         // if not tutorial and if panel glowing then stop glow
-        if (! firstTuts && showColor)
+        if (showColor)
         {
-            this.gameObject.GetComponent<Image>().color = new Color32(255, 16, 0, 0);
+            glow.SetActive(false);
             showColor = false;
         }
     }

@@ -12,9 +12,10 @@ public class SeesawController : MonoBehaviour
     public GameObject rightHandSidePositive;
     public GameObject leftHandSideNegative;
     public GameObject rightHandSideNegative;
+    public GameObject peg;
     public SimpleObjectPool toyPool;
     public SimpleObjectPool variablePool;
-    public Text equationText;
+    // public Text equationText;
 
     protected bool currentlyDragging;
     protected double tilt;
@@ -44,7 +45,7 @@ public class SeesawController : MonoBehaviour
         {
             UpdateTilt();
             UpdatePositions();
-            UpdateCurrentEquation();
+            // UpdateCurrentEquation();
         }
     }
 
@@ -83,12 +84,12 @@ public class SeesawController : MonoBehaviour
 
         if (left)
         {
-            foreach(Transform child in leftHandSidePositive.transform)
+            foreach(Transform child in leftHandSidePositive.transform.GetChild(0))
             {
                 child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
             }
 
-            foreach(Transform child in leftHandSideNegative.transform)
+            foreach(Transform child in leftHandSideNegative.transform.GetChild(0))
             {
                 child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
             }
@@ -96,23 +97,17 @@ public class SeesawController : MonoBehaviour
 
         if (right)
         {
-            foreach(Transform child in rightHandSidePositive.transform)
+            foreach(Transform child in rightHandSidePositive.transform.GetChild(0))
             {
                 child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
             }
 
-            foreach(Transform child in rightHandSideNegative.transform)
+            foreach(Transform child in rightHandSideNegative.transform.GetChild(0))
             {
                 child.gameObject.GetComponent<CanvasGroup>().blocksRaycasts = ! dragging;
             }
         }
 
-        /* // Play the danger music
-        if (! dragging)
-        {
-            Debug.Log("Check audioSource");
-            CheckTilt();
-        } */
     }
 
     public bool GetDragging()
@@ -133,10 +128,12 @@ public class SeesawController : MonoBehaviour
         if (tilt > 0)
         {
             this.transform.Rotate(0, 0, 0.05f, Space.Self);
+            peg.transform.Rotate(0, 0, 0.05f, Space.Self);
         }
         else if (tilt < 0)
         {
             this.transform.Rotate(0, 0, -0.05f, Space.Self);
+            peg.transform.Rotate(0, 0, -0.05f, Space.Self);
         }
         else
         {   // tilt == 0
@@ -147,9 +144,11 @@ public class SeesawController : MonoBehaviour
                 if (this.transform.rotation.eulerAngles.z < 180)
                 {
                     this.transform.Rotate(0, 0, -0.1f, Space.Self);
+                    peg.transform.Rotate(0, 0, -0.1f, Space.Self);
                 } else
                 {
                     this.transform.Rotate(0, 0, 0.1f, Space.Self);
+                    peg.transform.Rotate(0, 0, 0.1f, Space.Self);
                 }
             }
             else
@@ -167,22 +166,22 @@ public class SeesawController : MonoBehaviour
         int lhs = 0;
         int rhs = 0;
 
-        foreach(Transform child in leftHandSidePositive.transform)
+        foreach(Transform child in leftHandSidePositive.transform.GetChild(0))
         {
             lhs = lhs + child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
-        foreach(Transform child in leftHandSideNegative.transform)
+        foreach(Transform child in leftHandSideNegative.transform.GetChild(0))
         {
             lhs = lhs - child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
-        foreach(Transform child in rightHandSidePositive.transform)
+        foreach(Transform child in rightHandSidePositive.transform.GetChild(0))
         {
             rhs = rhs + child.gameObject.GetComponent<HasValue>().GetValue();
         }
 
-        foreach(Transform child in rightHandSideNegative.transform)
+        foreach(Transform child in rightHandSideNegative.transform.GetChild(0))
         {
             rhs = rhs - child.gameObject.GetComponent<HasValue>().GetValue();
         }
@@ -196,16 +195,9 @@ public class SeesawController : MonoBehaviour
             CheckTilt();
         }
 
-        /* if (tilt < 0.05)
-        {
-            if (audioSource != null)
-            {
-                audioSource.Stop();
-            }
-        } */
     }
 
-    // if it's tipped over more than 40 then the seesaw it too tipped over and they lose
+    // if it's tipped over more than 30 then the seesaw it too tipped over and they lose
     public bool FellOver()
     {
         float currangle = this.transform.rotation.eulerAngles.z;
@@ -214,19 +206,19 @@ public class SeesawController : MonoBehaviour
             currangle = 360 - this.transform.rotation.eulerAngles.z;
         }
 
-        return currangle > 40;
+        return currangle > 30;
     }
 
     // check if a variable is correctly isolated
     public virtual bool CheckIfComplete()
     {
         // check if there is only 1 variable on the left hand side
-        if (leftHandSidePositive.transform.childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.childCount == 0)
+        if (leftHandSidePositive.transform.GetChild(0).childCount == 1 && leftHandSidePositive.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && leftHandSideNegative.transform.GetChild(0).childCount == 0)
         {
             return rightHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 0 && rightHandSideNegative.GetComponent<SeesawSide>().NumVariables() == 0;
         }
 
-        if (rightHandSidePositive.transform.childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.childCount == 0)
+        if (rightHandSidePositive.transform.GetChild(0).childCount == 1 && rightHandSidePositive.transform.GetChild(0).GetChild(0).GetComponent<Draggable>().typeOfItem == Draggable.Slot.Variable && rightHandSideNegative.transform.GetChild(0).childCount == 0)
         {
             return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 0 && leftHandSideNegative.GetComponent<SeesawSide>().NumVariables() == 0;
         }
@@ -252,7 +244,7 @@ public class SeesawController : MonoBehaviour
         return leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
-    public virtual void UpdateCurrentEquation()
+    /* public virtual void UpdateCurrentEquation()
     {
         string equation = "";
         string lside = "";
@@ -388,7 +380,7 @@ public class SeesawController : MonoBehaviour
         }
 
         equationText.text = equation;
-    }
+    } */
 
     protected void CheckTilt()
     {

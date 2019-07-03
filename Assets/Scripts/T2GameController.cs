@@ -18,11 +18,9 @@ public class T2GameController : GameController
         dataController = FindObjectOfType<DataController>();
         level = dataController.GetDifficulty();
         equation = dataController.GetCurrentEquationData(level);
-        // audioSource = this.gameObject.GetComponent<AudioSource>();
         levelText.text = "Level " + level.ToString();
         currentlyDragging = false;
         roundActive = true;
-        // timeLeft = 60;
 
         if (level < 11)
         {
@@ -54,23 +52,23 @@ public class T2GameController : GameController
 
         if (lhs.numVars > 0)
         {
-            SetUpCoefficient(variablePool, seesaw.transform.Find("LHSPositive"), lhs.numVars, true);
+            SetUpCoefficient(variablePool, seesaw.transform.Find("LHSPositive").GetChild(0), lhs.numVars, true);
 
         }
         else if (lhs.numVars < 0)
         {
-            SetUpCoefficient(variablePool, seesaw.transform.Find("LHSNegative"), lhs.numVars, true);
+            SetUpCoefficient(variablePool, seesaw.transform.Find("LHSNegative").GetChild(0), lhs.numVars, true);
 
         }
 
         if (lhs.numValues > 0)
         {
-            SetUpCoefficient(toyPool, seesaw.transform.Find("LHSPositive"), lhs.numValues, false);
+            SetUpCoefficient(toyPool, seesaw.transform.Find("LHSPositive").GetChild(0), lhs.numValues, false);
 
         }
         else if (lhs.numValues < 0)
         {
-            SetUpCoefficient(toyPool, seesaw.transform.Find("LHSNegative"), lhs.numValues, false);
+            SetUpCoefficient(toyPool, seesaw.transform.Find("LHSNegative").GetChild(0), lhs.numValues, false);
 
         }
 
@@ -91,23 +89,23 @@ public class T2GameController : GameController
 
         if (rhs.numVars > 0)
         {
-            SetUpCoefficient(variablePool, seesaw.transform.Find("RHSPositive"), rhs.numVars, true);
+            SetUpCoefficient(variablePool, seesaw.transform.Find("RHSPositive").GetChild(0), rhs.numVars, true);
 
         }
         else if (rhs.numVars < 0)
         {
-            SetUpCoefficient(variablePool, seesaw.transform.Find("RHSNegative"), rhs.numVars, true);
+            SetUpCoefficient(variablePool, seesaw.transform.Find("RHSNegative").GetChild(0), rhs.numVars, true);
 
         }
 
         if (rhs.numValues > 0)
         {
-            SetUpCoefficient(toyPool, seesaw.transform.Find("RHSPositive"), rhs.numValues, false);
+            SetUpCoefficient(toyPool, seesaw.transform.Find("RHSPositive").GetChild(0), rhs.numValues, false);
 
         }
         else if (rhs.numValues < 0)
         {
-            SetUpCoefficient(toyPool, seesaw.transform.Find("RHSNegative"), rhs.numValues, false);
+            SetUpCoefficient(toyPool, seesaw.transform.Find("RHSNegative").GetChild(0), rhs.numValues, false);
 
         }
 
@@ -131,7 +129,7 @@ public class T2GameController : GameController
     {
         GameObject newObject = (GameObject) Instantiate(bracketPrefab);
         newObject.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(coefficient);
-        newObject.transform.SetParent(seesaw.transform.Find(side));
+        newObject.transform.SetParent(seesaw.transform.Find(side).GetChild(0));
 
         if (expression.numVars > 0)
         {

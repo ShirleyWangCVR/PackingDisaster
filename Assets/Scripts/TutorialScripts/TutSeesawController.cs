@@ -26,7 +26,7 @@ public class TutSeesawController : SeesawController
         {
             UpdateTilt();
             UpdatePositions();
-            UpdateCurrentEquation();
+            // UpdateCurrentEquation();
         }
     }
 
@@ -43,10 +43,12 @@ public class TutSeesawController : SeesawController
         if (tilt > 0)
         {
             this.transform.Rotate(0, 0, 0.01f, Space.Self);
+            peg.transform.Rotate(0, 0, 0.01f, Space.Self);
         }
         else if (tilt < 0)
         {
             this.transform.Rotate(0, 0, -0.01f, Space.Self);
+            peg.transform.Rotate(0, 0, -0.01f, Space.Self);
         }
         else
         {   // tilt == 0
@@ -56,10 +58,12 @@ public class TutSeesawController : SeesawController
             {
                 if (this.transform.rotation.eulerAngles.z < 180)
                 {
-                    this.transform.Rotate(0, 0, -0.1f, Space.Self);
+                    this.transform.Rotate(0, 0, -0.05f, Space.Self);
+                    peg.transform.Rotate(0, 0, -0.05f, Space.Self);
                 } else
                 {
-                    this.transform.Rotate(0, 0, 0.1f, Space.Self);
+                    this.transform.Rotate(0, 0, 0.05f, Space.Self);
+                    peg.transform.Rotate(0, 0, 0.05f, Space.Self);
                 }
             }
             else

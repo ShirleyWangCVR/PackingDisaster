@@ -25,7 +25,7 @@ public class BGMManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("OnSceneLoaded: " + scene.name);
+        // Debug.Log("OnSceneLoaded: " + scene.name);
 
         if (scene.name != prevScene)
         {
@@ -44,12 +44,12 @@ public class BGMManager : MonoBehaviour
                 audioSource.clip = endMusic;
                 audioSource.Play();
             }
-            else if (scene.name.StartsWith("Tutorial"))
+            else if (scene.name.StartsWith("Tut"))
             {
                 audioSource.clip = tutMusic;
                 audioSource.Play();
             }
-            else if (scene.name.EndsWith("Main"))
+            else if (scene.name.StartsWith("Main"))
             {
                 audioSource.clip = mainMusic;
                 audioSource.Play();

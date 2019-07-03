@@ -126,7 +126,7 @@ public class DataController : MonoBehaviour
 
         if (level <= 2)
         {
-            SceneManager.LoadScene("TutorialLevel1"); 
+            SceneManager.LoadScene("TutLevel1"); 
         }
         else if (level <= 5)
         {
@@ -134,11 +134,11 @@ public class DataController : MonoBehaviour
         }
         else if (level == 6 || level == 11 || level == 16)
         {
-            SceneManager.LoadScene("TutorialLevel2"); // Tut Stage 4, coefficients
+            SceneManager.LoadScene("TutLevel2"); // Tut Stage 4, coefficients
         }
         else if (level < 26)
         {
-            SceneManager.LoadScene("T2Main");
+            SceneManager.LoadScene("MainT2");
         }
         else 
         {
