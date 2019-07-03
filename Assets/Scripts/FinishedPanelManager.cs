@@ -76,9 +76,12 @@ public class FinishedPanelManager : MonoBehaviour
         } 
         else
         {
+            Destroy(toyDisplay.GetComponent<GridLayoutGroup>());
+            
             GameObject toy = toyPool.GetObject();
             toy.transform.localScale = 2 * toy.transform.localScale;
             toy.transform.SetParent(toyDisplay.transform);
+            toy.transform.position = toyDisplay.transform.position;
             toy.transform.Find("Coefficient").gameObject.GetComponent<Coefficient>().SetValue(correctValue);
             if (correctValue > 0)
             {

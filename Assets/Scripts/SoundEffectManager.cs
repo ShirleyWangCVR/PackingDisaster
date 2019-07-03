@@ -29,7 +29,7 @@ public class SoundEffectManager : MonoBehaviour
 
     public void PlayDing()
     {
-        audioSource.PlayOneShot(dingSfx, 2.0f);
+        audioSource.PlayOneShot(dingSfx, 1.0f);
     }
 
     public void PlayPickUpSfx()

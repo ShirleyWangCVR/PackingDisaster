@@ -49,9 +49,7 @@ public class TimeController : MonoBehaviour
         if (! tutorial)
         {
             currentTime += Time.deltaTime;
-            currentLength = Mathf.Round(currentTime) * constantBy; // exact positioning probably needs work it's kinda being weird
-            // Debug.Log(currentTime);
-            // Debug.Log(currentLength);
+            currentLength = Mathf.Round(currentTime) * constantBy;
 
             if (currentTime > 30 && currentStars == 3)
             {
@@ -74,8 +72,11 @@ public class TimeController : MonoBehaviour
                 rack.transform.position = new Vector3(initialX - currentLength, rack.transform.position.y, rack.transform.position.z);
                 
                 // make this more jittery to match the rack
-                gearBack.transform.Rotate(0, 0, -0.1f, Space.Self);
-                gearFront.transform.Rotate(0, 0, -0.1f, Space.Self);
+                gearBack.transform.eulerAngles = new Vector3(0, 0, -2f * Mathf.Round(currentTime));
+                gearFront.transform.eulerAngles = new Vector3(0, 0, -2f * Mathf.Round(currentTime));
+
+                // gearBack.transform.Rotate(0, 0, -0.1f, Space.Self);
+                // gearFront.transform.Rotate(0, 0, -0.1f, Space.Self);
             }
 
             /* currentLength = (int) (Mathf.Round(currentTime) * 5 / 3);

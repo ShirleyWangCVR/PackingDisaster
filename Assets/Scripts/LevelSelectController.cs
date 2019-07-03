@@ -31,12 +31,12 @@ public class LevelSelectController : MonoBehaviour
 
             // check if i > levels completed, if so set not interactable and hide num and stars
             // uncomment this when actual people play, keep this commented for easy testing
-            if (i > levelsShow)
+            /* if (i > levelsShow)
             {
                 levelButtons[i].GetComponent<Button>().interactable = false;
                 levelButtons[i].transform.Find("Number").gameObject.SetActive(false);
                 levelButtons[i].transform.Find("Stars").gameObject.SetActive(false);
-            }
+            } */
         }
 
         // to disable the locks on the next topic or make sure the next topic is locked
@@ -50,13 +50,13 @@ public class LevelSelectController : MonoBehaviour
                 topicLabels[i].GetComponent<Image>().sprite = redback;
             }
             // keep this commented for easy testing, uncommented for actual playing
-            else
+            /* else
             {
                 // make sure next level one is locked
                 levelButtons[5 * i].GetComponent<Button>().interactable = false;
                 levelButtons[5 * i].transform.Find("Number").gameObject.SetActive(false);
                 levelButtons[5 * i].transform.Find("Stars").gameObject.SetActive(false);
-            } 
+            }  */
 
         }
     }

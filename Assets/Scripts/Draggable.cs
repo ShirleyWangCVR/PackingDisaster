@@ -20,6 +20,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private SimpleObjectPool pool;
     private SoundEffectManager soundEffects;
     private int variableValue;
+    private GameObject seesaw;
 
     public void Start()
     {
@@ -35,6 +36,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             pool = GameObject.Find("Box Pool").GetComponent<SimpleObjectPool>();
         }
+
+        seesaw = GameObject.Find("Seesaw");
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -63,7 +66,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // set parent to return to so that if you let go while it's not on a valid side
         // it returns to its previous side
         parentToReturnTo = this.transform.parent;
-        this.transform.SetParent(this.transform.parent.parent);
+
+        this.transform.SetParent(this.transform.parent.parent.parent);
+        this.transform.SetSiblingIndex(seesaw.transform.GetSiblingIndex() + 1);
 
         // set blockRaycasts to false while dragging so pointer can be detected
         // so object can be detected on drop zones

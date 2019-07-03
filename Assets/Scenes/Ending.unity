@@ -235,6 +235,7 @@ MonoBehaviour:
   - You're an algebra champion now. I'm sure you can solve whatever equation pops
     up in your future!
   - Bye bye!
+  tutManager: {fileID: 1752871721}
 --- !u!4 &152006284
 Transform:
   m_ObjectHideFlags: 0
