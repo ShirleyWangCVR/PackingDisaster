@@ -26,7 +26,7 @@ public class HintSystem : MonoBehaviour
         // Set hints to be as follows.
         objective = "Isolate one box on one side with only toys on the other.";
         informhint = "Tap me if you ever need a hint on what to do!";
-        overflow = "There's too much on that side already! Combine some terms together to make room.";
+        overflow = "Combine or move some terms to make more room!";
         hints = new string[] { "Isolate one box on one side with only toys on the other.",
                                "Anything you do to one side you should do to the other.", 
                                "Drag an item from one side to the other and switch its sign to keep the seesaw balanced.",

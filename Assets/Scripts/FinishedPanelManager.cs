@@ -29,13 +29,13 @@ public class FinishedPanelManager : MonoBehaviour
     }
 
     // set finished display to if player lost by time out
-    public void DisplayTimeOut()
+    /* public void DisplayTimeOut()
     {
         audioSource.PlayOneShot(youLoseSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
         userMessage.text = "You Ran Out of Time\nYou Lose!";
-    }
+    } */
 
     // set finished display to if player wins
     public void DisplayCorrectlyBalanced(int correctValue, int stars)
@@ -100,7 +100,7 @@ public class FinishedPanelManager : MonoBehaviour
         audioSource.PlayOneShot(youLoseSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
-        userMessage.text = "You Determined Wrongly " + determined.ToString() + " in the Box!" + "\nYou Lose!";
+        userMessage.text = "You Determined " + determined.ToString() + " in the Box." + "Try Again! Make sure the Seesaw is Balanced!\n!";
     }
 
     // set finished panel to if player didn't fully isolate answer
@@ -109,7 +109,7 @@ public class FinishedPanelManager : MonoBehaviour
         audioSource.PlayOneShot(youLoseSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
-        userMessage.text = "You Didn't Properly Isolate the Box!\nYou Lose!";
+        userMessage.text = "Try Again!\nIsolate one box on one side with only toys on the other.";
     }
 
     // set finished panel to if player lost by too unbalanced
@@ -118,7 +118,7 @@ public class FinishedPanelManager : MonoBehaviour
         audioSource.PlayOneShot(youLoseSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
-        userMessage.text = "The Seesaw Tipped Over!\nYou Lose!";
+        userMessage.text = "The Seesaw Tipped Over!\nTry Again!";
     }
 
 }

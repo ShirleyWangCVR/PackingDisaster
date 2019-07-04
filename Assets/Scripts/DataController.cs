@@ -9,7 +9,7 @@ using System.IO;
  */
 public class DataController : MonoBehaviour
 {
-    public DialogueData dialogue; // not in use
+    // public DialogueData dialogue; // not in use
     public GameObject bearPrefab;
     public GameObject boxPrefab;
     public GameObject bearCoefPrefab;
@@ -25,16 +25,16 @@ public class DataController : MonoBehaviour
     private string equationDataFileName = "equations.json";
 
     // Player Progress used to store between sessions. Currently not in use.
-    private PlayerProgress playerProgress;
-    private string dialogueDataFileName = "dialogueData.json";
+    // private PlayerProgress playerProgress;
+    // private string dialogueDataFileName = "dialogueData.json";
 
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
         LoadGameData();
-        LoadDialogueData();
-        LoadPlayerProgress();
+        // LoadDialogueData();
+        // LoadPlayerProgress();
         SceneManager.LoadScene("Menu");
         currentLevel = 1;
         levelsCompleted = 0;
@@ -83,7 +83,7 @@ public class DataController : MonoBehaviour
     {
         if (level <= 2)
         {
-            return triedTutorial[level];
+            return triedTutorial[level - 1];
         }
         else if (level == 6)
         {
@@ -104,7 +104,7 @@ public class DataController : MonoBehaviour
     {
         if (level <= 2)
         {
-            triedTutorial[level] = num;
+            triedTutorial[level - 1] = num;
         }
         else if (level == 6)
         {
@@ -195,8 +195,31 @@ public class DataController : MonoBehaviour
         }
     }
 
+    public int GetLevelsCompleted()
+    {
+        return levelsCompleted;
+    }
+
+    public void SetLevelsCompleted(int newNum)
+    {
+        levelsCompleted = newNum;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // methods past this point work but currently not in use
+
     // load dialogue data from json
-    private void LoadDialogueData()
+    /* private void LoadDialogueData()
     {
         string filePath = Path.Combine(Application.streamingAssetsPath, dialogueDataFileName);
 
@@ -209,18 +232,6 @@ public class DataController : MonoBehaviour
             Debug.LogError("Cannot Load Dialogue Data");
         }
     }
-
-    public int GetLevelsCompleted()
-    {
-        return levelsCompleted;
-    }
-
-    public void SetLevelsCompleted(int newNum)
-    {
-        levelsCompleted = newNum;
-    }
-
-    // methods past this point work but currently not in use
 
     // submit a new score and store it if it's the highest
     public void SubmitNewPlayerScore(int newScore)
@@ -252,5 +263,7 @@ public class DataController : MonoBehaviour
         {
             playerProgress.highestScore = PlayerPrefs.GetInt("highestScore");
         }
-    }
+    } */
+
+
 }

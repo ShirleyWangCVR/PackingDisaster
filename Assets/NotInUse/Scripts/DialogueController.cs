@@ -1,10 +1,9 @@
-﻿using System.Collections;
+﻿/* using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* Possibly no longer needed since we have the other method of dialogue now
- */
+
 public class DialogueController : MonoBehaviour
 {
     public DialogueData dialogueData;
@@ -41,9 +40,7 @@ public class DialogueController : MonoBehaviour
         userText.text = currentDialogue[dialogueIndex];
     }
 
-    /* If player clicks dialogue box show next dialogue.
-     * If out of dialogue then start game and end dialogue.
-     */
+   
     public void OnClick()
     {
         if (dialogueActive)
@@ -66,3 +63,4 @@ public class DialogueController : MonoBehaviour
         return ! dialogueActive;
     }
 }
+ */
