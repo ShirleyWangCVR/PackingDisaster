@@ -11,7 +11,7 @@ public class LevelSelectController : MonoBehaviour
     public GameObject[] topicLabels;
     public Sprite[] stars;
     public Sprite redback;
-    
+
     private DataController dataController;
     private int level;
 
@@ -44,7 +44,7 @@ public class LevelSelectController : MonoBehaviour
         {
             if (dataController.GetTotalStarsUpTo(5 * i) >= 10 * i && levelsShow >= 5 * i)
             {
-                // show next topic as not locked 
+                // show next topic as not locked
                 topicLabels[i].transform.Find("Text").gameObject.SetActive(true);
                 topicLabels[i].transform.Find("Lock").gameObject.SetActive(false);
                 topicLabels[i].GetComponent<Image>().sprite = redback;
@@ -56,7 +56,7 @@ public class LevelSelectController : MonoBehaviour
                 levelButtons[5 * i].GetComponent<Button>().interactable = false;
                 levelButtons[5 * i].transform.Find("Number").gameObject.SetActive(false);
                 levelButtons[5 * i].transform.Find("Stars").gameObject.SetActive(false);
-            }  */
+            } */
 
         }
     }
