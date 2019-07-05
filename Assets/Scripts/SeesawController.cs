@@ -44,14 +44,20 @@ public class SeesawController : MonoBehaviour
         if (! currentlyDragging && roundActive)
         {
             UpdateTilt();
-            UpdatePositions();
+            // UpdatePositions();
             // UpdateCurrentEquation();
         }
+        UpdatePositions();
     }
 
     public void SetRoundActive(bool active)
     {
         roundActive = active;
+        
+        if (! active)
+        {
+            audioSource.Stop();
+        }
     }
 
     public void SetDragging(bool dragging, string side)
@@ -118,6 +124,16 @@ public class SeesawController : MonoBehaviour
     // make the seesaw tilt if it needs to
     protected virtual void UpdatePositions()
     {
+        float rotateBy;
+        if (currentlyDragging)
+        {
+            rotateBy = 0.02f;
+        }
+        else
+        {
+            rotateBy = 0.05f;
+        }
+        
         // tilt seesaw ominously
         float currangle = this.transform.rotation.eulerAngles.z;
         if (currangle > 180)
@@ -127,13 +143,13 @@ public class SeesawController : MonoBehaviour
 
         if (tilt > 0)
         {
-            this.transform.Rotate(0, 0, 0.05f, Space.Self);
-            peg.transform.Rotate(0, 0, 0.05f, Space.Self);
+            this.transform.Rotate(0, 0, rotateBy, Space.Self);
+            peg.transform.Rotate(0, 0, rotateBy, Space.Self);
         }
         else if (tilt < 0)
         {
-            this.transform.Rotate(0, 0, -0.05f, Space.Self);
-            peg.transform.Rotate(0, 0, -0.05f, Space.Self);
+            this.transform.Rotate(0, 0, 0 - rotateBy, Space.Self);
+            peg.transform.Rotate(0, 0, 0 - rotateBy, Space.Self);
         }
         else
         {   // tilt == 0
@@ -197,7 +213,7 @@ public class SeesawController : MonoBehaviour
 
     }
 
-    // if it's tipped over more than 30 then the seesaw it too tipped over and they lose
+    // if it's tipped over more than 25 then the seesaw it too tipped over and they lose
     public bool FellOver()
     {
         float currangle = this.transform.rotation.eulerAngles.z;
@@ -206,7 +222,7 @@ public class SeesawController : MonoBehaviour
             currangle = 360 - this.transform.rotation.eulerAngles.z;
         }
 
-        return currangle > 30;
+        return currangle > 25;
     }
 
     // check if a variable is correctly isolated
@@ -389,7 +405,6 @@ public class SeesawController : MonoBehaviour
             Debug.Log("Safe");
             StopCoroutine(soundDanger);
             audioSource.Stop();
-            // audioSource.mute = true;
         }
         else 
         {

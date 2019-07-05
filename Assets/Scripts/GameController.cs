@@ -167,16 +167,7 @@ public class GameController : MonoBehaviour
         roundActive = false;
         seesaw.GetComponent<SeesawController>().SetRoundActive(false);
 
-        int stars;
-        stars = timeController.FinishedGameGetStars();
-        /* if (timeController != null)
-        {
-            stars = timeController.FinishedGameGetStars();
-        } */
-        /* else
-        {
-            stars = 3;
-        } */
+        int stars = timeController.FinishedGameGetStars();
 
         if (howEnded == "Finished Check")
         {

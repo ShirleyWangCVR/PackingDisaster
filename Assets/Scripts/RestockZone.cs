@@ -91,23 +91,20 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
     {
         Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
 
-        soundEffects.PlayRestocked();
-
-        if (eventData.pointerDrag.transform.name.EndsWith("Drawer"))
-        {
-            // we get a null reference error here since when you drag an object and drag it back in the same
-            // move then it doesn't have a draggable
-            // to avoid nullreferenceexceptions
-            // TODO: it's not that big a deal it still works but fix it
-        }
-        else
+        if (! eventData.pointerDrag.transform.name.EndsWith("Drawer"))
         {
             Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
 
-            if (typeOfItems == Draggable.Slot.All || typeOfItems == dragged.typeOfItem)
+            if (typeOfItems == dragged.typeOfItem)
             {
                 eventData.pointerDrag.GetComponent<Draggable>().SetIsDragging(false);
                 objectPool.ReturnObject(eventData.pointerDrag);
+                soundEffects.PlayRestocked();
+            }
+            else
+            {
+                // play bzz
+                soundEffects.PlayBuzzer();
             }
         }
     }

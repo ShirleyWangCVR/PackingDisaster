@@ -1295,17 +1295,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356042375}
-  m_LocalRotation: {x: -0, y: -0, z: -0.13123181, w: 0.9913518}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.529637, y: -1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 1094335270}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -15.082001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.0000305, y: -49.000015}
-  m_SizeDelta: {x: 150, y: 30}
+  m_AnchoredPosition: {x: -205, y: -121}
+  m_SizeDelta: {x: 40, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &356042377
 MonoBehaviour:
@@ -5538,20 +5538,12 @@ MonoBehaviour:
   - Oh, I'm so happy you're here!
   - It's a disaster!  I lost the record detailing how many toys are in each box!
   - And the customers are coming to pick up the packages real soon!
-  - I've managed to balance the seesaw with the boxes and some other toys.
-  - But I can't figure out how to isolate the box to figure out exactly how many toys
-    are in each box!
-  - I'm sure you can help me figure this out!
+  - I've managed to balance the seesaw with the boxes and toys.
+  - If we can isolate one box on one side with only toys on the other,
+  - Then that way we can figure out how many toys are inside the box!
   - You can move an item from one side of the seesaw to the other by dragging it.
-  - But if the seesaw is unbalanced it will start tipping over, so be careful of which
-    items you move.
-  - If it tips over too much the toys will fall to the ground and break!
-  - You can drag toys back to the toy drawer if you don't need them.
-  - You can also drag more toys from the toy drawer onto the seesaw.
-  - The box drawer works the exact same way as the toy drawer, but for getting and
-    dropping off boxes.
-  - Remember, the seesaw needs to be balanced, so anything you do to one side of the
-    seesaw you should also do to the other!
+  - But if the seesaw tips over too much the toys will fall to the ground and break!
+  - You can get more items from the drawers, or put them away in the drawers.
   - Try taking away one toy from both sides of the seesaw.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1666044030
@@ -5599,13 +5591,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - Okay, here's Order 2.
-  - Oh, that box is upside down on the bottom of the seesaw.
-  - It's pushing upwards on the seesaw because of the balloons.
+  - Oh, that box is under the seesaw, pushing upwards because of the balloons.
   - That means its weight is being subtracted from that side instead of added.
-  - Remember that doing the same action to both sides of the seesaw will allow it
-    to stay balanced?
-  - Well, if you drag the box from the negative part to the positive part of the other
-    side of the seesaw,
+  - If you drag the box from the negative part to the positive part of the other side
+    of the seesaw,
   - 'Then that''s the same thing as adding a box to both sides. '
   - Try dragging the box over.
   tutManager: {fileID: 2065705612}
@@ -5934,9 +5923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - This way we're one step closer to isolating the box, and the seesaw is still balanced!
-  - Remember, isolate one box on one side with only toys on the other so that we can
-    figure out how many toys are inside the box.
-  - Keep going!  I'm sure you can isolate the box on one side now!
+  - Isolate one box on one side with only toys on the other.
   - Once you've done it, press Done in the corner to confirm your results. You can
     do it!
   tutManager: {fileID: 2065705612}

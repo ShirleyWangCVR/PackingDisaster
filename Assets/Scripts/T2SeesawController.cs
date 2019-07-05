@@ -30,9 +30,9 @@ public class T2SeesawController : SeesawController
         if (! currentlyDragging)
         {
             UpdateTilt();
-            UpdatePositions();
             UpdateCurrentEquation();
         }
+        UpdatePositions();
     }
 
     // update the current numerical tilt representing how unbalanced the seesaw is
@@ -279,6 +279,26 @@ public class T2SeesawController : SeesawController
         if (rside.Length == 0)
         {
             rside = rside + "0";
+        }
+
+        if (lside.Length > 30)
+        {
+            lside = "OVERFLOW";
+            leftEquationText.color = Color.red;
+        }
+        else
+        {
+            leftEquationText.color = Color.white;
+        }
+
+        if (rside.Length > 30)
+        {
+            rside = "OVERFLOW";
+            rightEquationText.color = Color.red;
+        }
+        else
+        {
+            rightEquationText.color = Color.white;
         }
 
         leftEquationText.text = lside;

@@ -299,8 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - Make sure you combine as many values together as you can to get the simplest answer.
-  - Remember, you need to isolate one box on one side by itself with only toys on
-    the other side.
+  - Now isolate one box on one side by itself with only toys on the other side.
   tutManager: {fileID: 96978901}
 --- !u!4 &51292038
 Transform:
@@ -1237,13 +1236,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - How are we going to solve this order?
-  - I can't really think of anything we can add or subtract to solve this.
-  - Oh, but as you probably know, if we do the same arithmetic operation to both sides
-    of the seesaw,
-  - the seesaw will still be balanced afterwards.
-  - You've been doing that with addition and subtraction up until now.
-  - But you can also do the same with multiplication and division!
+  - Remember how adding or subtracting the same item from both sides will let the
+    seesaw be balanced afterwards?
+  - It's the same with multiplication and division!
+  - I've installed a way to speed up that process for you.
   - Press the equals button in the middle of the seesaw to open up the both side operations
     menu.
   tutManager: {fileID: 96978901}
@@ -2441,9 +2437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Great!  Now we've expanded the bracket and taken the terms inside out of the box.
-  - Bracket's will move around as one term until it's properly expanded.
-  - Remember to expand them to get the boxes and bears out.
+  - Great!  Now we've expanded the bracket and taken the items out of it.
   - Now isolate the box like you've been doing up until now.
   tutManager: {fileID: 96978901}
 --- !u!4 &502308535
@@ -2665,9 +2659,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Now you've mutiplied the first term in the bracket by the bracket's coefficient.
-  - But remember that you also need to multiply all the other terms in the bracket
-    also by the bracket coefficient.
   - Drag the bracket coefficient onto the other term's coefficient now.
   tutManager: {fileID: 96978901}
 --- !u!4 &535926602
@@ -4296,7 +4287,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 442b295dd87ae8842b72aa27d4685292, type: 3}
-    m_FontSize: 18
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -4307,7 +4298,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 16(2X + 3) + 5(5x + 13) - 3(x + 5)
+  m_Text: 16(2X + 3) + 5(5x + 13)
 --- !u!1 &757746592
 GameObject:
   m_ObjectHideFlags: 0
@@ -6933,9 +6924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Yeah! We can also mutiply and divide both sides of an equation and still keep
-    the equation equal.
-  - Keep that in mind when solving for orders in the future.
+  - This new function should help with solving for orders in the future.
   tutManager: {fileID: 96978901}
 --- !u!4 &1367994570
 Transform:
@@ -8826,7 +8815,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 442b295dd87ae8842b72aa27d4685292, type: 3}
-    m_FontSize: 18
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -8837,7 +8826,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 16(2X + 3) + 5(5x + 13) - 3(x + 5)
+  m_Text: '16(2X + 3) + 5(5x + 13) '
 --- !u!1 &1779548597
 GameObject:
   m_ObjectHideFlags: 0
@@ -8969,8 +8958,7 @@ MonoBehaviour:
   - The quantity of orders is increasing, and the amount of stuff on the seesaws is
     getting hard to manage.
   - So I've switched over to using coefficients to show the quantities on each side.
-  - The number next to a box or bear shows how many of them are bunched together.
-  - You can move them together in groups now as a result.
+  - The number next to a box or toy shows how many of them are bunched together.
   - I also installed an automatic seesaw reader to show the current status of the
     seesaw.
   - Now you can see what the seesaw represents easier!
@@ -10472,17 +10460,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - Those glass boxes are bracket boxes.
-  - We won't be able to do anything to the terms inside them until the items inside
-    are taken out.
+  - We won't be able to do anything to the terms inside them until they're taken out.
   - Since the coefficient in front of the bracket box is a 3, that means there are
     three of them bunched together.
-  - So that means in total there are 3 times the coefficient of the term inside the
-    bracket.
   - To expand the bracket, we need to multiply all terms inside the bracket by the
     bracket's coefficient.
-  - To do that, you have to drag the bracket coefficient onto the coefficient of all
-    terms in the bracket.
-  - Try dragging the coefficient onto the first term inside the bracket box.
+  - To do that, drag the bracket coefficient onto the coefficient of all terms in
+    the bracket.
+  - Try dragging the coefficient onto the first term inside the bracket.
   tutManager: {fileID: 96978901}
 --- !u!4 &2117420741
 Transform:

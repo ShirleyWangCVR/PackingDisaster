@@ -25,14 +25,24 @@ public class TutSeesawController : SeesawController
         if (! currentlyDragging && roundActive)
         {
             UpdateTilt();
-            UpdatePositions();
             // UpdateCurrentEquation();
         }
+        UpdatePositions();
     }
 
     // in tutorial seesaw tilts slower than usual
     protected override void UpdatePositions()
     {
+        float rotateBy;
+        if (currentlyDragging)
+        {
+            rotateBy = 0.01f;
+        }
+        else
+        {
+            rotateBy = 0.02f;
+        }
+        
         // tilt seesaw ominously
         float currangle = this.transform.rotation.eulerAngles.z;
         if (currangle > 180)
@@ -42,13 +52,13 @@ public class TutSeesawController : SeesawController
 
         if (tilt > 0)
         {
-            this.transform.Rotate(0, 0, 0.01f, Space.Self);
-            peg.transform.Rotate(0, 0, 0.01f, Space.Self);
+            this.transform.Rotate(0, 0, rotateBy, Space.Self);
+            peg.transform.Rotate(0, 0, rotateBy, Space.Self);
         }
         else if (tilt < 0)
         {
-            this.transform.Rotate(0, 0, -0.01f, Space.Self);
-            peg.transform.Rotate(0, 0, -0.01f, Space.Self);
+            this.transform.Rotate(0, 0, 0 - rotateBy, Space.Self);
+            peg.transform.Rotate(0, 0, 0 - rotateBy, Space.Self);
         }
         else
         {   // tilt == 0

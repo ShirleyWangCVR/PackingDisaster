@@ -40,7 +40,7 @@ public class TimeController : MonoBehaviour
         currentTime = 0;
         currentStars = 3;
 
-        tutorial = dataController.GetDifficulty() == 1 || dataController.GetDifficulty() == 2 || dataController.GetDifficulty() == 6 || dataController.GetDifficulty() == 11 || dataController.GetDifficulty() == 16;
+        tutorial = dataController.GetDifficulty() <= 2 || dataController.GetDifficulty() == 6 || dataController.GetDifficulty() == 11 || dataController.GetDifficulty() == 16;
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class TimeController : MonoBehaviour
         if (! tutorial)
         {
             currentTime += Time.deltaTime;
-            currentLength = Mathf.Round(currentTime) * constantBy;
+            currentLength = currentTime * constantBy;
 
             if (currentTime > 30 && currentStars == 3)
             {
@@ -71,36 +71,16 @@ public class TimeController : MonoBehaviour
             {
                 rack.transform.position = new Vector3(initialX - currentLength, rack.transform.position.y, rack.transform.position.z);
                 
-                // make this more jittery to match the rack
-                gearBack.transform.eulerAngles = new Vector3(0, 0, -2f * Mathf.Round(currentTime));
-                gearFront.transform.eulerAngles = new Vector3(0, 0, -2f * Mathf.Round(currentTime));
+                // more jittery movement
+                // gearBack.transform.eulerAngles = new Vector3(0, 0, -2f * Mathf.Round(currentTime));
+                // gearFront.transform.eulerAngles = new Vector3(0, 0, -2f * Mathf.Round(currentTime));
 
-                // gearBack.transform.Rotate(0, 0, -0.1f, Space.Self);
-                // gearFront.transform.Rotate(0, 0, -0.1f, Space.Self);
+                // this looks okay on my big computer but i dunno how it'll be on other computers
+                gearBack.transform.Rotate(0, 0, -0.16f, Space.Self);
+                gearFront.transform.Rotate(0, 0, -0.16f, Space.Self);
             }
 
-            /* currentLength = (int) (Mathf.Round(currentTime) * 5 / 3);
-
-            if (currentTime > 30 && currentStars == 3)
-            {
-                currentStars = 2;
-                star3.sprite = emptyStar;
-            }
-            if (currentTime > 60 && currentStars == 2)
-            {
-                currentStars = 1;
-                star2.sprite = emptyStar;
-            }
-            if (currentTime > 90 && currentStars == 1)
-            {
-                currentStars = 0;
-                star1.sprite = emptyStar;
-            }
-
-            if (currentLength <= 200)
-            {
-                coverTime.GetComponent<RectTransform>().sizeDelta = new Vector2(currentLength, 30);
-            } */
+            
         }
     }
 
