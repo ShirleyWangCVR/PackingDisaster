@@ -5,16 +5,11 @@ using UnityEngine.UI;
 
 public class TimeController : MonoBehaviour
 {
-    // public Image star1;
-    // public Image star2;
-    // public Image star3;
     public Image showStars;
     public Image gearBack;
     public Image gearFront;
     public GameObject rack;
     public Sprite[] stars;
-    // public Sprite fullStar;
-    // public Sprite emptyStar;
 
     private bool tutorial;
     private int currentStars;
@@ -88,5 +83,10 @@ public class TimeController : MonoBehaviour
     {
         tutorial = false;
         return currentStars;
+    }
+
+    public float GetCurrentTime()
+    {
+        return currentTime;
     }
 }

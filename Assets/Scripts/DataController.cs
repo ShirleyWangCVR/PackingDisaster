@@ -20,9 +20,13 @@ public class DataController : MonoBehaviour
     private EquationData[] allEquationsUsed;
     private int[] starsObtained;
     private int[] triedTutorial;
-    private int currentLevel; // current level clicked on level select screen
+    private int currentLevel; // current level
     private int levelsCompleted; // use this to set how many levels available on level select
     private string equationDataFileName = "equations.json";
+    private PlayerOverallData playerLog;
+    private string playerDataFileName = "playerData.json";
+    private PlayerMovesData currLevelData;
+    private bool submittedCurrRound;
 
     // Player Progress used to store between sessions. Currently not in use.
     // private PlayerProgress playerProgress;
@@ -40,7 +44,6 @@ public class DataController : MonoBehaviour
         levelsCompleted = 0;
         
         starsObtained = new int[25];
-
         for (int i = 0; i < allEquationsUsed.Length; i++)
         {
             allEquationsUsed[i].SetExpressionsByString();
@@ -52,6 +55,11 @@ public class DataController : MonoBehaviour
         {
             triedTutorial[j] = 0;
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        playerLog = new PlayerOverallData();
+        currLevelData = null;
+        submittedCurrRound = false;
 
         // For some reason hardcoding the size at the start fixes resizing
         // issue between computers. It may look useless but removing the
@@ -204,6 +212,62 @@ public class DataController : MonoBehaviour
     {
         levelsCompleted = newNum;
     }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // update the player log every time a scene changes
+        
+        if (scene.name == "Menu")
+        {
+            SubmitCurrentRoundData();
+        }
+        else if (scene.name.StartsWith("Tut") || scene.name.StartsWith("Main"))
+        {
+            Debug.Log("Logging " + currentLevel.ToString() + " rounddata");
+            currLevelData = new PlayerMovesData(currentLevel);
+            submittedCurrRound = false;
+        }
+    }
+
+    // at the end of every round, submit current round data
+    public void SubmitCurrentRoundData()
+    {
+        if (! submittedCurrRound)
+        {
+            if (currLevelData != null)
+            {
+                playerLog.NewRoundData(currLevelData);
+                SaveCurrentPlayerData();
+                submittedCurrRound = true;
+            }
+        }
+    }
+
+    // save the current player log to the json
+    public void SaveCurrentPlayerData()
+    {
+        Debug.Log("Saving current player data");
+        string dataAsJson = JsonUtility.ToJson(playerLog);
+        string filePath = Path.Combine(Application.streamingAssetsPath, playerDataFileName);
+        File.WriteAllText(filePath, dataAsJson);
+    }
+
+    public void SubmitEquation(string equation)
+    {
+        currLevelData.AddEquationLog(equation);
+    }
+
+    public void StoreEndRoundData(float time, bool done, int stars, string reason)
+    {
+        currLevelData.SubmitEndRound(time, done, stars, reason);
+    }
+
+    public void StoreDragData(string dragData)
+    {
+        currLevelData.AddDragLog(dragData);
+    }
+
+    
 
 
 

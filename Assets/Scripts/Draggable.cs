@@ -14,6 +14,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public enum Slot {Variable, Value, All, Dummy, Bracket};
     public Slot typeOfItem = Slot.Value;
     public GameController gameController;
+    public string parentName;
 
     // to make dragging from side of equation look slightly nicer
     private GameObject placeholder = null;
@@ -21,6 +22,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private SoundEffectManager soundEffects;
     private int variableValue;
     private GameObject seesaw;
+    private DataController dataController;
+    private string dragData;
 
     public void Start()
     {
@@ -28,6 +31,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         gameController = FindObjectOfType<GameController>();
         soundEffects = FindObjectOfType<SoundEffectManager>();
         variableValue = gameController.GetEquation().variableValue;
+        dataController = FindObjectOfType<DataController>();
 
         if (typeOfItem == Slot.Value)
         {
@@ -74,6 +78,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // so object can be detected on drop zones
         GetComponent<CanvasGroup>().blocksRaycasts = false;
 
+        parentName = parentToReturnTo.parent.name;
+        if (parentName == "Workbench")
+        {
+            parentName = parentToReturnTo.name;
+        }
+
+        dragData = this.transform.name + " dragged from " + parentName;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -98,6 +109,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         Destroy(placeholder);
+
+        dragData = dragData + " to " + parentToReturnTo.parent.name;
+        Debug.Log(dragData);
+        dataController.StoreDragData(dragData);
     }
 
     public void SetIsDragging(bool dragging)
@@ -128,16 +143,17 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (dragged != null)
         {
+            dragData = eventData.pointerDrag.transform.name + " was dragged from " + eventData.pointerDrag.GetComponent<Draggable>().parentName + " to " + this.transform.name + " on " + this.transform.parent.parent.name;
+            Debug.Log(dragData);
+            dataController.StoreDragData(dragData);
+
             Transform coef = eventData.pointerDrag.transform.Find("Coefficient");
             if (coef == null)
             {
                 // still T1
                 // check if opposite (u negative it positive or vice versa) then return both else do nothing
-
                 if (eventData.pointerDrag.GetComponent<Draggable>().typeOfItem == this.gameObject.GetComponent<Draggable>().typeOfItem && this.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Bracket)
                 {
-                
-
                     int droppedorient = (int) Mathf.Round(eventData.pointerDrag.transform.Find("Image").localScale.x);
                     int thisorient = (int) Mathf.Round(this.transform.Find("Image").localScale.x);
                     if (droppedorient == 0 - thisorient)

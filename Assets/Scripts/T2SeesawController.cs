@@ -20,7 +20,9 @@ public class T2SeesawController : SeesawController
         currentlyDragging = false;
         roundActive = true;
         audioSource = this.gameObject.GetComponent<AudioSource>();
-        audioSource.volume = 2;
+        audioSource.volume = 1;
+        dataController = FindObjectOfType<DataController>();
+        prevEquation = "";
     }
 
     // Update is called once per frame
@@ -224,30 +226,36 @@ public class T2SeesawController : SeesawController
         }
     }
 
-    public void UpdateCurrentEquation()
+    public override void UpdateCurrentEquation()
     {
         string lside = "";
         string rside = "";
 
         foreach(Transform child in leftHandSidePositive.transform.GetChild(0))
         {
-            if (lside.Length > 0)
+            if (child.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Dummy)
             {
-                lside = lside + " + ";
+                if (lside.Length > 0)
+                {
+                    lside = lside + " + ";
+                }
+                lside = lside + StringTerm(child);
             }
-            lside = lside + StringTerm(child);
         }
 
         foreach(Transform child in leftHandSideNegative.transform.GetChild(0))
         {
-            if (lside.Length > 0)
+            if (child.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Dummy)
             {
-                lside = lside + " - ";
+                if (lside.Length > 0)
+                {
+                    lside = lside + " - ";
+                }
+                else {
+                    lside = lside + "-";
+                }
+                lside = lside + StringTerm(child);
             }
-            else {
-                lside = lside + "-";
-            }
-            lside = lside + StringTerm(child);
         }
 
         if (lside.Length == 0)
@@ -257,29 +265,53 @@ public class T2SeesawController : SeesawController
 
         foreach(Transform child in rightHandSidePositive.transform.GetChild(0))
         {
-            if (rside.Length > 0)
+            if (child.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Dummy)
             {
-                rside = rside + " + ";
+                if (rside.Length > 0)
+                {
+                    rside = rside + " + ";
+                }
+                rside = rside + StringTerm(child);
             }
-            rside = rside + StringTerm(child);
         }
 
         foreach(Transform child in rightHandSideNegative.transform.GetChild(0))
         {
-            if (rside.Length > 0)
+            if (child.gameObject.GetComponent<Draggable>().typeOfItem != Draggable.Slot.Dummy)
             {
-                rside = rside + " - ";
+                if (rside.Length > 0)
+                {
+                    rside = rside + " - ";
+                }
+                else {
+                    rside = rside + "-";
+                }
+                rside = rside + StringTerm(child);
             }
-            else {
-                rside = rside + "-";
-            }
-            rside = rside + StringTerm(child);
         }
 
         if (rside.Length == 0)
         {
             rside = rside + "0";
         }
+
+        string equation;
+        if (tilt == 0)
+        {
+            signText.text = "=";
+            equation = lside + " = " + rside;
+        }
+        else
+        {
+            signText.text = "≠"; // looks better with new display
+            equation = lside + " ≠ " + rside;
+        }
+        
+        if (prevEquation != equation)
+        {
+            dataController.SubmitEquation(equation);
+        }
+        prevEquation = equation;
 
         if (lside.Length > 30)
         {
@@ -304,14 +336,8 @@ public class T2SeesawController : SeesawController
         leftEquationText.text = lside;
         rightEquationText.text = rside;
         
-        if (tilt == 0)
-        {
-            signText.text = "=";
-        }
-        else
-        {
-            signText.text = "≠"; // looks better with new display
-        }
+        
+
         /* else if (tilt > 0)
         {
             signText.text = ">";

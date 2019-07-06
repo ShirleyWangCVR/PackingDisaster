@@ -17,12 +17,14 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
 
     private Draggable childScript;
     private SoundEffectManager soundEffects;
+    private DataController dataController;
 
     void Start()
     {
         gameController = FindObjectOfType<GameController>();
         soundEffects = FindObjectOfType<SoundEffectManager>();
         this.transform.GetChild(0).gameObject.SetActive(false);
+        dataController = FindObjectOfType<DataController>();
     }
 
     public void OnBeginDrag(PointerEventData pointerDrag)
@@ -89,22 +91,26 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
     // when an item is dropped on it get rid of it
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(eventData.pointerDrag.name + " was dropped on " + gameObject.name);
-
-        if (! eventData.pointerDrag.transform.name.EndsWith("Drawer"))
+        Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
+        if (dragged != null)
         {
-            Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
+            string dragData = eventData.pointerDrag.name + " was dragged from " + eventData.pointerDrag.GetComponent<Draggable>().parentName + " to " + this.transform.name;
+            Debug.Log(dragData);
+            dataController.StoreDragData(dragData);
 
-            if (typeOfItems == dragged.typeOfItem)
+            if (! eventData.pointerDrag.transform.name.EndsWith("Drawer"))
             {
-                eventData.pointerDrag.GetComponent<Draggable>().SetIsDragging(false);
-                objectPool.ReturnObject(eventData.pointerDrag);
-                soundEffects.PlayRestocked();
-            }
-            else
-            {
-                // play bzz
-                soundEffects.PlayBuzzer();
+                if (typeOfItems == dragged.typeOfItem)
+                {
+                    eventData.pointerDrag.GetComponent<Draggable>().SetIsDragging(false);
+                    objectPool.ReturnObject(eventData.pointerDrag);
+                    soundEffects.PlayRestocked();
+                }
+                else
+                {
+                    // play bzz
+                    soundEffects.PlayBuzzer();
+                }
             }
         }
     }

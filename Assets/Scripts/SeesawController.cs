@@ -23,8 +23,9 @@ public class SeesawController : MonoBehaviour
     protected bool roundActive;
     protected double prevTilt;
     protected Coroutine soundDanger;
-
     protected AudioSource audioSource;
+    protected DataController dataController;
+    protected string prevEquation;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,9 @@ public class SeesawController : MonoBehaviour
         currentlyDragging = false;
         roundActive = true;
         audioSource = this.gameObject.GetComponent<AudioSource>();
-        audioSource.volume = 2;
+        audioSource.volume = 1;
+        dataController = FindObjectOfType<DataController>();
+        prevEquation = "";
     }
 
     // Update is called once per frame
@@ -45,7 +48,7 @@ public class SeesawController : MonoBehaviour
         {
             UpdateTilt();
             // UpdatePositions();
-            // UpdateCurrentEquation();
+            UpdateCurrentEquation();
         }
         UpdatePositions();
     }
@@ -260,7 +263,7 @@ public class SeesawController : MonoBehaviour
         return leftHandSidePositive.GetComponent<SeesawSide>().TotalNumericalValue() - leftHandSideNegative.GetComponent<SeesawSide>().TotalNumericalValue();
     }
 
-    /* public virtual void UpdateCurrentEquation()
+    public virtual void UpdateCurrentEquation()
     {
         string equation = "";
         string lside = "";
@@ -395,8 +398,14 @@ public class SeesawController : MonoBehaviour
             equation = lside + " < " + rside;
         }
 
-        equationText.text = equation;
-    } */
+        if (prevEquation != equation)
+        {
+            dataController.SubmitEquation(equation);
+        }
+        prevEquation = equation;
+
+        // equationText.text = equation;
+    } 
 
     protected void CheckTilt()
     {

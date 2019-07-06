@@ -17,6 +17,7 @@ public class Bracket : MonoBehaviour
 
     private bool expanded;
     private SoundEffectManager soundEffects;
+    private DataController dataController;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class Bracket : MonoBehaviour
         numDroppedOn = 0;
         numTerms = this.gameObject.transform.Find("TermsInBracket").childCount;
         soundEffects = FindObjectOfType<SoundEffectManager>();
+        dataController = FindObjectOfType<DataController>();
 
         // give them the BracketInsideCoefficient component so that they can sense it being dropped on
         foreach (Transform child in this.gameObject.transform.Find("TermsInBracket"))
@@ -74,7 +76,9 @@ public class Bracket : MonoBehaviour
     public void TermDroppedOn()
     {
         numDroppedOn++;
-        Debug.Log(numDroppedOn);
+        // Debug.Log(numDroppedOn);
+        string dragData = "Bracket Coefficient dragged onto Bracket Inside Term " + numDroppedOn.ToString();
+        dataController.StoreDragData(dragData);
 
         if (numDroppedOn == numTerms)
         {

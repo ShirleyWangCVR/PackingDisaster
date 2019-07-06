@@ -163,11 +163,15 @@ public class GameController : MonoBehaviour
     // end the current round
     public void EndRound(string howEnded)
     {
+        bool done = false;
+        string reason = "";
+
         // deactivate game logic
         roundActive = false;
         seesaw.GetComponent<SeesawController>().SetRoundActive(false);
 
-        int stars = timeController.FinishedGameGetStars();
+        int stars = 0;
+        float time = timeController.GetCurrentTime();
 
         if (howEnded == "Finished Check")
         {
@@ -181,7 +185,9 @@ public class GameController : MonoBehaviour
                     {
                         dataController.SetLevelsCompleted(level);
                     }
+                    stars = timeController.FinishedGameGetStars();
                     dataController.SetNewStars(level, stars);
+                    done = true;
                     
                     finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue, stars);
                 }
@@ -196,16 +202,25 @@ public class GameController : MonoBehaviour
                         side = (int) seesaw.GetComponent<SeesawController>().GetRightHandSideValue();
                         finishedDisplayManager.DisplayWrongBalanced(side);
                     }
+                    done = false;
+                    reason = "Incorrect Value";
                 }
             }
             else
             {
                 finishedDisplayManager.DisplayNotYetBalanced();
+                done = false;
+                reason = "Not Isolated";
             }
         } else if (howEnded == "Scale Tipped")
         {
             finishedDisplayManager.DisplaySeesawTipped();
+            done = false;
+            reason = "Seesaw Tipped Over";
         }
+
+        dataController.StoreEndRoundData(time, done, stars, reason);
+        dataController.SubmitCurrentRoundData();
     }
 
     public void BackToMainMenu()
@@ -229,14 +244,12 @@ public class GameController : MonoBehaviour
     {
         // restart scene with the same equation
         dataController.StartLevel(level);
-        // SceneManager.LoadScene("Main");
     }
 
     // move onto next question
     public void NextQuestion()
     {
         // tell DataController to move to next question and then load main scene again
-        // SceneManager.LoadScene("Main");
         if (level > dataController.GetLevelsCompleted())
         {
             dataController.SetLevelsCompleted(level);

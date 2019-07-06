@@ -50,41 +50,50 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
             if ( !(eventData.pointerDrag.name.EndsWith("(Clone)")))
             {
                 // dragging from a restock zone then hopefully
-                drop = eventData.pointerDrag.GetComponent<RestockZone>().newObject;
+                RestockZone restock = eventData.pointerDrag.GetComponent<RestockZone>();
+                if (restock != null)
+                {
+                    drop = restock.newObject;
+                }
+                else
+                {
+                    drop = eventData.pointerDrag;
+                }
             } 
             else
             {
                 drop = eventData.pointerDrag;
             }
-            
-            Debug.Log(drop.name + " was dropped on " + gameObject.name);
 
             Draggable dragged = drop.GetComponent<Draggable>();
-            dragged.parentToReturnTo = terms.transform;
-
-            if (typeOfSide == Slot.Positive)
+            if (dragged != null)
             {
-                dragged.ShowOnPositiveSide();
-                Transform coefficient = drop.transform.Find("Coefficient");
-                if (coefficient != null)
+                dragged.parentToReturnTo = terms.transform;
+
+                if (typeOfSide == Slot.Positive)
                 {
-                    Coefficient coef = coefficient.gameObject.GetComponent<Coefficient>();
-                    if (coef.GetValue() < 0)
+                    dragged.ShowOnPositiveSide();
+                    Transform coefficient = drop.transform.Find("Coefficient");
+                    if (coefficient != null)
                     {
-                        coef.NegativeCurrentValue();
+                        Coefficient coef = coefficient.gameObject.GetComponent<Coefficient>();
+                        if (coef.GetValue() < 0)
+                        {
+                            coef.NegativeCurrentValue();
+                        }
                     }
                 }
-            }
-            else if (typeOfSide == Slot.Negative)
-            {
-                dragged.ShowOnNegativeSide();
-                Transform coefficient = drop.transform.Find("Coefficient");
-                if (coefficient != null)
+                else if (typeOfSide == Slot.Negative)
                 {
-                    Coefficient coef = coefficient.gameObject.GetComponent<Coefficient>();
-                    if (coef.GetValue() > 0)
+                    dragged.ShowOnNegativeSide();
+                    Transform coefficient = drop.transform.Find("Coefficient");
+                    if (coefficient != null)
                     {
-                        coef.NegativeCurrentValue();
+                        Coefficient coef = coefficient.gameObject.GetComponent<Coefficient>();
+                        if (coef.GetValue() > 0)
+                        {
+                            coef.NegativeCurrentValue();
+                        }
                     }
                 }
             }

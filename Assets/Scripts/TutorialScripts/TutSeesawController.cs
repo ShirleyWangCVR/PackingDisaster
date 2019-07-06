@@ -12,10 +12,13 @@ public class TutSeesawController : SeesawController
     void Start()
     {
         // set initial tilt to 0
-        currentlyDragging = false;
         tilt = 0;
+        currentlyDragging = false;
         roundActive = true;
         audioSource = this.gameObject.GetComponent<AudioSource>();
+        audioSource.volume = 1;
+        dataController = FindObjectOfType<DataController>();
+        prevEquation = "";
     }
 
     // Update is called once per frame
@@ -25,7 +28,7 @@ public class TutSeesawController : SeesawController
         if (! currentlyDragging && roundActive)
         {
             UpdateTilt();
-            // UpdateCurrentEquation();
+            UpdateCurrentEquation();
         }
         UpdatePositions();
     }
