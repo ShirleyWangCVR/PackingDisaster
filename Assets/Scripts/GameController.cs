@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
         SetUpSeesaw();
 
         // if not tutorial then have a time limit
-        if (! (level <= 2 || level == 6 || level == 11 || level == 16))
+        /* if (! (level <= 2 || level == 6 || level == 11 || level == 16))
         {
             notTutorial = true;
             // timeUsedText.text = "Time Left: " + timeLeft.ToString();
@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour
         else
         {
             notTutorial = false;
-        }
+        } */
     }
 
     public EquationData GetEquation()
@@ -150,7 +150,7 @@ public class GameController : MonoBehaviour
     public void Update()
     {
         // if not a tutorial then have time out and tip over
-        if (notTutorial && roundActive)
+        if (roundActive) // && notTutorial
         {
             // if seesaw fell over end game
             if (seesaw.GetComponent<SeesawController>().FellOver())
@@ -225,6 +225,7 @@ public class GameController : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        dataController.StoreEndRoundData(timeController.GetCurrentTime(), false, 0, "");
         SceneManager.LoadScene("Menu");
     }
 

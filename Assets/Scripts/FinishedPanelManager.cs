@@ -43,9 +43,10 @@ public class FinishedPanelManager : MonoBehaviour
         audioSource.PlayOneShot(youWinSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
-        userMessage.text = "You Determined Correctly " + correctValue.ToString() + " in the Box!" + "\nYou Win!";
+        userMessage.text = "You Determined Correctly " + correctValue.ToString() + " in the Box!" + "You Win!";
         nextQuestion.gameObject.SetActive(true);
-        boxDisplay.SetActive(true);
+        // boxDisplay.SetActive(true);
+        finishedDisplay.transform.Find("Question").gameObject.SetActive(false);
 
         for (int i = 0; i < stars; i++)
         {
@@ -100,7 +101,7 @@ public class FinishedPanelManager : MonoBehaviour
         audioSource.PlayOneShot(youLoseSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
-        userMessage.text = "You Determined " + determined.ToString() + " in the Box." + "Try Again! Make sure the Seesaw is Balanced!\n!";
+        userMessage.text = "You Didn't Determine the Right Number of Toys. Try Again!";
     }
 
     // set finished panel to if player didn't fully isolate answer
@@ -109,7 +110,7 @@ public class FinishedPanelManager : MonoBehaviour
         audioSource.PlayOneShot(youLoseSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
-        userMessage.text = "Try Again!\nIsolate one box on one side with only toys on the other.";
+        userMessage.text = "You Didn't Fully Isolate One Box. Try Again!";
     }
 
     // set finished panel to if player lost by too unbalanced
@@ -118,7 +119,7 @@ public class FinishedPanelManager : MonoBehaviour
         audioSource.PlayOneShot(youLoseSfx, 1.0f);
         
         finishedDisplay.SetActive(true);
-        userMessage.text = "The Seesaw Tipped Over!\nTry Again!";
+        userMessage.text = "The Seesaw Tipped Over! Try Again!";
     }
 
 }

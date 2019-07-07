@@ -235,7 +235,7 @@ public class DataController : MonoBehaviour
         if (! submittedCurrRound)
         {
             if (currLevelData != null)
-            {
+            {   
                 playerLog.NewRoundData(currLevelData);
                 SaveCurrentPlayerData();
                 submittedCurrRound = true;

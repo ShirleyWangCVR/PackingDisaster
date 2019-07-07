@@ -35,7 +35,6 @@ public class SeesawController : MonoBehaviour
         currentlyDragging = false;
         roundActive = true;
         audioSource = this.gameObject.GetComponent<AudioSource>();
-        audioSource.volume = 1;
         dataController = FindObjectOfType<DataController>();
         prevEquation = "";
     }
@@ -47,7 +46,6 @@ public class SeesawController : MonoBehaviour
         if (! currentlyDragging && roundActive)
         {
             UpdateTilt();
-            // UpdatePositions();
             UpdateCurrentEquation();
         }
         UpdatePositions();

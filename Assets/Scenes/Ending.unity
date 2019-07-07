@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - You solved all of the orders!
-  - Now the manager won't kill me!
+  - Now we can send out all the orders properly!
   - Thank you so much! I don't know how I can ever repay you!
   - You're an algebra champion now. I'm sure you can solve whatever equation pops
     up in your future!

@@ -20,7 +20,6 @@ public class T2SeesawController : SeesawController
         currentlyDragging = false;
         roundActive = true;
         audioSource = this.gameObject.GetComponent<AudioSource>();
-        audioSource.volume = 1;
         dataController = FindObjectOfType<DataController>();
         prevEquation = "";
     }

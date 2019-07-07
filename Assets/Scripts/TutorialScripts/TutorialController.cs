@@ -293,6 +293,11 @@ public class TutorialController : MonoBehaviour
                 {
                     interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
                 }
+                if (linesLeft == 1)
+                {
+                    interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(false);
+                    interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(false);
+                }
             }
         }
         else if (tutorialLevel == 2)
@@ -347,7 +352,7 @@ public class TutorialController : MonoBehaviour
         {
             if (dialogueNum == 1)
             {
-                if (linesLeft == 4)
+                if (linesLeft == 3)
                 {
                     interactivePanel.transform.Find("Seesaw Arrow 11").gameObject.SetActive(false);
                     interactivePanel.transform.Find("Seesaw Arrow 4").gameObject.SetActive(true);
@@ -365,8 +370,8 @@ public class TutorialController : MonoBehaviour
     {
         Debug.Log("Completed First Task");
         // interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
-        interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(false);
-        interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(false);
+        // interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(false);
+        // interactivePanel.transform.Find("Seesaw Arrow 3").gameObject.SetActive(false);
         dialogueNum = 2;
         dialogueTriggers[1].TriggerDialogue();
     }
@@ -407,27 +412,19 @@ public class TutorialController : MonoBehaviour
     // tutorial 11
     public void StartedBSO()
     {
-        Debug.Log("Started Panel");
-
         if (waitForFirstDrag)
         {
             // interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
             dialogueTriggers[4].TriggerDialogue();
             interactivePanel.transform.Find("Seesaw Arrow").gameObject.SetActive(false);
             waitForFirstDrag = false;
-            Debug.Log("Did the thing");
         }
     }
 
     public void PressedOperation()
     {
-        Debug.Log("Pressed Operation");
-
         if (waitForSecondDrag)
         {
-            Debug.Log("Pressed Operation");
-
-            // interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
             interactivePanel.transform.Find("Seesaw Arrow 2").gameObject.SetActive(false);
             dialogueTriggers[5].TriggerDialogue();
             waitForSecondDrag = false;
@@ -448,8 +445,6 @@ public class TutorialController : MonoBehaviour
     // tutorial 16
     public void FirstDrop()
     {
-        Debug.Log("First drop");
-        // interactivePanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
         interactivePanel.transform.Find("Seesaw Arrow 4").gameObject.SetActive(false);
         interactivePanel.transform.Find("Seesaw Arrow 5").gameObject.SetActive(false);
         waitForFirstDrag = false;

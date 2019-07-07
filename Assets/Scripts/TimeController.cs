@@ -41,9 +41,10 @@ public class TimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentTime += Time.deltaTime;
+        
         if (! tutorial)
         {
-            currentTime += Time.deltaTime;
             currentLength = currentTime * constantBy;
 
             if (currentTime > 30 && currentStars == 3)

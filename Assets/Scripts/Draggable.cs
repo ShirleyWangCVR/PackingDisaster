@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /* GameObjects with this class are Draggable, and can be dragged by
  * the mouse.  They can be Variables, Values, Brackets, or Dummys.
  */
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Transform parentToReturnTo;
     public enum Slot {Variable, Value, All, Dummy, Bracket};
@@ -42,6 +42,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         seesaw = GameObject.Find("Seesaw");
+        parentName = parentToReturnTo.parent.name; // nullreferenceexception sometimes
+        if (parentName == "Workbench")
+        {
+            parentName = parentToReturnTo.name;
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -146,6 +151,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             dragData = eventData.pointerDrag.transform.name + " was dragged from " + eventData.pointerDrag.GetComponent<Draggable>().parentName + " to " + this.transform.name + " on " + this.transform.parent.parent.name;
             Debug.Log(dragData);
             dataController.StoreDragData(dragData);
+
+            Vector3 current = this.gameObject.transform.Find("Image").localScale;
+            if (current.x > 1.4)
+            {
+                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
+            }
 
             Transform coef = eventData.pointerDrag.transform.Find("Coefficient");
             if (coef == null)
@@ -323,6 +334,69 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             this.gameObject.transform.Find("Balloons").gameObject.SetActive(true);
             this.gameObject.transform.Find("Image").localScale = new Vector3(1, -1, 1);
             this.gameObject.transform.Find("Image").gameObject.GetComponent<Image>().color = new Color32(255, 43, 43, 139);
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData pointerEventData)
+    {
+        GameObject check = pointerEventData.pointerDrag; // .GetComponent<Draggable>();
+        if (check != null)
+        {        
+            if (typeOfItem == Draggable.Slot.Variable || typeOfItem == Draggable.Slot.Value)
+            {
+                if (typeOfItem == pointerEventData.pointerDrag.GetComponent<Draggable>().typeOfItem)
+                {
+                    if (this.transform.parent.parent.parent.name == "Seesaw")
+                    {
+                        if (this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
+                        {
+                            Transform coef = pointerEventData.pointerDrag.transform.Find("Coefficient");
+                            if (coef == null)
+                            {
+                                if (this.parentName != pointerEventData.pointerDrag.GetComponent<Draggable>().parentName)
+                                {
+                                    Vector3 current = this.gameObject.transform.Find("Image").localScale;
+                                    this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
+                                }
+                            }
+                            else
+                            {
+                                Vector3 current = this.gameObject.transform.Find("Image").localScale;
+                                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData pointerEventData)
+    {
+        // this.transform.GetChild(0).gameObject.SetActive(false);
+        GameObject check = pointerEventData.pointerDrag; // .GetComponent<Draggable>();
+        if (check != null)
+        {
+            if (typeOfItem == Draggable.Slot.Variable || typeOfItem == Draggable.Slot.Value)
+            {
+                Transform check2 = this.transform.parent.parent.parent;
+                if (check2 == null)
+                {
+                    return;
+                }
+                
+                if (this.transform.parent.parent.parent.name == "Seesaw")
+                {
+                    if (this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
+                    {
+                        Vector3 current = this.gameObject.transform.Find("Image").localScale;
+                        if (current.x > 1.4)
+                        {
+                            this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
+                        }
+                    }
+                }
+            }
         }
     }
 }

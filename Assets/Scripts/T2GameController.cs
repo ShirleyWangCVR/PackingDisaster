@@ -32,7 +32,7 @@ public class T2GameController : GameController
         SetUpSeesaw();
 
         // if not tutorial then have a time limit
-        if (! (level <= 3 || level == 6 || level == 11 || level == 16))
+        /* if (! (level <= 3 || level == 6 || level == 11 || level == 16))
         {
             notTutorial = true;
             // timeUsedText.text = "Time Used: " + timeLeft.ToString();
@@ -40,7 +40,7 @@ public class T2GameController : GameController
         else
         {
             notTutorial = false;
-        }
+        } */
     }
 
     // set up the seesaw according to the equation data
