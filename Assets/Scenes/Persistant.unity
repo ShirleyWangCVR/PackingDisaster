@@ -150,7 +150,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -670,8 +670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bb8d30e95714d34da264bae7872c581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    level0DialogueList: []
   bearPrefab: {fileID: 7017859109228230586, guid: 7677a02e557a0dc4192225a646a4d8bb,
     type: 3}
   boxPrefab: {fileID: 5044895873799692828, guid: b79df0512f0d05f4dbb7edc0a81ee3ca,

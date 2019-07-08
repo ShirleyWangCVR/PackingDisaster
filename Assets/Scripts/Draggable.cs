@@ -15,6 +15,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Slot typeOfItem = Slot.Value;
     public GameController gameController;
     public string parentName;
+    public bool inBracket = false;
 
     // to make dragging from side of equation look slightly nicer
     private GameObject placeholder = null;
@@ -47,6 +48,27 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             parentName = parentToReturnTo.name;
         }
+    }
+
+    public void Update()
+    {
+        /* Transform check = this.transform.parent.parent.parent;
+        if (check == null)
+        {
+            return;
+        }
+        
+        if (this.transform.parent.parent.parent.name == "Seesaw")
+        {
+            if (! this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
+            {
+                Vector3 current = this.gameObject.transform.Find("Image").localScale;
+                if (current.x > 1.4)
+                {
+                    this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
+                }
+            }
+        } */
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -117,6 +139,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         dragData = dragData + " to " + parentToReturnTo.parent.name;
         Debug.Log(dragData);
+        parentName = parentToReturnTo.parent.name;
+        if (parentName == "Workbench")
+        {
+            parentName = parentToReturnTo.name;
+        }
         dataController.StoreDragData(dragData);
     }
 
@@ -144,6 +171,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnDrop(PointerEventData eventData)
     {
         SetIsDragging(false);
+        Debug.Log("Dropped");
 
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (dragged != null)
@@ -153,7 +181,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             dataController.StoreDragData(dragData);
 
             Vector3 current = this.gameObject.transform.Find("Image").localScale;
-            if (current.x > 1.4)
+            Debug.Log(current);
+            if (current.x > 1.4 || current.x < -1.4)
             {
                 this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
             }
@@ -339,30 +368,36 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        GameObject check = pointerEventData.pointerDrag; // .GetComponent<Draggable>();
-        if (check != null)
-        {        
-            if (typeOfItem == Draggable.Slot.Variable || typeOfItem == Draggable.Slot.Value)
-            {
-                if (typeOfItem == pointerEventData.pointerDrag.GetComponent<Draggable>().typeOfItem)
+        if (! inBracket)
+        {
+            GameObject check = pointerEventData.pointerDrag; // .GetComponent<Draggable>();
+            if (check != null)
+            {        
+                if (typeOfItem == Draggable.Slot.Variable || typeOfItem == Draggable.Slot.Value)
                 {
-                    if (this.transform.parent.parent.parent.name == "Seesaw")
+                    if (typeOfItem == pointerEventData.pointerDrag.GetComponent<Draggable>().typeOfItem)
                     {
-                        if (this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
+                        if (this.transform.parent.parent.parent.name == "Seesaw")
                         {
-                            Transform coef = pointerEventData.pointerDrag.transform.Find("Coefficient");
-                            if (coef == null)
-                            {
-                                if (this.parentName != pointerEventData.pointerDrag.GetComponent<Draggable>().parentName)
-                                {
-                                    Vector3 current = this.gameObject.transform.Find("Image").localScale;
-                                    this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
-                                }
-                            }
-                            else
+                            if (this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
                             {
                                 Vector3 current = this.gameObject.transform.Find("Image").localScale;
-                                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
+                                Debug.Log(current);
+                                if (current.x < 1.1 && current.x > -1.1)
+                                {
+                                    Transform coef = pointerEventData.pointerDrag.transform.Find("Coefficient");
+                                    if (coef == null)
+                                    {
+                                        if (this.parentName != pointerEventData.pointerDrag.GetComponent<Draggable>().parentName)
+                                        {
+                                            this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
+                                    }
+                                }
                             }
                         }
                     }
@@ -373,26 +408,29 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        // this.transform.GetChild(0).gameObject.SetActive(false);
-        GameObject check = pointerEventData.pointerDrag; // .GetComponent<Draggable>();
-        if (check != null)
+        if (! inBracket)
         {
-            if (typeOfItem == Draggable.Slot.Variable || typeOfItem == Draggable.Slot.Value)
+            // this.transform.GetChild(0).gameObject.SetActive(false);
+            GameObject check = pointerEventData.pointerDrag; // .GetComponent<Draggable>();
+            if (check != null)
             {
-                Transform check2 = this.transform.parent.parent.parent;
-                if (check2 == null)
+                if (typeOfItem == Draggable.Slot.Variable || typeOfItem == Draggable.Slot.Value)
                 {
-                    return;
-                }
-                
-                if (this.transform.parent.parent.parent.name == "Seesaw")
-                {
-                    if (this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
+                    Transform check2 = this.transform.parent.parent.parent;
+                    if (check2 == null)
                     {
-                        Vector3 current = this.gameObject.transform.Find("Image").localScale;
-                        if (current.x > 1.4)
+                        return;
+                    }
+                    
+                    if (this.transform.parent.parent.parent.name == "Seesaw")
+                    {
+                        if (this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
                         {
-                            this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
+                            Vector3 current = this.gameObject.transform.Find("Image").localScale;
+                            if (current.x > 1.4 || current.x < -1.4)
+                            {
+                                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
+                            }
                         }
                     }
                 }

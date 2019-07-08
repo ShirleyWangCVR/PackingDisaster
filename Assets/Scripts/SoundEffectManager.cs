@@ -29,12 +29,12 @@ public class SoundEffectManager : MonoBehaviour
 
     public void PlayDing()
     {
-        audioSource.PlayOneShot(dingSfx, 1.0f);
+        audioSource.PlayOneShot(dingSfx, 0.5f);
     }
 
     public void PlayPickUpSfx()
     {
-        audioSource.PlayOneShot(pickUpSfx, 7.0f);
+        audioSource.PlayOneShot(pickUpSfx, 6.0f);
     }
 
     public void PlayPutDownSfx(Draggable.Slot type)
@@ -60,12 +60,12 @@ public class SoundEffectManager : MonoBehaviour
 
     public void PlayBuzzer()
     {
-        audioSource.PlayOneShot(wrongSfx, 2.0f);
+        audioSource.PlayOneShot(wrongSfx, 1.0f);
     }
 
     public void PlayExpanded()
     {
-        audioSource.PlayOneShot(expandedSfx, 3.0f);
+        audioSource.PlayOneShot(expandedSfx, 0.6f);
     }
 
     public void PlayOneDragged()

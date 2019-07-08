@@ -33,6 +33,7 @@ public class Bracket : MonoBehaviour
         {
             // child.gameObject.GetComponent<Draggable>().SetBracketStatus(true);
             child.gameObject.transform.Find("Coefficient").gameObject.AddComponent<BracketInsideCoefficient>();
+            child.gameObject.GetComponent<Draggable>().inBracket = true;
         }
 
     }
@@ -59,6 +60,7 @@ public class Bracket : MonoBehaviour
 
                 // also need to set parentToReturnTo in Draggable
                 child.gameObject.GetComponent<Draggable>().parentToReturnTo = parent;
+                child.gameObject.GetComponent<Draggable>().inBracket = false;
 
                 if (newCoef < 0)
                 {

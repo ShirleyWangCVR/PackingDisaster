@@ -3982,17 +3982,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312359687}
-  m_LocalRotation: {x: 0, y: 0, z: 0.17364816, w: 0.9848078}
+  m_LocalRotation: {x: 0, y: 0, z: 0.13052616, w: 0.9914449}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1.529637, y: -1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 1094335270}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 20}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27, y: 20}
-  m_SizeDelta: {x: 200, y: 20}
+  m_AnchoredPosition: {x: 65, y: 23}
+  m_SizeDelta: {x: 250, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1312359689
 MonoBehaviour:
@@ -5998,7 +5998,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - This way we're one step closer to isolating the box, and the seesaw is still balanced!
-  - Isolate one box on one side with only toys on the other.
+  - Do it again to isolate one box on one side with only toys on the other.
   - Once you've done it, press Done in the corner to confirm your results. You can
     do it!
   tutManager: {fileID: 2065705612}
