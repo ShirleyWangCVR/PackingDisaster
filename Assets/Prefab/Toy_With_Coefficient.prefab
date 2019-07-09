@@ -478,6 +478,7 @@ MonoBehaviour:
   typeOfItem: 1
   gameController: {fileID: 0}
   parentName: 
+  inBracket: 0
 --- !u!114 &59847576437065334
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1189,9 +1189,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - You can also combine like terms on the same side of the seesaw by dragging one
-    on top of the other.
-  - Drag the bear onto the other to add together their values.
+  - You can combine like terms on the same side of the seesaw by dragging one on top
+    of the other.
+  - Drag the bear onto the other to combine their values.
   tutManager: {fileID: 96978901}
 --- !u!4 &257561691
 Transform:
@@ -9030,13 +9030,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - The quantity of orders is increasing, and the amount of stuff on the seesaws is
-    getting hard to manage.
-  - So I've switched over to using coefficients to show the quantities on each side.
-  - The number next to a box or toy shows how many of them are bunched together.
+  - Now the number next to a box or toy shows how many of them are bunched together.
   - I also installed an automatic seesaw reader to show the current status of the
     seesaw.
-  - Now you can see what the seesaw represents easier!
   - You can split up any term larger than one by double clicking on it. Try it on
     this group of bears.
   tutManager: {fileID: 96978901}

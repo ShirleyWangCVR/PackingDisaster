@@ -2627,16 +2627,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747283183}
-  m_LocalRotation: {x: -0, y: -0, z: 0.9848078, w: -0.17364809}
+  m_LocalRotation: {x: 0, y: 0, z: 0.5, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1.5296385, y: 1.5296385, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 1094335270}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 200}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 60}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 271.6, y: 40.59999}
+  m_AnchoredPosition: {x: -175, y: -4}
   m_SizeDelta: {x: 80, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &747283185
@@ -3982,16 +3982,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312359687}
-  m_LocalRotation: {x: 0, y: 0, z: 0.13052616, w: 0.9914449}
+  m_LocalRotation: {x: 0, y: 0, z: 0.08715578, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: -1.529637, y: -1.529637, z: 1.5296367}
   m_Children: []
   m_Father: {fileID: 1094335270}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 65, y: 23}
+  m_AnchoredPosition: {x: 65, y: 30}
   m_SizeDelta: {x: 250, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1312359689
@@ -5310,9 +5310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Also, dragging something from the positive part of one side to the negative part
-    of the other side,
-  - Is the same as subtracting it from both sides.
+  - It's the same for dragging from one side positive to the other side negative.
   - Drag the toy to the negative part of the other side to subtract one toy from both
     sides.
   tutManager: {fileID: 2065705612}
@@ -5610,14 +5608,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Oh, I'm so happy you're here!
   - It's a disaster!  I lost the record detailing how many toys are in each box!
-  - And the customers are coming to pick up the packages real soon!
-  - I've managed to balance the seesaw with the boxes and toys.
-  - If we can isolate one box on one side with only toys on the other,
-  - Then that way we can figure out how many toys are inside the box!
+  - If we can isolate one box on one side with only toys on the other, then we can
+    figure out how many toys are in the box!
   - You can move an item from one side of the seesaw to the other by dragging it.
-  - But if the seesaw tips over too much the toys will fall to the ground and break!
   - You can get more items from the drawers, or put them away in the drawers.
   - Try taking away one toy from both sides of the seesaw.
   tutManager: {fileID: 2065705612}
@@ -5665,13 +5659,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Okay, here's Order 2.
-  - Oh, that box is under the seesaw, pushing upwards because of the balloons.
-  - That means its weight is being subtracted from that side instead of added.
+  - That box is under the seesaw, pushing upwards because of the balloons, so it's
+    weight is being subtracted.
   - If you drag the box from the negative part to the positive part of the other side
     of the seesaw,
   - 'Then that''s the same thing as adding a box to both sides. '
-  - Try dragging the box over.
+  - Try dragging the box over to the positive spart of the other side.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1690268538
 Transform:
@@ -5997,10 +5990,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - This way we're one step closer to isolating the box, and the seesaw is still balanced!
-  - Do it again to isolate one box on one side with only toys on the other.
-  - Once you've done it, press Done in the corner to confirm your results. You can
-    do it!
+  - Do it again to fully isolate the box on one side with only toys on the other.
+  - Once you've done it, press Done in the corner to confirm your results.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1848239578
 Transform:
@@ -6237,12 +6228,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Now on the left side we have one bear adding its weight and one bear subtracting
-    its weight.
-  - Together they add zero weight, so let's cancel them out.
-  - You can cancel out a positive and negative term by dragging one on top of the
-    other.
-  - Remember to cancel out as much as possible to get the most simplified answer.
+  - Combine like terms by dragging one on top of the other.
+  - Cancel out as much as possible to get the most simplified answer.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1926703247
 Transform:

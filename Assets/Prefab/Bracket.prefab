@@ -611,6 +611,7 @@ MonoBehaviour:
   typeOfItem: 4
   gameController: {fileID: 0}
   parentName: 
+  inBracket: 0
 --- !u!82 &3702595159852243748
 AudioSource:
   m_ObjectHideFlags: 0
