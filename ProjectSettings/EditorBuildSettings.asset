@@ -18,13 +18,13 @@ EditorBuildSettings:
     path: Assets/Scenes/Level Select.unity
     guid: cdc3c3d99e5c08b48981dd4c0f9945be
   - enabled: 0
-    path: Assets/Scenes/TestingScenes/T2Main.unity
+    path: Assets/NotInUse/Scenes/T2Main.unity
     guid: 49b42a7e0792d694b9037a87bfb7c80f
   - enabled: 0
-    path: Assets/Scenes/TestingScenes/TutorialLevel1.unity
+    path: Assets/NotInUse/Scenes/TutorialLevel1.unity
     guid: 85cf3b591cf134c4ea38ca3689167f73
   - enabled: 0
-    path: Assets/Scenes/TestingScenes/TutorialLevel2.unity
+    path: Assets/NotInUse/Scenes/TutorialLevel2.unity
     guid: d47ee1cdaba2d1e47b1241551879cb52
   - enabled: 1
     path: Assets/Scenes/Ending.unity

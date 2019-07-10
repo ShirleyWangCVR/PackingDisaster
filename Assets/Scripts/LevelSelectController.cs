@@ -42,7 +42,7 @@ public class LevelSelectController : MonoBehaviour
         // to disable the locks on the next topic or make sure the next topic is locked
         for (int i = 1; i < 5; i++)
         {
-            if (dataController.GetTotalStarsUpTo(5 * i) >= 10 * i && levelsShow >= 5 * i)
+            if (dataController.GetTotalStarsUpTo(5 * i) >= 12 * i && levelsShow >= 5 * i)
             {
                 // show next topic as not locked
                 topicLabels[i].transform.Find("Text").gameObject.SetActive(true);

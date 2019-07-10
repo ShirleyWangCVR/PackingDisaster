@@ -90,10 +90,10 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
 
     // when an item is dropped on it get rid of it
     public void OnDrop(PointerEventData eventData)
-    {
+    {        
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (dragged != null)
-        {
+        {            
             string dragData = eventData.pointerDrag.name + " was dragged from " + eventData.pointerDrag.GetComponent<Draggable>().parentName + " to " + this.transform.name;
             Debug.Log(dragData);
             dataController.StoreDragData(dragData);
@@ -118,6 +118,7 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         this.transform.GetChild(0).gameObject.SetActive(true);
+        Debug.Log("Entered");
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)

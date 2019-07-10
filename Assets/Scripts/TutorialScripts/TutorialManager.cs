@@ -26,8 +26,15 @@ public class TutorialManager : MonoBehaviour
     }
     public void EndDialogueNow()
     {
-        dialogueModMgr.ExitDialogueBox();
+        StartCoroutine(AbsoluteDialogueGone());
         KickBob();
+    }
+
+    public IEnumerator AbsoluteDialogueGone()
+    {
+        dialogueModMgr.ExitDialogueBox();
+        yield return new WaitForSeconds(2f);
+        dialogueModMgr.gameObject.SetActive(false);
     }
 
     public void KickBob() {

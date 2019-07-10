@@ -42,6 +42,9 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     // if Draggable object dropped onto this. Assuming all items dropped on it are Draggable.
     public void OnDrop(PointerEventData eventData)
     {
+        glow.SetActive(false);
+        showColor = false;
+        
         int size = GetCurrentSize();
         
         if (size < capacity)
