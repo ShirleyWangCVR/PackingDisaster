@@ -36,7 +36,7 @@ public class LevelSelectController : MonoBehaviour
                 levelButtons[i].GetComponent<Button>().interactable = false;
                 levelButtons[i].transform.Find("Number").gameObject.SetActive(false);
                 levelButtons[i].transform.Find("Stars").gameObject.SetActive(false);
-            }
+            } 
         }
 
         // to disable the locks on the next topic or make sure the next topic is locked
@@ -56,7 +56,7 @@ public class LevelSelectController : MonoBehaviour
                 levelButtons[5 * i].GetComponent<Button>().interactable = false;
                 levelButtons[5 * i].transform.Find("Number").gameObject.SetActive(false);
                 levelButtons[5 * i].transform.Find("Stars").gameObject.SetActive(false);
-            } 
+            }
 
         }
     }
