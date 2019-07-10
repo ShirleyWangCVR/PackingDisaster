@@ -33,9 +33,9 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
         showColor = false;
         firstTuts = level <= 2;
-        terms = this.transform.GetChild(0).gameObject;
-        glow = this.transform.GetChild(1).gameObject;
-        
+        terms = this.transform.GetChild(1).gameObject;
+        glow = this.transform.GetChild(0).gameObject;
+
         glow.SetActive(false);
     }
 
@@ -44,9 +44,9 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
     {
         glow.SetActive(false);
         showColor = false;
-        
+
         int size = GetCurrentSize();
-        
+
         if (size < capacity)
         {
             GameObject drop;
@@ -62,7 +62,7 @@ public class SeesawSide : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
                 {
                     drop = eventData.pointerDrag;
                 }
-            } 
+            }
             else
             {
                 drop = eventData.pointerDrag;

@@ -65,7 +65,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < lhs.numVars; i++)
             {
-                Transform lhsPositive = seesaw.transform.Find("LHSPositive").GetChild(0);
+                Transform lhsPositive = seesaw.transform.Find("LHSPositive").GetChild(1);
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(lhsPositive);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < 0 - lhs.numVars; i++)
             {
-                Transform lhsNegative = seesaw.transform.Find("LHSNegative").GetChild(0);
+                Transform lhsNegative = seesaw.transform.Find("LHSNegative").GetChild(1);
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(lhsNegative);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < lhs.numValues; i++)
             {
-                Transform lhsPositive = seesaw.transform.Find("LHSPositive").GetChild(0);
+                Transform lhsPositive = seesaw.transform.Find("LHSPositive").GetChild(1);
                 GameObject newVar = toyPool.GetObject();
                 newVar.transform.SetParent(lhsPositive);
             }
@@ -96,7 +96,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < 0 - lhs.numValues; i++)
             {
-                Transform lhsNegative = seesaw.transform.Find("LHSNegative").GetChild(0);
+                Transform lhsNegative = seesaw.transform.Find("LHSNegative").GetChild(1);
                 GameObject newVar = toyPool.GetObject();
                 newVar.transform.SetParent(lhsNegative);
                 newVar.GetComponent<Draggable>().ShowOnNegativeSide();
@@ -107,7 +107,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < rhs.numVars; i++)
             {
-                Transform rhsPositive = seesaw.transform.Find("RHSPositive").GetChild(0);
+                Transform rhsPositive = seesaw.transform.Find("RHSPositive").GetChild(1);
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(rhsPositive);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
@@ -117,7 +117,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < 0 - rhs.numVars; i++)
             {
-                Transform rhsNegative = seesaw.transform.Find("RHSNegative").GetChild(0);
+                Transform rhsNegative = seesaw.transform.Find("RHSNegative").GetChild(1);
                 GameObject newVar = variablePool.GetObject();
                 newVar.transform.SetParent(rhsNegative);
                 newVar.GetComponent<HasValue>().SetValue(equation.variableValue);
@@ -129,7 +129,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < rhs.numValues; i++)
             {
-                Transform rhsPositive = seesaw.transform.Find("RHSPositive").GetChild(0);
+                Transform rhsPositive = seesaw.transform.Find("RHSPositive").GetChild(1);
                 GameObject newVar = toyPool.GetObject();
                 newVar.transform.SetParent(rhsPositive);
             }
@@ -138,7 +138,7 @@ public class GameController : MonoBehaviour
         {
             for (int i = 0; i < 0 - rhs.numValues; i++)
             {
-                Transform rhsNegative = seesaw.transform.Find("RHSNegative").GetChild(0);
+                Transform rhsNegative = seesaw.transform.Find("RHSNegative").GetChild(1);
                 GameObject newVar = toyPool.GetObject();
                 newVar.transform.SetParent(rhsNegative);
                 newVar.GetComponent<Draggable>().ShowOnNegativeSide();
@@ -188,7 +188,7 @@ public class GameController : MonoBehaviour
                     stars = timeController.FinishedGameGetStars();
                     dataController.SetNewStars(level, stars);
                     done = true;
-                    
+
                     finishedDisplayManager.DisplayCorrectlyBalanced(equation.variableValue, stars);
                 }
                 else
