@@ -184,7 +184,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             Debug.Log(current);
             if (current.x > 1.4 || current.x < -1.4)
             {
-                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
+                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x / 2, current.y / 2, current.z);
             }
 
             Transform coef = eventData.pointerDrag.transform.Find("Coefficient");
@@ -390,12 +390,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                                     {
                                         if (this.parentName != pointerEventData.pointerDrag.GetComponent<Draggable>().parentName)
                                         {
-                                            this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
+                                            this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2, current.y * 2, current.z);
                                         }
                                     }
                                     else
                                     {
-                                        this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 3 / 2, current.y * 3 / 2, current.z);
+                                        this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2, current.y * 2, current.z);
                                     }
                                 }
                             }
@@ -429,7 +429,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             Vector3 current = this.gameObject.transform.Find("Image").localScale;
                             if (current.x > 1.4 || current.x < -1.4)
                             {
-                                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x * 2 / 3, current.y * 2 / 3, current.z);
+                                this.gameObject.transform.Find("Image").localScale = new Vector3(current.x / 2, current.y / 2, current.z);
                             }
                         }
                     }
