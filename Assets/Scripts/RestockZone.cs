@@ -118,7 +118,6 @@ public class RestockZone : MonoBehaviour, IDropHandler, IBeginDragHandler, IDrag
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         this.transform.GetChild(0).gameObject.SetActive(true);
-        Debug.Log("Entered");
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)

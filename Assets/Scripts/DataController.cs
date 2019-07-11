@@ -24,7 +24,7 @@ public class DataController : MonoBehaviour
     private int levelsCompleted; // use this to set how many levels available on level select
     private string equationDataFileName = "equations.json";
     private PlayerOverallData playerLog;
-    private string playerDataFileName = "playerData.json";
+    private string playerDataFileName;
     private PlayerMovesData currLevelData;
     private bool submittedCurrRound;
 
@@ -42,6 +42,8 @@ public class DataController : MonoBehaviour
         SceneManager.LoadScene("Menu");
         currentLevel = 1;
         levelsCompleted = 0;
+
+        playerDataFileName = "playerData" + Directory.GetFiles(Application.streamingAssetsPath, "*.json").Length.ToString() + ".json";
         
         starsObtained = new int[25];
         for (int i = 0; i < allEquationsUsed.Length; i++)

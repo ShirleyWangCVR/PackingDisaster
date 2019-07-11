@@ -171,7 +171,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnDrop(PointerEventData eventData)
     {
         SetIsDragging(false);
-        Debug.Log("Dropped");
 
         Draggable dragged = eventData.pointerDrag.GetComponent<Draggable>();
         if (dragged != null)
@@ -181,7 +180,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             dataController.StoreDragData(dragData);
 
             Vector3 current = this.gameObject.transform.Find("Image").localScale;
-            Debug.Log(current);
             if (current.x > 1.4 || current.x < -1.4)
             {
                 this.gameObject.transform.Find("Image").localScale = new Vector3(current.x / 2, current.y / 2, current.z);
@@ -382,7 +380,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                             if (this.transform.parent.parent.parent.gameObject.GetComponent<SeesawController>().GetDragging())
                             {
                                 Vector3 current = this.gameObject.transform.Find("Image").localScale;
-                                Debug.Log(current);
                                 if (current.x < 1.1 && current.x > -1.1)
                                 {
                                     Transform coef = pointerEventData.pointerDrag.transform.Find("Coefficient");

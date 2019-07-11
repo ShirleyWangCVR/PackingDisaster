@@ -17,7 +17,6 @@ public class LevelSelectButton : MonoBehaviour
     public void StartLevel()
     {
         string num = this.transform.Find("Number").gameObject.GetComponent<Text>().text;
-        Debug.Log(num);
 
         int level = Int32.Parse(num);
         levelSelectController.StartLevel(level);

@@ -14,12 +14,6 @@ public class EndingSceneController : MonoBehaviour
         dialogue.TriggerInitialDialogue();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void BackToMenu()
     {
         SceneManager.LoadScene("Menu");
