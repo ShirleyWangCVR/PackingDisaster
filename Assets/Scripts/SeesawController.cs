@@ -61,6 +61,11 @@ public class SeesawController : MonoBehaviour
         }
     }
 
+    public double GetTilt()
+    {
+        return tilt;
+    }
+
     public void SetDragging(bool dragging, string side)
     {
         currentlyDragging = dragging;

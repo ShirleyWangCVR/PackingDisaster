@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 40049542}
   - component: {fileID: 40049544}
   - component: {fileID: 40049543}
+  - component: {fileID: 40049545}
   m_Layer: 5
   m_Name: Legs Front
   m_TagString: Untagged
@@ -194,6 +195,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40049541}
   m_CullTransparentMesh: 0
+--- !u!225 &40049545
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40049541}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &66404440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,7 +1282,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &356042375
 GameObject:
@@ -1448,7 +1461,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &362771283
 MonoBehaviour:
@@ -1511,7 +1524,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466808575
 GameObject:
@@ -1727,6 +1740,7 @@ MonoBehaviour:
   - {fileID: 1690268537}
   - {fileID: 1606566200}
   - {fileID: 1926703246}
+  - {fileID: 1972615134}
   seesaw: {fileID: 732550606}
   skipButton: {fileID: 343717464}
   checkLHSPositive: {fileID: 0}
@@ -2360,6 +2374,7 @@ GameObject:
   - component: {fileID: 704423427}
   - component: {fileID: 704423429}
   - component: {fileID: 704423428}
+  - component: {fileID: 704423430}
   m_Layer: 5
   m_Name: Legs Back
   m_TagString: Untagged
@@ -2423,6 +2438,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704423426}
   m_CullTransparentMesh: 0
+--- !u!225 &704423430
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 704423426}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &732550606
 GameObject:
   m_ObjectHideFlags: 0
@@ -2948,7 +2975,7 @@ RectTransform:
   - {fileID: 1497557057}
   - {fileID: 193419126}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3834,7 +3861,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1191794853
 GameObject:
@@ -3866,7 +3893,7 @@ RectTransform:
   m_LocalScale: {x: 1.05375, y: 1.05375, z: 1.05375}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5417,9 +5444,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - It's the same for dragging from one side positive to the other side negative.
-  - Drag the toy to the negative part of the other side to subtract one toy from both
-    sides.
+  - It's the same for dragging from the top to the other side bottom.
+  - Drag the toy to the bottom of the other side to subtract one toy from both sides.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1606566201
 Transform:
@@ -5433,7 +5459,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1610441589
 GameObject:
@@ -5768,10 +5794,9 @@ MonoBehaviour:
   dialogueSentences:
   - That box is under the seesaw, pushing upwards because of the balloons, so it's
     weight is being subtracted.
-  - If you drag the box from the negative part to the positive part of the other side
-    of the seesaw,
-  - 'Then that''s the same thing as adding a box to both sides. '
-  - Try dragging the box over to the positive spart of the other side.
+  - If you drag the box from the bottom to the top of the other side of the seesaw,
+  - Then that's the same thing as adding a box to both sides.
+  - Try dragging the box over to the top of the other side.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1690268538
 Transform:
@@ -5785,7 +5810,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1701058986
 GameObject:
@@ -6098,7 +6123,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueSentences:
   - Do it again to fully isolate the box on one side with only toys on the other.
-  - Once you've done it, press Done in the corner to confirm your results.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1848239578
 Transform:
@@ -6335,7 +6359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSentences:
-  - Combine like terms by dragging one on top of the other.
+  - You can combine like terms by dragging one on top of the other.
   - Cancel out as much as possible to get the most simplified answer.
   tutManager: {fileID: 2065705612}
 --- !u!4 &1926703247
@@ -6350,7 +6374,54 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1972615133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972615135}
+  - component: {fileID: 1972615134}
+  m_Layer: 0
+  m_Name: DialogueTrigger2 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1972615134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972615133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15837033acd8fbb46b0a683277049d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSentences:
+  - Now we know there are 3 toys inside the box.
+  - Press Done in the corner to confirm your results.
+  tutManager: {fileID: 2065705612}
+--- !u!4 &1972615135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972615133}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1979010000
 GameObject:
@@ -6568,7 +6639,7 @@ PrefabInstance:
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5248207342084737485, guid: b9b20db15c39e4644aa58e8e1e9d4d0b,
         type: 3}

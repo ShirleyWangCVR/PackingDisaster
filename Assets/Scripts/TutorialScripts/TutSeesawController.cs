@@ -91,6 +91,11 @@ public class TutSeesawController : SeesawController
         return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 1 && rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 4 && tilt == 0 && ! currentlyDragging;
     }
 
+    public bool CheckDraggedStillBalanced2()
+    {
+        return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 0 && rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 3 && tilt == 0 && ! currentlyDragging;
+    }
+
     // tutorial 2
     public bool CheckDraggedToPositive()
     {

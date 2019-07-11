@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+  m_Color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -519,8 +519,8 @@ MonoBehaviour:
   speakerText: {fileID: 1371644635839724209}
   dialogueText: {fileID: 1371644635846275259}
   tutController: {fileID: 0}
+  endController: {fileID: 0}
   continueButton: {fileID: 1371644635638889039}
-  clicked: {fileID: 8300000, guid: 5ea9ee31fc9ea5841a9ae2823cf09d81, type: 3}
 --- !u!82 &5004134223281652601
 AudioSource:
   m_ObjectHideFlags: 0
