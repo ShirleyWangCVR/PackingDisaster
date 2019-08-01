@@ -37,6 +37,13 @@ public class SeesawController : MonoBehaviour
         audioSource = this.gameObject.GetComponent<AudioSource>();
         dataController = FindObjectOfType<DataController>();
         prevEquation = "";
+        int level = dataController.GetDifficulty();
+
+        if (level == 1)
+        {
+            leftHandSideNegative.SetActive(false);
+            rightHandSideNegative.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -133,11 +140,11 @@ public class SeesawController : MonoBehaviour
         float rotateBy;
         if (currentlyDragging)
         {
-            rotateBy = 0.02f;
+            rotateBy = 0.01f;
         }
         else
         {
-            rotateBy = 0.05f;
+            rotateBy = 0.02f;
         }
 
         // tilt seesaw ominously
@@ -228,7 +235,7 @@ public class SeesawController : MonoBehaviour
             currangle = 360 - this.transform.rotation.eulerAngles.z;
         }
 
-        return currangle > 25;
+        return currangle > 20;
     }
 
     // check if a variable is correctly isolated
@@ -431,4 +438,45 @@ public class SeesawController : MonoBehaviour
         audioSource.Play();
     }
 
+    public int LeftSideNumVariables()
+    {
+        return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() + leftHandSideNegative.GetComponent<SeesawSide>().NumVariables();
+    }
+
+    public int RightSideNumVariables()
+    {
+        return rightHandSidePositive.GetComponent<SeesawSide>().NumVariables() + rightHandSideNegative.GetComponent<SeesawSide>().NumVariables();
+    }
+
+    public int LeftSideNumValues()
+    {
+        return leftHandSidePositive.GetComponent<SeesawSide>().NumValues() + leftHandSideNegative.GetComponent<SeesawSide>().NumValues();
+    }
+
+    public int RightSideNumValues()
+    {
+        return rightHandSidePositive.GetComponent<SeesawSide>().NumValues() + rightHandSideNegative.GetComponent<SeesawSide>().NumValues();
+    }
+    
+    // tutorial 1
+    public bool CheckDraggedStillBalanced()
+    {
+        return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 1 && rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 4 && tilt == 0 && ! currentlyDragging;
+    }
+
+    public bool CheckDraggedStillBalanced2()
+    {
+        return leftHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSidePositive.GetComponent<SeesawSide>().NumValues() == 0 && rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 3 && tilt == 0 && ! currentlyDragging;
+    }
+
+    // tutorial 2
+    public bool CheckDraggedToPositive()
+    {
+        return rightHandSidePositive.GetComponent<SeesawSide>().NumVariables() == 1 && leftHandSideNegative.GetComponent<SeesawSide>().NumVariables() == 0;
+    }
+
+    public bool CheckDraggedToNegative()
+    {
+        return rightHandSidePositive.GetComponent<SeesawSide>().NumValues() == 0 && leftHandSideNegative.GetComponent<SeesawSide>().NumValues() == 1;
+    }
 }
